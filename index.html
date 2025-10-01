@@ -1,58 +1,65 @@
 <!DOCTYPE html>
 <html lang="it">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Serie A 2025/2026</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="style.css" />
+    <link
+      rel="icon"
+      href="https://www.calciomagazine.net/wp-content/uploads/2024/07/serie-a-enilive-logo.jpg"
+      type="image/jpeg"
+    />
+  </head>
+  <body>
     <div class="bg-animation"></div>
-    
+
     <div class="container">
-        <header>
-            <div class="header-content">
-                <h1>⚽ SERIE A</h1>
-                <p>Stagione 2025/2026 • Calendario & Classifica</p>
-            </div>
-        </header>
-
-        <div class="main-grid">
-            <div class="calendar-section" id="calendar"></div>
-            
-            <aside class="sidebar">
-                <div class="leaderboard-card">
-                    <h2>CLASSIFICA</h2>
-                    <div class="leaderboard-scroll">
-                        <table class="leaderboard-table">
-                            <thead>
-                                <tr>
-                                    <th>#</th>
-                                    <th>Squadra</th>
-                                    <th>Pt</th>
-                                    <th>G</th>
-                                    <th>V</th>
-                                    <th>N</th>
-                                    <th>P</th>
-                                    <th>GF</th>
-                                    <th>GS</th>
-                                    <th>DR</th>
-                                </tr>
-                            </thead>
-                            <tbody id="leaderboard-body">
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-
-                <div class="legend-card">
-                    <h3>LEGENDA</h3>
-                    <div id="legend-list"></div>
-                </div>
-            </aside>
+      <header>
+        <div class="header-content">
+          <h1>⚽ SERIE A</h1>
+          <p>Stagione 2025/2026 • Calendario & Classifica</p>
         </div>
+      </header>
+
+      <div class="main-grid">
+        <div class="calendar-section" id="calendar"></div>
+
+        <aside class="sidebar">
+          <div class="leaderboard-card">
+            <h2>CLASSIFICA</h2>
+            <div class="leaderboard-scroll">
+              <table class="leaderboard-table">
+                <thead>
+                  <tr>
+                    <th>#</th>
+                    <th>Squadra</th>
+                    <th>Pt</th>
+                    <th>G</th>
+                    <th>V</th>
+                    <th>N</th>
+                    <th>P</th>
+                    <th>GF</th>
+                    <th>GS</th>
+                    <th>DR</th>
+                  </tr>
+                </thead>
+                <tbody id="leaderboard-body"></tbody>
+              </table>
+            </div>
+          </div>
+
+          <div class="legend-card">
+            <h3>LEGENDA</h3>
+            <div id="legend-list"></div>
+          </div>
+        </aside>
+      </div>
     </div>
     <script src="script.js"></script>
-</body>
+  </body>
 </html>
