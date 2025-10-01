@@ -297,15 +297,40 @@ async function initializeApp() {
 
   const { teams, teamLogos, calendar } = data;
 
-  const container = document.getElementById("calendar");
-  container.innerHTML = "";
+  const calendarContainer = document.getElementById("calendar");
+  calendarContainer.innerHTML = "";
 
   calendar.forEach((day) => {
-    container.appendChild(createDaySection(day, teamLogos));
+    calendarContainer.appendChild(createDaySection(day, teamLogos));
   });
 
   updateLeaderboard(calendar, teams, config, teamLogos);
   createLegend(config);
+
+  const showCalendarBtn = document.getElementById("show-calendar-btn");
+  const showSidebarBtn = document.getElementById("show-sidebar-btn");
+  const calendarSection = document.querySelector(".calendar-section");
+  const sidebarSection = document.querySelector(".sidebar");
+
+  function switchView(view) {
+    if (view === "calendar") {
+      calendarSection.classList.remove("hidden");
+      sidebarSection.classList.add("hidden");
+      showCalendarBtn.classList.add("active");
+      showSidebarBtn.classList.remove("active");
+    } else {
+      calendarSection.classList.add("hidden");
+      sidebarSection.classList.remove("hidden");
+      showSidebarBtn.classList.add("active");
+      showCalendarBtn.classList.remove("active");
+    }
+  }
+  
+  showCalendarBtn.addEventListener("click", () => switchView("calendar"));
+  showSidebarBtn.addEventListener("click", () => switchView("sidebar"));
+
+  // Imposta la vista iniziale sul calendario
+  switchView("calendar");
 }
 
 initializeApp();

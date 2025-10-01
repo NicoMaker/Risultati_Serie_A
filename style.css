@@ -125,16 +125,52 @@ header {
   }
 }
 
-/* Main Grid */
-.main-grid {
-  display: grid;
-  grid-template-columns: 1fr 500px;
-  gap: 30px;
-  padding: 20px 0 60px;
+/* View Selector */
+.view-selector {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  margin-bottom: 25px;
+  animation: fadeIn 0.8s ease-out 0.4s both;
+}
+
+.view-selector button {
+  background: var(--bg-card);
+  color: var(--text-secondary);
+  border: 1px solid var(--border);
+  padding: 12px 25px;
+  border-radius: 15px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.view-selector button:hover {
+  border-color: var(--accent-green);
+  color: var(--text-primary);
+}
+
+.view-selector button.active {
+  background: var(--gradient-green);
+  color: var(--bg-primary);
+  border-color: var(--accent-green);
+  box-shadow: 0 5px 20px rgba(0, 255, 136, 0.3);
+}
+
+/* Main Content Section */
+.main-content {
+  display: flex;
+  justify-content: center;
+}
+
+.hidden {
+  display: none;
 }
 
 /* Calendar Section */
 .calendar-section {
+  width: 100%;
   animation: fadeIn 0.8s ease-out 0.4s both;
 }
 
@@ -349,12 +385,6 @@ header {
   transform: scale(1.1);
 }
 
-.team-name {
-  font-size: 0.85rem;
-  font-weight: 600;
-  text-align: center;
-}
-
 .vs {
   color: var(--text-secondary);
   font-size: 0.9rem;
@@ -371,10 +401,8 @@ header {
 
 /* Sidebar */
 .sidebar {
-  position: sticky;
-  top: 20px;
-  height: fit-content;
-  animation: slideLeft 0.8s ease-out 0.6s both;
+  width: 100%;
+  animation: fadeIn 0.8s ease-out 0.6s both;
 }
 
 @keyframes slideLeft {
@@ -431,9 +459,9 @@ header {
 }
 
 .leaderboard-table th {
-  padding: 12px 6px;
+  padding: 8px 2px;
   text-align: center;
-  font-size: 0.8rem;
+  font-size: 0.75rem;
   font-weight: 600;
   color: var(--accent-green);
   text-transform: uppercase;
@@ -441,10 +469,11 @@ header {
 }
 
 .leaderboard-table td {
-  padding: 12px 6px;
+  padding: 8px 2px;
   text-align: center;
-  font-size: 0.85rem;
+  font-size: 0.8rem;
   border-bottom: 1px solid var(--border);
+  color: var(--text-secondary);
 }
 
 .leaderboard-table tbody tr {
@@ -458,8 +487,9 @@ header {
 .team-cell {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 4px; /* Modificato */
   font-weight: 600;
+  color: var(--text-primary);
   text-align: left;
 }
 
@@ -476,28 +506,30 @@ header {
 }
 
 .position {
-  min-width: 30px;
-  height: 30px;
-  border-radius: 50%;
+  min-width: 20px; /* Modificato */
+  height: 20px; /* Modificato */
+  border-radius: 10px; /* Modificato */
   display: flex;
   align-items: center;
   justify-content: center;
   font-weight: 700;
+  font-size: 0.6rem; /* Modificato */
   background: rgba(255, 255, 255, 0.05);
 }
 
 .scudetto-row {
   background: linear-gradient(
     135deg,
-    rgba(255, 215, 0, 0.2) 0%,
-    rgba(255, 170, 0, 0.2) 100%
+    rgba(255, 215, 0, 0.1) 0%,
+    rgba(255, 170, 0, 0.1) 100%
   ) !important;
-  border-left: 4px solid #ffd700 !important;
+  border-left: 2px solid #ffd700 !important;
 }
 
 .scudetto-row .position {
   background: var(--gradient-green);
-  box-shadow: 0 0 20px rgba(0, 255, 136, 0.5);
+  box-shadow: 0 0 15px rgba(0, 255, 136, 0.3);
+  color: var(--bg-primary); /* Modificato: il testo diventa scuro */
 }
 
 .legend-card {
@@ -533,12 +565,13 @@ header {
 
 /* Responsive */
 @media (max-width: 1024px) {
-  .main-grid {
-    grid-template-columns: 1fr;
+  .main-content {
+    display: block;
   }
 
-  .sidebar {
-    position: static;
+  .sidebar,
+  .calendar-section {
+    width: 100%;
   }
 
   .leaderboard-card {
