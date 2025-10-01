@@ -128,7 +128,7 @@ header {
 /* Main Grid */
 .main-grid {
   display: grid;
-  grid-template-columns: 1fr 500px; /* Larghezza aumentata per la classifica */
+  grid-template-columns: 1fr 500px;
   gap: 30px;
   padding: 20px 0 60px;
 }
@@ -157,6 +157,12 @@ header {
   transition: all 0.3s ease;
 }
 
+.day-card.open {
+  max-height: 650px;
+  display: flex;
+  flex-direction: column;
+}
+
 .day-card:hover {
   transform: translateY(-5px);
   box-shadow: var(--shadow);
@@ -167,14 +173,21 @@ header {
   padding: 25px 30px;
   background: linear-gradient(
     135deg,
-    rgba(0, 255, 136, 0.1) 0%,
-    rgba(0, 212, 255, 0.1) 100%
+    rgba(0, 255, 136, 0.15) 0%,
+    rgba(0, 212, 255, 0.15) 100%
   );
   cursor: pointer;
   display: flex;
   justify-content: space-between;
   align-items: center;
   transition: all 0.3s ease;
+  flex-shrink: 0;
+  border-radius: 20px 20px 0 0;
+}
+
+.day-card.open .day-header {
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
 }
 
 .day-header:hover {
@@ -223,7 +236,33 @@ header {
   display: none;
   grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
   gap: 20px;
-  padding: 30px;
+  padding: 20px 30px 30px 30px;
+  background: var(--bg-card);
+  overflow-y: auto;
+  overflow-x: hidden;
+  flex: 1;
+  min-height: 0;
+  max-height: 550px;
+  scrollbar-width: thin;
+  scrollbar-color: var(--accent-green) rgba(255, 255, 255, 0.05);
+}
+
+.matches-grid::-webkit-scrollbar {
+  width: 10px;
+}
+
+.matches-grid::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 0 0 20px 0;
+}
+
+.matches-grid::-webkit-scrollbar-thumb {
+  background: var(--accent-green);
+  border-radius: 5px;
+}
+
+.matches-grid::-webkit-scrollbar-thumb:hover {
+  background: var(--accent-blue);
 }
 
 .day-card.open .matches-grid {
@@ -310,6 +349,12 @@ header {
   transform: scale(1.1);
 }
 
+.team-name {
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-align: center;
+}
+
 .vs {
   color: var(--text-secondary);
   font-size: 0.9rem;
@@ -330,32 +375,17 @@ header {
   top: 20px;
   height: fit-content;
   animation: slideLeft 0.8s ease-out 0.6s both;
-  position: relative;
 }
 
-/* Vertical line on scroll */
-.sidebar::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  transform: translateX(-20px);
-  width: 1px;
-  height: 100%;
-  background: linear-gradient(
-    to bottom,
-    transparent 0%,
-    var(--border) 20%,
-    var(--border) 80%,
-    transparent 100%
-  );
-  opacity: 0;
-  transition: opacity 0.5s ease;
-  pointer-events: none;
-}
-
-.scrolled .sidebar::before {
-  opacity: 1;
+@keyframes slideLeft {
+  from {
+    opacity: 0;
+    transform: translateX(50px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
 }
 
 .leaderboard-card {
@@ -381,12 +411,9 @@ header {
 .leaderboard-scroll {
   max-height: 600px;
   overflow-y: auto;
-  
-  /* Nasconde la scrollbar di default per Firefox */
-  scrollbar-width: none; 
+  scrollbar-width: none;
 }
 
-/* Nasconde la scrollbar di default per Chrome, Edge, Safari */
 .leaderboard-scroll::-webkit-scrollbar {
   display: none;
 }
@@ -514,14 +541,10 @@ header {
     position: static;
   }
 
-  .sidebar::before {
-    display: none;
-  }
-
   .leaderboard-card {
     overflow-x: auto;
   }
-  
+
   .leaderboard-scroll::-webkit-scrollbar {
     display: initial;
   }

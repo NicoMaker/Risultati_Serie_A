@@ -11,38 +11,35 @@ async function loadJSON(filePath) {
   }
 }
 
-// Funzione per creare la card di una singola partita
 function createMatchCard(match, teamLogos) {
   const matchCard = document.createElement("div");
   matchCard.className = "match-card";
 
-  // Aggiungi un div per il nome della squadra sotto il logo
   matchCard.innerHTML = `
-      <div class="teams">
-          <div class="team">
-              <img src="${teamLogos[match.home]}" alt="${
+            <div class="teams">
+                <div class="team">
+                    <img src="${teamLogos[match.home]}" alt="${
     match.home
   }" class="team-logo">
-              <span class="team-name">${match.home}</span>
-          </div>
-          <span class="vs">VS</span>
-          <div class="team">
-              <img src="${teamLogos[match.away]}" alt="${
+                    <span class="team-name">${match.home}</span>
+                </div>
+                <span class="vs">VS</span>
+                <div class="team">
+                    <img src="${teamLogos[match.away]}" alt="${
     match.away
   }" class="team-logo">
-              <span class="team-name">${match.away}</span>
-          </div>
-      </div>
-      <div class="score">
-          ${match.homeScore !== null ? match.homeScore : "?"} - ${
+                    <span class="team-name">${match.away}</span>
+                </div>
+            </div>
+            <div class="score">
+                ${match.homeScore !== null ? match.homeScore : "?"} - ${
     match.awayScore !== null ? match.awayScore : "?"
   }
-      </div>
-  `;
+            </div>
+        `;
   return matchCard;
 }
 
-// Funzione per creare la sezione di una giornata
 function createDaySection(day, teamLogos) {
   const dayCard = document.createElement("div");
   dayCard.className = "day-card";
@@ -52,14 +49,14 @@ function createDaySection(day, teamLogos) {
     .join("");
 
   dayCard.innerHTML = `
-      <div class="day-header">
-          <h2>Giornata ${day.giornata}</h2>
-          <div class="toggle-btn"></div>
-      </div>
-      <div class="matches-grid">
-          ${matchesHTML}
-      </div>
-  `;
+            <div class="day-header">
+                <h2>Giornata ${day.giornata}</h2>
+                <div class="toggle-btn"></div>
+            </div>
+            <div class="matches-grid">
+                ${matchesHTML}
+            </div>
+        `;
 
   dayCard.querySelector(".day-header").addEventListener("click", () => {
     dayCard.classList.toggle("open");
@@ -68,7 +65,6 @@ function createDaySection(day, teamLogos) {
   return dayCard;
 }
 
-// Funzione per calcolare gli scontri diretti
 function calculateHeadToHead(teamsWithSamePoints, allMatches) {
   if (teamsWithSamePoints.length <= 1) return teamsWithSamePoints;
 
@@ -135,7 +131,6 @@ function calculateHeadToHead(teamsWithSamePoints, allMatches) {
   });
 }
 
-// Funzione per calcolare e aggiornare la classifica
 function updateLeaderboard(calendarData, teams, config, teamLogos) {
   const teamsStats = {};
 
@@ -251,30 +246,31 @@ function updateLeaderboard(calendarData, teams, config, teamLogos) {
     tr.style = rowStyle;
 
     tr.innerHTML = `
-            <td><div class="position">${teamPos}</div></td>
-            <td>
-                <div class="team-cell">
-                    <img src="${teamLogos[team.squadra]}" alt="${
+                    <td><div class="position">${teamPos}</div></td>
+                    <td>
+                        <div class="team-cell">
+                            <img src="${teamLogos[team.squadra]}" alt="${
       team.squadra
     }" class="team-logo-small">
-                    <span>${team.squadra}</span>
-                </div>
-            </td>
-            <td><strong>${team.punti}</strong></td>
-            <td>${team.giocate}</td>
-            <td>${team.vinte}</td>
-            <td>${team.pareggiate}</td>
-            <td>${team.perse}</td>
-            <td>${team.golFatti}</td>
-            <td>${team.golSubiti}</td>
-            <td>${team.differenzaReti > 0 ? "+" : ""}${team.differenzaReti}</td>
-        `;
+                            <span>${team.squadra}</span>
+                        </div>
+                    </td>
+                    <td><strong>${team.punti}</strong></td>
+                    <td>${team.giocate}</td>
+                    <td>${team.vinte}</td>
+                    <td>${team.pareggiate}</td>
+                    <td>${team.perse}</td>
+                    <td>${team.golFatti}</td>
+                    <td>${team.golSubiti}</td>
+                    <td>${team.differenzaReti > 0 ? "+" : ""}${
+      team.differenzaReti
+    }</td>
+                `;
 
     leaderboardBody.appendChild(tr);
   });
 }
 
-// Funzione per creare la legenda della classifica
 function createLegend(config) {
   const legendList = document.getElementById("legend-list");
   legendList.innerHTML = "";
@@ -284,16 +280,14 @@ function createLegend(config) {
     const div = document.createElement("div");
     div.className = "legend-item";
     div.innerHTML = `
-            <div class="legend-color" style="background-color: ${item.backgroundColor}; border-color: ${item.borderColor};"></div>
-            <span>${item.name}: ${item.description}</span>
-        `;
+                    <div class="legend-color" style="background-color: ${item.backgroundColor}; border-color: ${item.borderColor};"></div>
+                    <span>${item.name}: ${item.description}</span>
+                `;
     legendList.appendChild(div);
   }
 }
 
-// Funzione di inizializzazione dell'app
 async function initializeApp() {
-  // Carico contemporaneamente i due file
   const [data, config] = await Promise.all([
     loadJSON("JSON/data.json"),
     loadJSON("JSON/config.json"),
@@ -301,21 +295,17 @@ async function initializeApp() {
 
   if (!data || !config) return;
 
-  // Estraggo i dati dal file data.json
   const { teams, teamLogos, calendar } = data;
 
   const container = document.getElementById("calendar");
   container.innerHTML = "";
 
-  // Genero il calendario
   calendar.forEach((day) => {
     container.appendChild(createDaySection(day, teamLogos));
   });
 
-  // Aggiorno la classifica e creo la legenda
   updateLeaderboard(calendar, teams, config, teamLogos);
   createLegend(config);
 }
 
-// Avvio dell'app
 initializeApp();
