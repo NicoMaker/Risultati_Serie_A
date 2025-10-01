@@ -465,11 +465,6 @@ header {
   box-shadow: 0 0 20px rgba(0, 255, 136, 0.5);
 }
 
-.scudetto-row .team-cell::before {
-  content: "⭐";
-  margin-right: 5px;
-}
-
 .legend-card {
   background: var(--bg-card);
   border-radius: 20px;
