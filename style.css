@@ -1,0 +1,325 @@
+:root {
+    --primary-green: #009246;
+    --secondary-red: #CE2B37;
+    --white: #ffffff;
+    --light-gray: #f4f4f4;
+    --dark-text: #333;
+    --shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    --border-radius: 12px;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    color: var(--dark-text);
+    line-height: 1.6;
+    min-height: 100vh;
+}
+
+.header {
+    background: linear-gradient(135deg, var(--primary-green) 0%, #006837 100%);
+    color: var(--white);
+    text-align: center;
+    padding: 2.5rem 1rem;
+    box-shadow: var(--shadow);
+    margin-bottom: 2rem;
+}
+
+.header h1 {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+}
+
+.header p {
+    font-size: 1.1rem;
+    opacity: 0.95;
+}
+
+.main-content-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 1rem 2rem;
+    display: flex;
+    gap: 2rem;
+    flex-wrap: wrap;
+}
+
+.container {
+    flex: 2;
+    min-width: 0;
+}
+
+.sidebar {
+    flex: 1;
+    background-color: var(--white);
+    padding: 1.5rem;
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow);
+    height: fit-content;
+    position: sticky;
+    top: 1rem;
+}
+
+.sidebar h2 {
+    color: var(--primary-green);
+    margin-bottom: 1rem;
+    font-size: 1.5rem;
+    border-bottom: 3px solid var(--primary-green);
+    padding-bottom: 0.5rem;
+}
+
+#leaderboard table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.9rem;
+}
+
+#leaderboard th,
+#leaderboard td {
+    padding: 0.6rem 0.4rem;
+    text-align: center;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+#leaderboard th {
+    background-color: var(--primary-green);
+    color: var(--white);
+    font-weight: 600;
+    position: sticky;
+    top: 0;
+    font-size: 0.85rem;
+}
+
+#leaderboard tbody tr:hover {
+    background-color: #f0f0f0;
+}
+
+#leaderboard .team-logo-leaderboard {
+    width: 24px;
+    height: 24px;
+    margin-right: 8px;
+    vertical-align: middle;
+}
+
+.squadra-cell {
+    text-align: left;
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+#leaderboard-table-container {
+    max-height: 600px;
+    overflow-y: auto;
+    scrollbar-width: thin;
+    scrollbar-color: var(--primary-green) #e0e0e0;
+}
+
+/* Stile per la riga dello Scudetto */
+#leaderboard tbody tr.scudetto {
+    background-color: #ffd700 !important; /* Colore oro */
+    border-left: 5px solid #ffaa00 !important;
+    font-weight: bold;
+}
+
+#leaderboard tbody tr.scudetto .squadra-cell {
+    position: relative;
+    padding-left: 35px;
+}
+
+#leaderboard tbody tr.scudetto .squadra-cell::before {
+    content: '⭐';
+    position: absolute;
+    left: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 1.2rem;
+}
+
+
+.day-section {
+    background-color: var(--white);
+    padding: 0;
+    margin-bottom: 1rem;
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow);
+    overflow: hidden;
+}
+
+.day-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.2rem 1.5rem;
+    cursor: pointer;
+    background: linear-gradient(135deg, var(--primary-green) 0%, #007c3f 100%);
+    color: var(--white);
+    transition: background 0.3s ease;
+}
+
+.day-header:hover {
+    background: linear-gradient(135deg, #007c3f 0%, var(--primary-green) 100%);
+}
+
+.day-header h2 {
+    font-size: 1.3rem;
+    font-weight: 600;
+}
+
+.toggle-icon {
+    font-size: 1.5rem;
+    transition: transform 0.3s ease;
+}
+
+.toggle-icon.open {
+    transform: rotate(180deg);
+}
+
+.matches-container {
+    display: none;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1rem;
+    padding: 1.5rem;
+    background-color: #f9f9f9;
+}
+
+.matches-container.open {
+    display: grid;
+    animation: slideDown 0.3s ease-out;
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.match-card {
+    background-color: var(--white);
+    padding: 1.2rem;
+    border-radius: 10px;
+    border: 2px solid #e0e0e0;
+    transition: all 0.3s ease;
+}
+
+.match-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+    border-color: var(--primary-green);
+}
+
+.teams {
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: 0.8rem;
+    color: var(--dark-text);
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.team-logo {
+    width: 32px;
+    height: 32px;
+    margin: 0 8px;
+}
+
+.teams span.vs {
+    font-size: 0.9rem;
+    color: #999;
+}
+
+.score {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--primary-green);
+    text-align: center;
+    margin: 0.5rem 0;
+}
+
+.score.not-played {
+    color: #999;
+    font-size: 1.5rem;
+}
+
+.match-date {
+    text-align: center;
+    font-size: 0.85rem;
+    color: #666;
+    margin-top: 0.5rem;
+}
+
+.legend-container {
+    margin-top: 1.5rem;
+}
+
+.legend-container h2 {
+    color: var(--primary-green);
+    font-size: 1.2rem;
+    margin-bottom: 0.8rem;
+}
+
+.legend-container ul {
+    list-style: none;
+    padding: 0;
+}
+
+.legend-container li {
+    display: flex;
+    align-items: center;
+    margin-bottom: 0.5rem;
+    font-size: 0.9rem;
+}
+
+.legend-color-box {
+    width: 20px;
+    height: 20px;
+    border-radius: 4px;
+    margin-right: 10px;
+    border: 2px solid;
+}
+
+@media (max-width: 1024px) {
+    .main-content-container {
+        flex-direction: column;
+    }
+
+    .sidebar {
+        position: static;
+    }
+}
+
+@media (max-width: 768px) {
+    .header h1 {
+        font-size: 1.8rem;
+    }
+
+    .matches-container {
+        grid-template-columns: 1fr;
+    }
+
+    #leaderboard {
+        overflow-x: auto;
+    }
+
+    #leaderboard table {
+        font-size: 0.8rem;
+    }
+
+    #leaderboard th,
+    #leaderboard td {
+        padding: 0.4rem 0.2rem;
+    }
+}

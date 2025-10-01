@@ -1,0 +1,43 @@
+{
+  "positions": {
+    "scudetto": {
+      "name": "Campione d'Italia",
+      "positions": [1],
+      "backgroundColor": "#ffd700",
+      "borderColor": "#ffaa00",
+      "description": "Scudetto"
+    },
+    "champions": {
+      "name": "Champions League",
+      "positions": [2, 3, 4],
+      "backgroundColor": "#e3f2fd",
+      "borderColor": "#1976d2",
+      "description": "Accesso diretto alla fase a gironi UEFA Champions League"
+    },
+    "europa": {
+      "name": "Europa League",
+      "positions": [5, 6],
+      "backgroundColor": "#fff3e0",
+      "borderColor": "#f57c00",
+      "description": "Accesso diretto alla fase a gironi UEFA Europa League"
+    },
+    "conference": {
+      "name": "Conference League",
+      "positions": [7],
+      "backgroundColor": "#f3e5f5",
+      "borderColor": "#7b1fa2",
+      "description": "Accesso ai preliminari UEFA Conference League"
+    },
+    "relegation": {
+      "name": "Retrocessione",
+      "positions": [18, 19, 20],
+      "backgroundColor": "#ffebee",
+      "borderColor": "#c62828",
+      "description": "Retrocessione in Serie B"
+    }
+  },
+  "legend": {
+    "show": true,
+    "position": "sidebar"
+  }
+}
