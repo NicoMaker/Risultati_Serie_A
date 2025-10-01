@@ -301,6 +301,28 @@ function createLegend(config) {
   }
 }
 
+let scrollTimeout;
+
+// Funzione per gestire lo scrolling
+function handleScroll() {
+  const body = document.body;
+  const leaderboardCard = document.querySelector('.leaderboard-card');
+  if (!leaderboardCard) return;
+
+  const rect = leaderboardCard.getBoundingClientRect();
+  const isScrolledPast = rect.top <= 20;
+
+  if (isScrolledPast) {
+    body.classList.add("scrolled");
+    clearTimeout(scrollTimeout);
+    scrollTimeout = setTimeout(() => {
+      body.classList.remove("scrolled");
+    }, 150); // Regola questo valore per cambiare la durata
+  } else {
+    body.classList.remove("scrolled");
+  }
+}
+
 // Funzione principale che inizializza l'applicazione
 async function initializeApp() {
   const [data, config] = await Promise.all([loadData(), loadConfig()]);
@@ -319,4 +341,8 @@ async function initializeApp() {
   createLegend(config);
 }
 
+// Aggiungi un ascoltatore per l'evento di scroll
+window.addEventListener("scroll", handleScroll);
+
+// Avvia l'app
 initializeApp();
