@@ -16,14 +16,14 @@
     },
     "europa": {
       "name": "Europa League",
-      "positions": [5, 6],
+      "positions": [5],
       "backgroundColor": "#fff3e0",
       "borderColor": "#f57c00",
       "description": "Accesso diretto alla fase a gironi UEFA Europa League"
     },
     "conference": {
       "name": "Conference League",
-      "positions": [7],
+      "positions": [6],
       "backgroundColor": "#f3e5f5",
       "borderColor": "#7b1fa2",
       "description": "Accesso ai preliminari UEFA Conference League"
