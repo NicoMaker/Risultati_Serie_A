@@ -1,23 +1,12 @@
-// Funzione per caricare i dati dal file JSON
-async function loadData() {
+async function loadJSON(filePath) {
   try {
-    const response = await fetch("JSON/data.json");
-    const data = await response.json();
-    return data;
+    const response = await fetch(filePath);
+    if (!response.ok) {
+      throw new Error(`Errore HTTP! Status: ${response.status}`);
+    }
+    return await response.json();
   } catch (error) {
-    console.error("Errore nel caricamento dei dati:", error);
-    return null;
-  }
-}
-
-// Funzione per caricare la configurazione dal file JSON
-async function loadConfig() {
-  try {
-    const response = await fetch("JSON/config.json");
-    const config = await response.json();
-    return config;
-  } catch (error) {
-    console.error("Errore nel caricamento della configurazione:", error);
+    console.error(`Errore nel caricamento di ${filePath}:`, error);
     return null;
   }
 }
@@ -278,9 +267,7 @@ function updateLeaderboard(calendarData, teams, config, teamLogos) {
             <td>${team.perse}</td>
             <td>${team.golFatti}</td>
             <td>${team.golSubiti}</td>
-            <td>${team.differenzaReti > 0 ? "+" : ""}${
-      team.differenzaReti
-    }</td>
+            <td>${team.differenzaReti > 0 ? "+" : ""}${team.differenzaReti}</td>
         `;
 
     leaderboardBody.appendChild(tr);
@@ -304,23 +291,31 @@ function createLegend(config) {
   }
 }
 
-// Funzione principale che inizializza l'applicazione
+// Funzione di inizializzazione dell'app
 async function initializeApp() {
-  const [data, config] = await Promise.all([loadData(), loadConfig()]);
+  // Carico contemporaneamente i due file
+  const [data, config] = await Promise.all([
+    loadJSON("JSON/data.json"),
+    loadJSON("JSON/config.json"),
+  ]);
+
   if (!data || !config) return;
 
+  // Estraggo i dati dal file data.json
   const { teams, teamLogos, calendar } = data;
 
   const container = document.getElementById("calendar");
   container.innerHTML = "";
 
+  // Genero il calendario
   calendar.forEach((day) => {
     container.appendChild(createDaySection(day, teamLogos));
   });
 
+  // Aggiorno la classifica e creo la legenda
   updateLeaderboard(calendar, teams, config, teamLogos);
   createLegend(config);
 }
 
-// Avvia l'app
+// Avvio dell'app
 initializeApp();
