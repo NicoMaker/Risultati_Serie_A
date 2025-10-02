@@ -1,3 +1,4 @@
+// Funzione per caricare un file JSON in modo asincrono
 async function loadJSON(filePath) {
   try {
     const response = await fetch(filePath);
@@ -11,6 +12,7 @@ async function loadJSON(filePath) {
   }
 }
 
+// Funzione per creare la card HTML di una singola partita
 function createMatchCard(match, teamLogos) {
   const matchCard = document.createElement("div");
   matchCard.className = "match-card";
@@ -40,6 +42,7 @@ function createMatchCard(match, teamLogos) {
   return matchCard;
 }
 
+// Funzione per creare la sezione HTML di una giornata
 function createDaySection(day, teamLogos) {
   const dayCard = document.createElement("div");
   dayCard.className = "day-card";
@@ -65,6 +68,7 @@ function createDaySection(day, teamLogos) {
   return dayCard;
 }
 
+// Funzione per calcolare i criteri di spareggio negli scontri diretti
 function calculateHeadToHead(teamsWithSamePoints, allMatches) {
   if (teamsWithSamePoints.length <= 1) return teamsWithSamePoints;
 
@@ -109,28 +113,34 @@ function calculateHeadToHead(teamsWithSamePoints, allMatches) {
     const statsA = h2hStats[a.squadra];
     const statsB = h2hStats[b.squadra];
 
+    // Criterio 1: Punti negli scontri diretti
     if (statsB.punti !== statsA.punti) {
       return statsB.punti - statsA.punti;
     }
 
+    // Criterio 2: Differenza reti negli scontri diretti
     const drA = statsA.golFatti - statsA.golSubiti;
     const drB = statsB.golFatti - statsB.golSubiti;
     if (drB !== drA) {
       return drB - drA;
     }
 
+    // Criterio 3: Gol fatti negli scontri diretti
     if (statsB.golFatti !== statsA.golFatti) {
       return statsB.golFatti - statsA.golFatti;
     }
 
+    // Criterio 4: Differenza reti totale
     if (b.differenzaReti !== a.differenzaReti) {
       return b.differenzaReti - a.differenzaReti;
     }
 
+    // Criterio 5: Gol fatti totali
     return b.golFatti - a.golFatti;
   });
 }
 
+// Funzione principale per aggiornare la classifica
 function updateLeaderboard(calendarData, teams, config, teamLogos) {
   const teamsStats = {};
 
@@ -186,6 +196,7 @@ function updateLeaderboard(calendarData, teams, config, teamLogos) {
     }
   });
 
+  // Gestione di una penalità per la squadra "Bologna" (se applicabile)
   if (teamsStats["Bologna"]) {
     teamsStats["Bologna"].punti = teamsStats["Bologna"].punti - 2;
   }
@@ -210,6 +221,7 @@ function updateLeaderboard(calendarData, teams, config, teamLogos) {
       const teamsWithSamePoints = pointsGroups[points];
 
       if (teamsWithSamePoints.length > 1) {
+        // Se ci sono squadre con gli stessi punti, chiama la funzione di spareggio
         const sortedByH2H = calculateHeadToHead(
           teamsWithSamePoints,
           allMatches
@@ -246,31 +258,32 @@ function updateLeaderboard(calendarData, teams, config, teamLogos) {
     tr.style = rowStyle;
 
     tr.innerHTML = `
-                    <td><div class="position">${teamPos}</div></td>
-                    <td>
-                        <div class="team-cell">
-                            <img src="${teamLogos[team.squadra]}" alt="${
+                        <td><div class="position">${teamPos}</div></td>
+                        <td>
+                            <div class="team-cell">
+                                <img src="${teamLogos[team.squadra]}" alt="${
       team.squadra
     }" class="team-logo-small">
-                            <span>${team.squadra}</span>
-                        </div>
-                    </td>
-                    <td><strong>${team.punti}</strong></td>
-                    <td>${team.giocate}</td>
-                    <td>${team.vinte}</td>
-                    <td>${team.pareggiate}</td>
-                    <td>${team.perse}</td>
-                    <td>${team.golFatti}</td>
-                    <td>${team.golSubiti}</td>
-                    <td>${team.differenzaReti > 0 ? "+" : ""}${
+                                <span>${team.squadra}</span>
+                            </div>
+                        </td>
+                        <td><strong>${team.punti}</strong></td>
+                        <td>${team.giocate}</td>
+                        <td>${team.vinte}</td>
+                        <td>${team.pareggiate}</td>
+                        <td>${team.perse}</td>
+                        <td>${team.golFatti}</td>
+                        <td>${team.golSubiti}</td>
+                        <td>${team.differenzaReti > 0 ? "+" : ""}${
       team.differenzaReti
     }</td>
-                `;
+                    `;
 
     leaderboardBody.appendChild(tr);
   });
 }
 
+// Funzione per creare la legenda dei colori
 function createLegend(config) {
   const legendList = document.getElementById("legend-list");
   legendList.innerHTML = "";
@@ -280,13 +293,14 @@ function createLegend(config) {
     const div = document.createElement("div");
     div.className = "legend-item";
     div.innerHTML = `
-                    <div class="legend-color" style="background-color: ${item.backgroundColor}; border-color: ${item.borderColor};"></div>
-                    <span>${item.name}: ${item.description}</span>
-                `;
+                        <div class="legend-color" style="background-color: ${item.backgroundColor}; border-color: ${item.borderColor};"></div>
+                        <span>${item.name}: ${item.description}</span>
+                    `;
     legendList.appendChild(div);
   }
 }
 
+// Funzione di inizializzazione dell'app
 async function initializeApp() {
   const [data, config] = await Promise.all([
     loadJSON("JSON/data.json"),
@@ -325,7 +339,7 @@ async function initializeApp() {
       showCalendarBtn.classList.remove("active");
     }
   }
-  
+
   showCalendarBtn.addEventListener("click", () => switchView("calendar"));
   showSidebarBtn.addEventListener("click", () => switchView("sidebar"));
 
