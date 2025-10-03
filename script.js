@@ -284,10 +284,6 @@ function updateLeaderboard(calendarData, teams, config, teamLogos) {
     }
   });
 
-  // Gestione di una penalità per la squadra "Bologna" (se applicabile)
-  if (teamsStats["Bologna"]) {
-    teamsStats["Bologna"].punti = teamsStats["Bologna"].punti - 2;
-  }
 
   for (const team in teamsStats) {
     teamsStats[team].differenzaReti =
