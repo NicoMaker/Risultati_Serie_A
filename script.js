@@ -18,27 +18,27 @@ function createMatchCard(match, teamLogos) {
   matchCard.className = "match-card";
 
   matchCard.innerHTML = `
-            <div class="teams">
-                <div class="team">
-                    <img src="${teamLogos[match.home]}" alt="${
+      <div class="teams">
+        <div class="team">
+          <img src="${teamLogos[match.home]}" alt="${
     match.home
   }" class="team-logo">
-                    <span class="team-name">${match.home}</span>
-                </div>
-                <span class="vs">VS</span>
-                <div class="team">
-                    <img src="${teamLogos[match.away]}" alt="${
+          <span class="team-name">${match.home}</span>
+        </div>
+        <span class="vs">VS</span>
+        <div class="team">
+          <img src="${teamLogos[match.away]}" alt="${
     match.away
   }" class="team-logo">
-                    <span class="team-name">${match.away}</span>
-                </div>
-            </div>
-            <div class="score">
-                ${match.homeScore !== null ? match.homeScore : "?"} - ${
+          <span class="team-name">${match.away}</span>
+        </div>
+      </div>
+      <div class="score">
+        ${match.homeScore !== null ? match.homeScore : "?"} - ${
     match.awayScore !== null ? match.awayScore : "?"
   }
-            </div>
-        `;
+      </div>
+    `;
   return matchCard;
 }
 
@@ -52,14 +52,14 @@ function createDaySection(day, teamLogos) {
     .join("");
 
   dayCard.innerHTML = `
-            <div class="day-header">
-                <h2>Giornata ${day.giornata}</h2>
-                <div class="toggle-btn"></div>
-            </div>
-            <div class="matches-grid">
-                ${matchesHTML}
-            </div>
-        `;
+      <div class="day-header">
+        <h2>Giornata ${day.giornata}</h2>
+        <div class="toggle-btn"></div>
+      </div>
+      <div class="matches-grid">
+        ${matchesHTML}
+      </div>
+    `;
 
   dayCard.querySelector(".day-header").addEventListener("click", () => {
     dayCard.classList.toggle("open");
@@ -258,26 +258,26 @@ function updateLeaderboard(calendarData, teams, config, teamLogos) {
     tr.style = rowStyle;
 
     tr.innerHTML = `
-                        <td><div class="position">${teamPos}</div></td>
-                        <td>
-                            <div class="team-cell">
-                                <img src="${teamLogos[team.squadra]}" alt="${
+            <td><div class="position">${teamPos}</div></td>
+            <td>
+              <div class="team-cell">
+                <img src="${teamLogos[team.squadra]}" alt="${
       team.squadra
     }" class="team-logo-small">
-                                <span>${team.squadra}</span>
-                            </div>
-                        </td>
-                        <td><strong>${team.punti}</strong></td>
-                        <td>${team.giocate}</td>
-                        <td>${team.vinte}</td>
-                        <td>${team.pareggiate}</td>
-                        <td>${team.perse}</td>
-                        <td>${team.golFatti}</td>
-                        <td>${team.golSubiti}</td>
-                        <td>${team.differenzaReti > 0 ? "+" : ""}${
+                <span>${team.squadra}</span>
+              </div>
+            </td>
+            <td><strong>${team.punti}</strong></td>
+            <td>${team.giocate}</td>
+            <td>${team.vinte}</td>
+            <td>${team.pareggiate}</td>
+            <td>${team.perse}</td>
+            <td>${team.golFatti}</td>
+            <td>${team.golSubiti}</td>
+            <td>${team.differenzaReti > 0 ? "+" : ""}${
       team.differenzaReti
     }</td>
-                    `;
+          `;
 
     leaderboardBody.appendChild(tr);
   });
@@ -293,9 +293,9 @@ function createLegend(config) {
     const div = document.createElement("div");
     div.className = "legend-item";
     div.innerHTML = `
-                        <div class="legend-color" style="background-color: ${item.backgroundColor}; border-color: ${item.borderColor};"></div>
-                        <span>${item.name}: ${item.description}</span>
-                    `;
+            <div class="legend-color" style="background-color: ${item.backgroundColor}; border-color: ${item.borderColor};"></div>
+            <span>${item.name}: ${item.description}</span>
+          `;
     legendList.appendChild(div);
   }
 }
@@ -332,19 +332,29 @@ async function initializeApp() {
       sidebarSection.classList.add("hidden");
       showCalendarBtn.classList.add("active");
       showSidebarBtn.classList.remove("active");
+      // Salva lo stato in localStorage
+      localStorage.setItem("currentView", "calendar");
     } else {
       calendarSection.classList.add("hidden");
       sidebarSection.classList.remove("hidden");
       showSidebarBtn.classList.add("active");
       showCalendarBtn.classList.remove("active");
+      // Salva lo stato in localStorage
+      localStorage.setItem("currentView", "sidebar");
     }
   }
 
   showCalendarBtn.addEventListener("click", () => switchView("calendar"));
   showSidebarBtn.addEventListener("click", () => switchView("sidebar"));
 
-  // Imposta la vista iniziale sul calendario
-  switchView("calendar");
+  // Recupera lo stato da localStorage o imposta la vista di default
+  const savedView = localStorage.getItem("currentView");
+  if (savedView) {
+    switchView(savedView);
+  } else {
+    // Se non c'è uno stato salvato, imposta la vista iniziale sul calendario
+    switchView("calendar");
+  }
 }
 
 initializeApp();
