@@ -267,7 +267,7 @@ function updateLeaderboard(calendarData, teams, config, teamLogos) {
                 <span>${team.squadra}</span>
               </div>
             </td>
-            <td><strong>${team.punti}</strong></td>
+            <td><strong style="color: var(--accent-green);">${team.punti}</strong></td>
             <td>${team.giocate}</td>
             <td>${team.vinte}</td>
             <td>${team.pareggiate}</td>

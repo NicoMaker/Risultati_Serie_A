@@ -423,6 +423,7 @@ header {
   border: 1px solid var(--border);
   margin-bottom: 20px;
   position: relative;
+  overflow-x: auto;
 }
 
 .leaderboard-card h2 {
@@ -439,16 +440,34 @@ header {
 .leaderboard-scroll {
   max-height: 600px;
   overflow-y: auto;
-  scrollbar-width: none;
+  overflow-x: auto;
+  scrollbar-width: thin;
+  scrollbar-color: var(--accent-green) rgba(255, 255, 255, 0.05);
 }
 
 .leaderboard-scroll::-webkit-scrollbar {
-  display: none;
+  height: 8px;
+  width: 8px;
+}
+
+.leaderboard-scroll::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 10px;
+}
+
+.leaderboard-scroll::-webkit-scrollbar-thumb {
+  background: var(--accent-green);
+  border-radius: 10px;
+}
+
+.leaderboard-scroll::-webkit-scrollbar-thumb:hover {
+  background: var(--accent-blue);
 }
 
 .leaderboard-table {
   width: 100%;
   border-collapse: collapse;
+  min-width: 800px;
 }
 
 .leaderboard-table thead {
@@ -459,21 +478,79 @@ header {
 }
 
 .leaderboard-table th {
-  padding: 8px 2px;
+  padding: 12px 8px;
   text-align: center;
-  font-size: 0.75rem;
+  font-size: 0.85rem;
   font-weight: 600;
   color: var(--accent-green);
   text-transform: uppercase;
   letter-spacing: 0.5px;
+  white-space: nowrap;
 }
 
 .leaderboard-table td {
-  padding: 8px 2px;
+  padding: 14px 8px;
   text-align: center;
-  font-size: 0.8rem;
+  font-size: 0.95rem;
   border-bottom: 1px solid var(--border);
   color: var(--text-secondary);
+  white-space: nowrap;
+}
+
+/* Colonne con larghezze specifiche */
+.col-pos { 
+  width: 60px; 
+  min-width: 60px; 
+}
+
+.col-team { 
+  width: auto; 
+  min-width: 160px; 
+  text-align: left !important;
+  padding-left: 12px !important;
+}
+
+.col-pts { 
+  width: 70px; 
+  min-width: 70px; 
+  font-weight: 700;
+}
+
+.col-played { 
+  width: 60px; 
+  min-width: 60px; 
+}
+
+.col-wins { 
+  width: 60px; 
+  min-width: 60px; 
+}
+
+.col-draws { 
+  width: 60px; 
+  min-width: 60px; 
+}
+
+.col-losses { 
+  width: 60px; 
+  min-width: 60px; 
+}
+
+.col-gf { 
+  width: 70px; 
+  min-width: 70px; 
+}
+
+.col-ga { 
+  width: 70px; 
+  min-width: 70px; 
+}
+
+.col-gd { 
+  width: 80px; 
+  min-width: 80px; 
+  font-weight: 600;
+  color: var(--accent-green) !important;
 }
 
 .leaderboard-table tbody tr {
@@ -487,34 +564,36 @@ header {
 .team-cell {
   display: flex;
   align-items: center;
-  gap: 4px; /* Modificato */
+  gap: 10px;
   font-weight: 600;
   color: var(--text-primary);
   text-align: left;
+  min-width: 140px;
 }
 
 .team-logo-small {
-  width: 28px;
-  height: 28px;
+  width: 32px;
+  height: 32px;
   border-radius: 50%;
   background: #ffffff;
-  padding: 3px;
+  padding: 4px;
   object-fit: contain;
   border: 2px solid rgba(255, 255, 255, 0.15);
   flex-shrink: 0;
-  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
 }
 
 .position {
-  min-width: 20px; /* Modificato */
-  height: 20px; /* Modificato */
-  border-radius: 10px; /* Modificato */
+  min-width: 36px;
+  height: 36px;
+  border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
   font-weight: 700;
-  font-size: 0.6rem; /* Modificato */
-  background: rgba(255, 255, 255, 0.05);
+  font-size: 0.95rem;
+  background: rgba(255, 255, 255, 0.08);
+  color: var(--text-primary);
 }
 
 .scudetto-row {
@@ -523,13 +602,13 @@ header {
     rgba(255, 215, 0, 0.1) 0%,
     rgba(255, 170, 0, 0.1) 100%
   ) !important;
-  border-left: 2px solid #ffd700 !important;
+  border-left: 3px solid #ffd700 !important;
 }
 
 .scudetto-row .position {
   background: var(--gradient-green);
   box-shadow: 0 0 15px rgba(0, 255, 136, 0.3);
-  color: var(--bg-primary); /* Modificato: il testo diventa scuro */
+  color: var(--bg-primary);
 }
 
 .legend-card {
@@ -551,7 +630,7 @@ header {
   align-items: center;
   gap: 12px;
   margin-bottom: 12px;
-  font-size: 0.85rem;
+  font-size: 0.9rem;
   color: var(--text-secondary);
 }
 
@@ -575,15 +654,7 @@ header {
   }
 
   .leaderboard-card {
-    overflow-x: auto;
-  }
-
-  .leaderboard-scroll::-webkit-scrollbar {
-    display: initial;
-  }
-
-  .leaderboard-scroll {
-    scrollbar-width: thin;
+    padding: 20px;
   }
 }
 
@@ -597,22 +668,140 @@ header {
     padding: 20px;
   }
 
-  .leaderboard-card {
-    padding: 20px;
-  }
-
   .day-header {
     padding: 20px;
   }
 
-  .leaderboard-table th,
+  .leaderboard-card {
+    padding: 15px;
+  }
+
+  .leaderboard-card h2 {
+    font-size: 1.5rem;
+    margin-bottom: 15px;
+  }
+
+  .leaderboard-table {
+    min-width: 700px;
+  }
+
+  .leaderboard-table th {
+    padding: 10px 6px;
+    font-size: 0.75rem;
+  }
+
+  .leaderboard-table td {
+    padding: 12px 6px;
+    font-size: 0.85rem;
+  }
+
+  .col-pos { 
+    width: 50px; 
+    min-width: 50px; 
+  }
+
+  .col-team { 
+    min-width: 140px; 
+  }
+
+  .col-pts,
+  .col-played,
+  .col-wins,
+  .col-draws,
+  .col-losses { 
+    width: 50px; 
+    min-width: 50px; 
+  }
+
+  .col-gf,
+  .col-ga { 
+    width: 60px; 
+    min-width: 60px; 
+  }
+
+  .col-gd { 
+    width: 70px; 
+    min-width: 70px; 
+  }
+
+  .team-cell {
+    gap: 8px;
+    min-width: 120px;
+  }
+
+  .team-logo-small {
+    width: 28px;
+    height: 28px;
+  }
+
+  .position {
+    min-width: 32px;
+    height: 32px;
+    font-size: 0.85rem;
+  }
+
+  .legend-item {
+    font-size: 0.85rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .leaderboard-table {
+    min-width: 650px;
+  }
+
+  .leaderboard-table th {
+    padding: 8px 4px;
+    font-size: 0.7rem;
+  }
+
   .leaderboard-table td {
     padding: 10px 4px;
-    font-size: 0.75rem;
+    font-size: 0.8rem;
+  }
+
+  .col-pos { 
+    width: 45px; 
+    min-width: 45px; 
+  }
+
+  .col-team { 
+    min-width: 120px; 
+  }
+
+  .col-pts,
+  .col-played,
+  .col-wins,
+  .col-draws,
+  .col-losses { 
+    width: 45px; 
+    min-width: 45px; 
+  }
+
+  .col-gf,
+  .col-ga { 
+    width: 55px; 
+    min-width: 55px; 
+  }
+
+  .col-gd { 
+    width: 65px; 
+    min-width: 65px; 
+  }
+
+  .team-cell {
+    gap: 6px;
+    min-width: 110px;
   }
 
   .team-logo-small {
     width: 24px;
     height: 24px;
+  }
+
+  .position {
+    min-width: 28px;
+    height: 28px;
+    font-size: 0.75rem;
   }
 }
