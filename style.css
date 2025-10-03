@@ -114,16 +114,16 @@ header {
 .header-row {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: center;
   gap: 16px;
 }
 
 .title-wrap {
-  text-align: left;
+  text-align: center;
 }
 
 .actions-wrap {
-  display: flex;
+  display: none;
   align-items: center;
   gap: 10px;
 }
@@ -131,13 +131,31 @@ header {
 .header-content h1 {
   font-size: clamp(2rem, 5vw, 4rem);
   font-weight: 800;
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 10px;
+  letter-spacing: -2px;
+  animation: slideDown 0.8s ease-out;
+}
+
+.title-text {
   background: var(--gradient-green);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
-  margin-bottom: 10px;
-  letter-spacing: -2px;
-  animation: slideDown 0.8s ease-out;
+}
+
+.ball-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: clamp(28px, 4vw, 40px);
+  height: clamp(28px, 4vw, 40px);
+  border-radius: 50%;
+  background: radial-gradient(circle at 30% 30%, #ffffff 0 18%, var(--bg-card) 19% 100%);
+  border: 2px solid #0b5ed7;
+  box-shadow: 0 6px 16px rgba(11, 94, 215, 0.25);
 }
 
 .header-content p {
@@ -349,7 +367,7 @@ header {
 
 .matches-grid {
   display: none;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 20px;
   padding: 20px 30px 30px 30px;
   background: var(--bg-card);
@@ -404,12 +422,27 @@ header {
   transition: all 0.3s ease;
   position: relative;
   overflow: hidden;
+  text-align: center;
 }
 
 .match-card::before {
   content: "";
   position: absolute;
   top: 0;
+  left: 0;
+  right: 0;
+  height: 6px;
+  background: linear-gradient(90deg, #008C45 0 33%, #F4F5F0 33% 66%, #CD212A 66% 100%);
+  opacity: 0.95;
+  border-top-left-radius: 15px;
+  border-top-right-radius: 15px;
+  pointer-events: none;
+}
+
+.match-card::after {
+  content: "";
+  position: absolute;
+  top: 6px;
   left: 0;
   width: 100%;
   height: 3px;
@@ -424,15 +457,16 @@ header {
   box-shadow: 0 10px 30px rgba(0, 255, 136, 0.2);
 }
 
-.match-card:hover::before {
+.match-card:hover::after {
   transform: scaleX(1);
 }
 
 .teams {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: center;
   margin-bottom: 15px;
+  gap: 18px;
 }
 
 .team {
@@ -441,6 +475,12 @@ header {
   align-items: center;
   gap: 8px;
   flex: 1;
+}
+
+.team-name {
+  font-weight: 700;
+  color: var(--text-primary);
+  text-align: center;
 }
 
 .team-logo {
@@ -467,7 +507,8 @@ header {
 .vs {
   color: var(--text-secondary);
   font-size: 0.9rem;
-  font-weight: 600;
+  font-weight: 700;
+  letter-spacing: 0.5px;
 }
 
 .score {
@@ -505,6 +546,27 @@ header {
   overflow-x: auto;
 }
 
+.leaderboard-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 5px;
+  background: linear-gradient(90deg, #008C45 0 33%, #F4F5F0 33% 66%, #CD212A 66% 100%);
+}
+
+.leaderboard-card::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, #0b5ed7, #12b886);
+  opacity: 0.6;
+}
+
 .leaderboard-card h2 {
   font-size: 1.8rem;
   font-weight: 800;
@@ -514,6 +576,22 @@ header {
   -webkit-text-fill-color: transparent;
   background-clip: text;
   letter-spacing: -1px;
+}
+
+.mini-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: -10px 0 16px;
+}
+
+.legend-chip {
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  border: 2px solid;
 }
 
 .leaderboard-scroll {
@@ -745,6 +823,34 @@ header {
 
 .footer-link:hover { text-decoration: underline; }
 
+/* Italian tricolore accent */
+.tricolore-bar {
+  display: block;
+  height: 8px;
+  width: 280px;
+  margin: 18px auto 0;
+  border-radius: 999px;
+  background: linear-gradient(90deg, #008C45 0 33%, #F4F5F0 33% 66%, #CD212A 66% 100%);
+  box-shadow: 0 8px 22px rgba(0, 0, 0, 0.18);
+  position: relative;
+  overflow: hidden;
+}
+
+.tricolore-bar::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.25), transparent);
+  transform: translateX(-100%);
+  animation: tricolore-shimmer 2.6s ease-in-out infinite;
+}
+
+@keyframes tricolore-shimmer {
+  0% { transform: translateX(-100%); }
+  60% { transform: translateX(100%); }
+  100% { transform: translateX(100%); }
+}
+
 /* Responsive */
 @media (max-width: 1024px) {
   .main-content {
@@ -768,7 +874,7 @@ header {
 
   .header-row { flex-direction: column; align-items: stretch; gap: 12px; }
   .title-wrap { text-align: center; }
-  .actions-wrap { justify-content: center; }
+  .actions-wrap { justify-content: center; display: flex; }
 
   .matches-grid {
     grid-template-columns: 1fr;
@@ -911,4 +1017,73 @@ header {
     height: 28px;
     font-size: 0.75rem;
   }
+}
+
+/* Floating football */
+.floating-ball {
+  position: fixed;
+  right: 18px;
+  bottom: 18px;
+  width: 54px;
+  height: 54px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: radial-gradient(circle at 30% 30%, #ffffff 0 18%, var(--bg-card) 19% 100%);
+  border: 2px solid #0b5ed7; /* azzurri accent */
+  box-shadow: 0 10px 26px rgba(11, 94, 215, 0.25), var(--shadow);
+  font-size: 1.4rem;
+  z-index: 20;
+  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+  animation: floatBall 4s ease-in-out infinite;
+}
+
+.floating-ball:hover {
+  transform: translateY(-3px) scale(1.05);
+  border-color: #12b886;
+  box-shadow: 0 14px 30px rgba(18, 184, 134, 0.28), var(--shadow);
+}
+
+@keyframes floatBall {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+}
+
+.badge {
+  margin-left: 8px;
+  padding: 4px 8px;
+  border-radius: 999px;
+  font-size: 0.7rem;
+  font-weight: 700;
+  white-space: nowrap;
+  border: 1px solid var(--border);
+  background: rgba(255,255,255,0.06);
+  color: var(--text-secondary);
+}
+
+.badge--scudetto {
+  background: linear-gradient(135deg, #ffd70033, #ffaa0033);
+  color: #ffd700;
+  border-color: #ffaa00;
+}
+.badge--champions {
+  background: linear-gradient(135deg, #e3f2fd55, #1976d244);
+  color: #90caf9;
+  border-color: #1976d2;
+}
+.badge--europa {
+  background: linear-gradient(135deg, #fff3e055, #f57c0044);
+  color: #ffcc80;
+  border-color: #f57c00;
+}
+.badge--conference {
+  background: linear-gradient(135deg, #f3e5f555, #7b1fa244);
+  color: #ce93d8;
+  border-color: #7b1fa2;
+}
+.badge--relegation {
+  background: linear-gradient(135deg, #ffebee55, #c6282844);
+  color: #ef9a9a;
+  border-color: #c62828;
 }
