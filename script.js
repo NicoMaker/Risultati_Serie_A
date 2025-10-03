@@ -12,6 +12,88 @@ async function loadJSON(filePath) {
   }
 }
 
+// UI: Theme toggle
+function applyTheme(theme) {
+  const root = document.documentElement;
+  if (theme === "light") {
+    root.classList.add("light");
+  } else {
+    root.classList.remove("light");
+  }
+}
+
+function initThemeToggle() {
+  const toggle = document.getElementById("theme-toggle");
+  const savedTheme = localStorage.getItem("theme") || "dark";
+  applyTheme(savedTheme);
+  updateThemeIcon(toggle, savedTheme);
+
+  toggle.addEventListener("click", () => {
+    const current = document.documentElement.classList.contains("light")
+      ? "light"
+      : "dark";
+    const next = current === "light" ? "dark" : "light";
+    applyTheme(next);
+    updateThemeIcon(toggle, next);
+    localStorage.setItem("theme", next);
+  });
+}
+
+function updateThemeIcon(button, theme) {
+  if (!button) return;
+  const icon = button.querySelector(".theme-icon");
+  if (!icon) return;
+  icon.textContent = theme === "light" ? "🌞" : "🌙";
+}
+
+// Skeleton helpers
+function renderCalendarSkeleton(container, days = 3, matchesPerDay = 4) {
+  container.innerHTML = "";
+  for (let d = 0; d < days; d++) {
+    const day = document.createElement("div");
+    day.className = "day-card skeleton-card";
+    day.innerHTML = `
+      <div class="skeleton skeleton-line lg" style="width: 180px; margin-bottom: 16px;"></div>
+      <div class="matches-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px;">
+        ${Array.from({ length: matchesPerDay })
+          .map(
+            () => `
+          <div class="match-card skeleton-card">
+            <div style="display:flex; align-items:center; justify-content:space-between; gap:16px; margin-bottom:12px;">
+              <div class="skeleton skeleton-avatar"></div>
+              <div class="skeleton skeleton-line" style="flex:1; margin:0 12px;"></div>
+              <div class="skeleton skeleton-avatar"></div>
+            </div>
+            <div class="skeleton skeleton-line lg" style="width: 80px; margin: 0 auto;"></div>
+          </div>`
+          )
+          .join("")}
+      </div>
+    `;
+    container.appendChild(day);
+  }
+}
+
+function renderLeaderboardSkeleton(bodyEl, rows = 10) {
+  bodyEl.innerHTML = "";
+  for (let i = 0; i < rows; i++) {
+    const tr = document.createElement("tr");
+    tr.innerHTML = `
+      <td><div class="skeleton skeleton-line" style="width:32px; height:32px; border-radius:50%"></div></td>
+      <td>
+        <div style="display:flex; align-items:center; gap:10px;">
+          <div class="skeleton" style="width:32px; height:32px; border-radius:50%"></div>
+          <div class="skeleton skeleton-line" style="width:140px;"></div>
+        </div>
+      </td>
+      ${Array.from({ length: 7 })
+        .map(() => `<td><div class="skeleton skeleton-line" style="width:40px;"></div></td>`)
+        .join("")}
+    `;
+    bodyEl.appendChild(tr);
+  }
+}
+
 // Funzione per creare la card HTML di una singola partita
 function createMatchCard(match, teamLogos) {
   const matchCard = document.createElement("div");
@@ -302,6 +384,15 @@ function createLegend(config) {
 
 // Funzione di inizializzazione dell'app
 async function initializeApp() {
+  initThemeToggle();
+
+  const calendarContainer = document.getElementById("calendar");
+  const leaderboardBody = document.getElementById("leaderboard-body");
+
+  // Render skeletons while loading
+  renderCalendarSkeleton(calendarContainer, 3, 6);
+  renderLeaderboardSkeleton(leaderboardBody, 12);
+
   const [data, config] = await Promise.all([
     loadJSON("JSON/data.json"),
     loadJSON("JSON/config.json"),
@@ -311,7 +402,6 @@ async function initializeApp() {
 
   const { teams, teamLogos, calendar } = data;
 
-  const calendarContainer = document.getElementById("calendar");
   calendarContainer.innerHTML = "";
 
   calendar.forEach((day) => {

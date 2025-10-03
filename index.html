@@ -21,8 +21,17 @@
     <div class="container">
       <header>
         <div class="header-content">
-          <h1>⚽ SERIE A</h1>
-          <p>Stagione 2025/2026 • Calendario & Classifica</p>
+          <div class="header-row">
+            <div class="title-wrap">
+              <h1>⚽ SERIE A</h1>
+              <p>Stagione 2025/2026 • Calendario & Classifica</p>
+            </div>
+            <div class="actions-wrap">
+              <button id="theme-toggle" class="icon-button" aria-label="Cambia tema" title="Cambia tema">
+                <span class="theme-icon" aria-hidden="true">🌙</span>
+              </button>
+            </div>
+          </div>
         </div>
       </header>
 
@@ -64,6 +73,13 @@
           </div>
         </aside>
       </div>
+
+      <footer class="site-footer">
+        <div class="footer-inner">
+          <span>Made with ❤️ • Serie A UI demo</span>
+          <a class="footer-link" href="#" onclick="window.scrollTo({top:0,behavior:'smooth'});return false;">Torna su</a>
+        </div>
+      </footer>
     </div>
     <script src="script.js"></script>
   </body>
