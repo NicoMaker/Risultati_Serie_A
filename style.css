@@ -1088,7 +1088,8 @@ header {
   border-color: #c62828;
 }
 
-
-#theme-toggle{
-  display: none;
+.actions-wrap {
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }

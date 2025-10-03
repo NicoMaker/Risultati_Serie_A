@@ -22,6 +22,12 @@ function applyTheme(theme) {
   }
 }
 
+/**
+ * Inizializza il bottone per il cambio del tema.
+ * Recupera l'elemento con l'id "theme-toggle", legge il tema corrente
+ * e aggiunge un listener per il click, che cambia il tema e lo salva
+ * in localStorage.
+ */
 function initThemeToggle() {
   const toggle = document.getElementById("theme-toggle");
   const savedTheme = localStorage.getItem("theme") || "dark";
