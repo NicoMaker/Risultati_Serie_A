@@ -122,7 +122,7 @@
     {
       "giornata": 6,
       "partite": [
-        {"home": "Verona", "away": "Sassuolo", "homeScore": null, "awayScore": null},
+        {"home": "Verona", "away": "Sassuolo", "homeScore": 0, "awayScore": 1},
         {"home": "Parma", "away": "Lecce", "homeScore": null, "awayScore": null},
         {"home": "Lazio", "away": "Torino", "homeScore": null, "awayScore": null},
         {"home": "Inter", "away": "Cremonese", "homeScore": null, "awayScore": null},
