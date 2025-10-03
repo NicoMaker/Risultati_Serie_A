@@ -49,7 +49,7 @@ function updateThemeIcon(button, theme) {
   if (!button) return;
   const icon = button.querySelector(".theme-icon");
   if (!icon) return;
-  icon.textContent = theme === "light" ? "🌞" : "🌙";
+  icon.textContent = theme === "light" ? "🌙" : "🌞";
 }
 
 // Skeleton helpers
