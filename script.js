@@ -22,12 +22,6 @@ function applyTheme(theme) {
   }
 }
 
-/**
- * Inizializza il bottone per il cambio del tema.
- * Recupera l'elemento con l'id "theme-toggle", legge il tema corrente
- * e aggiunge un listener per il click, che cambia il tema e lo salva
- * in localStorage.
- */
 function initThemeToggle() {
   const toggle = document.getElementById("theme-toggle");
   const savedTheme = localStorage.getItem("theme") || "dark";
@@ -108,23 +102,17 @@ function createMatchCard(match, teamLogos) {
   matchCard.innerHTML = `
       <div class="teams">
         <div class="team">
-          <img src="${teamLogos[match.home]}" alt="${
-    match.home
-  }" class="team-logo">
+          <img src="${teamLogos[match.home]}" alt="${match.home}" class="team-logo">
           <span class="team-name">${match.home}</span>
         </div>
         <span class="vs">VS</span>
         <div class="team">
-          <img src="${teamLogos[match.away]}" alt="${
-    match.away
-  }" class="team-logo">
+          <img src="${teamLogos[match.away]}" alt="${match.away}" class="team-logo">
           <span class="team-name">${match.away}</span>
         </div>
       </div>
       <div class="score">
-        ${match.homeScore !== null ? match.homeScore : "?"} - ${
-    match.awayScore !== null ? match.awayScore : "?"
-  }
+        ${match.homeScore !== null ? match.homeScore : "?"} - ${match.awayScore !== null ? match.awayScore : "?"}
       </div>
     `;
   return matchCard;
@@ -156,7 +144,7 @@ function createDaySection(day, teamLogos) {
   return dayCard;
 }
 
-// Funzione per calcolare i criteri di spareggio negli scontri diretti
+// Funzione per calcolare gli scontri diretti
 function calculateHeadToHead(teamsWithSamePoints, allMatches) {
   if (teamsWithSamePoints.length <= 1) return teamsWithSamePoints;
 
@@ -201,30 +189,15 @@ function calculateHeadToHead(teamsWithSamePoints, allMatches) {
     const statsA = h2hStats[a.squadra];
     const statsB = h2hStats[b.squadra];
 
-    // Criterio 1: Punti negli scontri diretti
-    if (statsB.punti !== statsA.punti) {
-      return statsB.punti - statsA.punti;
-    }
+    if (statsB.punti !== statsA.punti) return statsB.punti - statsA.punti;
 
-    // Criterio 2: Differenza reti negli scontri diretti
     const drA = statsA.golFatti - statsA.golSubiti;
     const drB = statsB.golFatti - statsB.golSubiti;
-    if (drB !== drA) {
-      return drB - drA;
-    }
+    if (drB !== drA) return drB - drA;
 
-    // Criterio 3: Gol fatti negli scontri diretti
-    if (statsB.golFatti !== statsA.golFatti) {
-      return statsB.golFatti - statsA.golFatti;
-    }
+    if (statsB.golFatti !== statsA.golFatti) return statsB.golFatti - statsA.golFatti;
 
-    // Criterio 4: Differenza reti totale
-    if (b.differenzaReti !== a.differenzaReti) {
-      return b.differenzaReti - a.differenzaReti;
-    }
-
-    // Criterio 5: Gol fatti totali
-    return b.golFatti - a.golFatti;
+    return 0; // restano pari se tutto uguale
   });
 }
 
@@ -284,37 +257,34 @@ function updateLeaderboard(calendarData, teams, config, teamLogos) {
     }
   });
 
-
   for (const team in teamsStats) {
     teamsStats[team].differenzaReti =
       teamsStats[team].golFatti - teamsStats[team].golSubiti;
   }
 
-  const pointsGroups = {};
-  Object.values(teamsStats).forEach((team) => {
-    if (!pointsGroups[team.punti]) {
-      pointsGroups[team.punti] = [];
+  let finalSortedTeams = Object.values(teamsStats);
+
+  // Ordinamento:
+  // 1) punti
+  // 2) differenza reti
+  // 3) scontri diretti
+  // 4) gol fatti totali
+  finalSortedTeams.sort((a, b) => {
+    if (b.punti !== a.punti) return b.punti - a.punti;
+    if (b.differenzaReti !== a.differenzaReti) return b.differenzaReti - a.differenzaReti;
+
+    // se anche differenza reti è uguale -> applica head-to-head
+    const tiedTeams = [a, b];
+    const sorted = calculateHeadToHead(tiedTeams, allMatches);
+    if (sorted[0].squadra !== sorted[1].squadra) {
+      return sorted[0].squadra === a.squadra ? -1 : 1;
     }
-    pointsGroups[team.punti].push(team);
+
+    // se anche scontri diretti sono uguali -> gol fatti totali
+    if (b.golFatti !== a.golFatti) return b.golFatti - a.golFatti;
+
+    return 0;
   });
-
-  let finalSortedTeams = [];
-  Object.keys(pointsGroups)
-    .sort((a, b) => parseInt(b) - parseInt(a))
-    .forEach((points) => {
-      const teamsWithSamePoints = pointsGroups[points];
-
-      if (teamsWithSamePoints.length > 1) {
-        // Se ci sono squadre con gli stessi punti, chiama la funzione di spareggio
-        const sortedByH2H = calculateHeadToHead(
-          teamsWithSamePoints,
-          allMatches
-        );
-        finalSortedTeams.push(...sortedByH2H);
-      } else {
-        finalSortedTeams.push(...teamsWithSamePoints);
-      }
-    });
 
   const leaderboardBody = document.getElementById("leaderboard-body");
   leaderboardBody.innerHTML = "";
@@ -345,15 +315,11 @@ function updateLeaderboard(calendarData, teams, config, teamLogos) {
             <td><div class="position">${teamPos}</div></td>
             <td>
               <div class="team-cell">
-                <img src="${teamLogos[team.squadra]}" alt="${
-      team.squadra
-    }" class="team-logo-small">
+                <img src="${teamLogos[team.squadra]}" alt="${team.squadra}" class="team-logo-small">
                 <span>${team.squadra}</span>
               </div>
             </td>
-            <td><strong style="color: var(--accent-green);">${
-              team.punti
-            }</strong></td>
+            <td><strong style="color: var(--accent-green);">${team.punti}</strong></td>
             <td>${team.giocate}</td>
             <td>${team.vinte}</td>
             <td>${team.pareggiate}</td>
@@ -391,7 +357,6 @@ async function initializeApp() {
   const calendarContainer = document.getElementById("calendar");
   const leaderboardBody = document.getElementById("leaderboard-body");
 
-  // Render skeletons while loading
   renderCalendarSkeleton(calendarContainer, 3, 6);
   renderLeaderboardSkeleton(leaderboardBody, 12);
 
@@ -424,14 +389,12 @@ async function initializeApp() {
       sidebarSection.classList.add("hidden");
       showCalendarBtn.classList.add("active");
       showSidebarBtn.classList.remove("active");
-      // Salva lo stato in localStorage
       localStorage.setItem("currentView", "calendar");
     } else {
       calendarSection.classList.add("hidden");
       sidebarSection.classList.remove("hidden");
       showSidebarBtn.classList.add("active");
       showCalendarBtn.classList.remove("active");
-      // Salva lo stato in localStorage
       localStorage.setItem("currentView", "sidebar");
     }
   }
@@ -439,12 +402,10 @@ async function initializeApp() {
   showCalendarBtn.addEventListener("click", () => switchView("calendar"));
   showSidebarBtn.addEventListener("click", () => switchView("sidebar"));
 
-  // Recupera lo stato da localStorage o imposta la vista di default
   const savedView = localStorage.getItem("currentView");
   if (savedView) {
     switchView(savedView);
   } else {
-    // Se non c'è uno stato salvato, imposta la vista iniziale sul calendario
     switchView("calendar");
   }
 }
