@@ -498,57 +498,57 @@ header {
 }
 
 /* Colonne con larghezze specifiche */
-.col-pos { 
-  width: 60px; 
-  min-width: 60px; 
+.col-pos {
+  width: 60px;
+  min-width: 60px;
 }
 
-.col-team { 
-  width: auto; 
-  min-width: 160px; 
+.col-team {
+  width: auto;
+  min-width: 160px;
   text-align: left !important;
   padding-left: 12px !important;
 }
 
-.col-pts { 
-  width: 70px; 
-  min-width: 70px; 
+.col-pts {
+  width: 70px;
+  min-width: 70px;
   font-weight: 700;
 }
 
-.col-played { 
-  width: 60px; 
-  min-width: 60px; 
+.col-played {
+  width: 60px;
+  min-width: 60px;
 }
 
-.col-wins { 
-  width: 60px; 
-  min-width: 60px; 
+.col-wins {
+  width: 60px;
+  min-width: 60px;
 }
 
-.col-draws { 
-  width: 60px; 
-  min-width: 60px; 
+.col-draws {
+  width: 60px;
+  min-width: 60px;
 }
 
-.col-losses { 
-  width: 60px; 
-  min-width: 60px; 
+.col-losses {
+  width: 60px;
+  min-width: 60px;
 }
 
-.col-gf { 
-  width: 70px; 
-  min-width: 70px; 
+.col-gf {
+  width: 70px;
+  min-width: 70px;
 }
 
-.col-ga { 
-  width: 70px; 
-  min-width: 70px; 
+.col-ga {
+  width: 70px;
+  min-width: 70px;
 }
 
-.col-gd { 
-  width: 80px; 
-  min-width: 80px; 
+.col-gd {
+  width: 80px;
+  min-width: 80px;
   font-weight: 600;
   color: var(--accent-green) !important;
 }
@@ -695,33 +695,33 @@ header {
     font-size: 0.85rem;
   }
 
-  .col-pos { 
-    width: 50px; 
-    min-width: 50px; 
+  .col-pos {
+    width: 50px;
+    min-width: 50px;
   }
 
-  .col-team { 
-    min-width: 140px; 
+  .col-team {
+    min-width: 140px;
   }
 
   .col-pts,
   .col-played,
   .col-wins,
   .col-draws,
-  .col-losses { 
-    width: 50px; 
-    min-width: 50px; 
+  .col-losses {
+    width: 50px;
+    min-width: 50px;
   }
 
   .col-gf,
-  .col-ga { 
-    width: 60px; 
-    min-width: 60px; 
+  .col-ga {
+    width: 60px;
+    min-width: 60px;
   }
 
-  .col-gd { 
-    width: 70px; 
-    min-width: 70px; 
+  .col-gd {
+    width: 70px;
+    min-width: 70px;
   }
 
   .team-cell {
@@ -760,33 +760,33 @@ header {
     font-size: 0.8rem;
   }
 
-  .col-pos { 
-    width: 45px; 
-    min-width: 45px; 
+  .col-pos {
+    width: 45px;
+    min-width: 45px;
   }
 
-  .col-team { 
-    min-width: 120px; 
+  .col-team {
+    min-width: 120px;
   }
 
   .col-pts,
   .col-played,
   .col-wins,
   .col-draws,
-  .col-losses { 
-    width: 45px; 
-    min-width: 45px; 
+  .col-losses {
+    width: 45px;
+    min-width: 45px;
   }
 
   .col-gf,
-  .col-ga { 
-    width: 55px; 
-    min-width: 55px; 
+  .col-ga {
+    width: 55px;
+    min-width: 55px;
   }
 
-  .col-gd { 
-    width: 65px; 
-    min-width: 65px; 
+  .col-gd {
+    width: 65px;
+    min-width: 65px;
   }
 
   .team-cell {

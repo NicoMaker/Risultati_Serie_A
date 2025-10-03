@@ -267,16 +267,16 @@ function updateLeaderboard(calendarData, teams, config, teamLogos) {
                 <span>${team.squadra}</span>
               </div>
             </td>
-            <td><strong style="color: var(--accent-green);">${team.punti}</strong></td>
+            <td><strong style="color: var(--accent-green);">${
+              team.punti
+            }</strong></td>
             <td>${team.giocate}</td>
             <td>${team.vinte}</td>
             <td>${team.pareggiate}</td>
             <td>${team.perse}</td>
             <td>${team.golFatti}</td>
             <td>${team.golSubiti}</td>
-            <td>${team.differenzaReti > 0 ? "+" : ""}${
-      team.differenzaReti
-    }</td>
+            <td>${team.differenzaReti > 0 ? "+" : ""}${team.differenzaReti}</td>
           `;
 
     leaderboardBody.appendChild(tr);
