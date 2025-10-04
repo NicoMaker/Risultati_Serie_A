@@ -126,7 +126,7 @@
         {"home": "Parma", "away": "Lecce", "homeScore": 0, "awayScore": 1},
         {"home": "Lazio", "away": "Torino", "homeScore": 3, "awayScore": 3},
         {"home": "Inter", "away": "Cremonese", "homeScore": 4, "awayScore": 1},
-        {"home": "Atalanta", "away": "Como", "homeScore": null, "awayScore": null},
+        {"home": "Atalanta", "away": "Como", "homeScore": 1, "awayScore": 1},
         {"home": "Udinese", "away": "Cagliari", "homeScore": null, "awayScore": null},
         {"home": "Fiorentina", "away": "Roma", "homeScore": null, "awayScore": null},
         {"home": "Bologna", "away": "Pisa", "homeScore": null, "awayScore": null},
