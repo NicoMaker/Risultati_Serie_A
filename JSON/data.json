@@ -239,8 +239,8 @@
         {
           "home": "Juventus",
           "away": "Milan",
-          "homeScore": null,
-          "awayScore": null
+          "homeScore": 0,
+          "awayScore": 0
         }
       ]
     }
