@@ -103,27 +103,27 @@ function createMatchCard(match, teamLogos) {
   matchCard.className = "match-card";
 
   matchCard.innerHTML = `
-      <div class="teams">
-        <div class="team">
-          <img src="${teamLogos[match.home]}" alt="${
+    <div class="teams">
+      <div class="team">
+        <img src="${teamLogos[match.home]}" alt="${
     match.home
   }" class="team-logo">
-          <span class="team-name">${match.home}</span>
-        </div>
-        <span class="vs">VS</span>
-        <div class="team">
-          <img src="${teamLogos[match.away]}" alt="${
+        <span class="team-name">${match.home}</span>
+      </div>
+      <span class="vs">VS</span>
+      <div class="team">
+        <img src="${teamLogos[match.away]}" alt="${
     match.away
   }" class="team-logo">
-          <span class="team-name">${match.away}</span>
-        </div>
+        <span class="team-name">${match.away}</span>
       </div>
-      <div class="score">
-        ${match.homeScore !== null ? match.homeScore : "?"} - ${
+    </div>
+    <div class="score">
+      ${match.homeScore !== null ? match.homeScore : "?"} - ${
     match.awayScore !== null ? match.awayScore : "?"
   }
-      </div>
-    `;
+    </div>
+  `;
   return matchCard;
 }
 
@@ -137,14 +137,14 @@ function createDaySection(day, teamLogos) {
     .join("");
 
   dayCard.innerHTML = `
-      <div class="day-header">
-        <h2>Giornata ${day.giornata}</h2>
-        <div class="toggle-btn"></div>
-      </div>
-      <div class="matches-grid">
-        ${matchesHTML}
-      </div>
-    `;
+    <div class="day-header">
+      <h2>Giornata ${day.giornata}</h2>
+      <div class="toggle-btn"></div>
+    </div>
+    <div class="matches-grid">
+      ${matchesHTML}
+    </div>
+  `;
 
   dayCard.querySelector(".day-header").addEventListener("click", () => {
     dayCard.classList.toggle("open");
@@ -207,7 +207,7 @@ function calculateHeadToHead(teamsWithSamePoints, allMatches) {
     if (statsB.golFatti !== statsA.golFatti)
       return statsB.golFatti - statsA.golFatti;
 
-    return 0; // restano pari se tutto uguale
+    return 0;
   });
 }
 
@@ -274,26 +274,20 @@ function updateLeaderboard(calendarData, teams, config, teamLogos) {
 
   let finalSortedTeams = Object.values(teamsStats);
 
-  // Ordinamento:
-  // 1) punti
-  // 2) differenza reti
-  // 3) scontri diretti
-  // 4) gol fatti totali
+  // 🔽 Ordinamento aggiornato
   finalSortedTeams.sort((a, b) => {
-    if (b.punti !== a.punti) return b.punti - a.punti;
+    if (b.punti !== a.punti) return b.punti - a.punti; // punti
+    if (a.giocate !== b.giocate) return a.giocate - b.giocate; // meno partite sopra
     if (b.differenzaReti !== a.differenzaReti)
-      return b.differenzaReti - a.differenzaReti;
+      return b.differenzaReti - a.differenzaReti; // diff reti
 
-    // se anche differenza reti è uguale -> applica head-to-head
     const tiedTeams = [a, b];
     const sorted = calculateHeadToHead(tiedTeams, allMatches);
     if (sorted[0].squadra !== sorted[1].squadra) {
       return sorted[0].squadra === a.squadra ? -1 : 1;
     }
 
-    // se anche scontri diretti sono uguali -> gol fatti totali
     if (b.golFatti !== a.golFatti) return b.golFatti - a.golFatti;
-
     return 0;
   });
 
@@ -314,7 +308,8 @@ function updateLeaderboard(calendarData, teams, config, teamLogos) {
       if (config.positions[key].positions.includes(teamPos)) {
         const bgColor = config.positions[key].backgroundColor;
         const borderColor = config.positions[key].borderColor;
-        rowStyle = `background: linear-gradient(135deg, ${bgColor}20 0%, ${bgColor}10 100%); border-left: 4px solid ${borderColor};`;
+        rowStyle = `background: linear-gradient(135deg, ${bgColor}20 0%, ${bgColor}10 100%);
+                    border-left: 4px solid ${borderColor};`;
         break;
       }
     }
@@ -323,26 +318,26 @@ function updateLeaderboard(calendarData, teams, config, teamLogos) {
     tr.style = rowStyle;
 
     tr.innerHTML = `
-            <td><div class="position">${teamPos}</div></td>
-            <td>
-              <div class="team-cell">
-                <img src="${teamLogos[team.squadra]}" alt="${
+      <td><div class="position">${teamPos}</div></td>
+      <td>
+        <div class="team-cell">
+          <img src="${teamLogos[team.squadra]}" alt="${
       team.squadra
     }" class="team-logo-small">
-                <span>${team.squadra}</span>
-              </div>
-            </td>
-            <td><strong style="color: var(--accent-green);">${
-              team.punti
-            }</strong></td>
-            <td>${team.giocate}</td>
-            <td>${team.vinte}</td>
-            <td>${team.pareggiate}</td>
-            <td>${team.perse}</td>
-            <td>${team.golFatti}</td>
-            <td>${team.golSubiti}</td>
-            <td>${team.differenzaReti > 0 ? "+" : ""}${team.differenzaReti}</td>
-          `;
+          <span>${team.squadra}</span>
+        </div>
+      </td>
+      <td><strong style="color: var(--accent-green);">${
+        team.punti
+      }</strong></td>
+      <td>${team.giocate}</td>
+      <td>${team.vinte}</td>
+      <td>${team.pareggiate}</td>
+      <td>${team.perse}</td>
+      <td>${team.golFatti}</td>
+      <td>${team.golSubiti}</td>
+      <td>${team.differenzaReti > 0 ? "+" : ""}${team.differenzaReti}</td>
+    `;
 
     leaderboardBody.appendChild(tr);
   });
@@ -358,9 +353,9 @@ function createLegend(config) {
     const div = document.createElement("div");
     div.className = "legend-item";
     div.innerHTML = `
-            <div class="legend-color" style="background-color: ${item.backgroundColor}; border-color: ${item.borderColor};"></div>
-            <span>${item.name}: ${item.description}</span>
-          `;
+      <div class="legend-color" style="background-color: ${item.backgroundColor}; border-color: ${item.borderColor};"></div>
+      <span>${item.name}: ${item.description}</span>
+    `;
     legendList.appendChild(div);
   }
 }
