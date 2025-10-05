@@ -87,7 +87,10 @@ function renderLeaderboardSkeleton(bodyEl, rows = 10) {
         </div>
       </td>
       ${Array.from({ length: 7 })
-        .map(() => `<td><div class="skeleton skeleton-line" style="width:40px;"></div></td>`)
+        .map(
+          () =>
+            `<td><div class="skeleton skeleton-line" style="width:40px;"></div></td>`
+        )
         .join("")}
     `;
     bodyEl.appendChild(tr);
@@ -102,17 +105,23 @@ function createMatchCard(match, teamLogos) {
   matchCard.innerHTML = `
       <div class="teams">
         <div class="team">
-          <img src="${teamLogos[match.home]}" alt="${match.home}" class="team-logo">
+          <img src="${teamLogos[match.home]}" alt="${
+    match.home
+  }" class="team-logo">
           <span class="team-name">${match.home}</span>
         </div>
         <span class="vs">VS</span>
         <div class="team">
-          <img src="${teamLogos[match.away]}" alt="${match.away}" class="team-logo">
+          <img src="${teamLogos[match.away]}" alt="${
+    match.away
+  }" class="team-logo">
           <span class="team-name">${match.away}</span>
         </div>
       </div>
       <div class="score">
-        ${match.homeScore !== null ? match.homeScore : "?"} - ${match.awayScore !== null ? match.awayScore : "?"}
+        ${match.homeScore !== null ? match.homeScore : "?"} - ${
+    match.awayScore !== null ? match.awayScore : "?"
+  }
       </div>
     `;
   return matchCard;
@@ -195,7 +204,8 @@ function calculateHeadToHead(teamsWithSamePoints, allMatches) {
     const drB = statsB.golFatti - statsB.golSubiti;
     if (drB !== drA) return drB - drA;
 
-    if (statsB.golFatti !== statsA.golFatti) return statsB.golFatti - statsA.golFatti;
+    if (statsB.golFatti !== statsA.golFatti)
+      return statsB.golFatti - statsA.golFatti;
 
     return 0; // restano pari se tutto uguale
   });
@@ -271,7 +281,8 @@ function updateLeaderboard(calendarData, teams, config, teamLogos) {
   // 4) gol fatti totali
   finalSortedTeams.sort((a, b) => {
     if (b.punti !== a.punti) return b.punti - a.punti;
-    if (b.differenzaReti !== a.differenzaReti) return b.differenzaReti - a.differenzaReti;
+    if (b.differenzaReti !== a.differenzaReti)
+      return b.differenzaReti - a.differenzaReti;
 
     // se anche differenza reti è uguale -> applica head-to-head
     const tiedTeams = [a, b];
@@ -315,11 +326,15 @@ function updateLeaderboard(calendarData, teams, config, teamLogos) {
             <td><div class="position">${teamPos}</div></td>
             <td>
               <div class="team-cell">
-                <img src="${teamLogos[team.squadra]}" alt="${team.squadra}" class="team-logo-small">
+                <img src="${teamLogos[team.squadra]}" alt="${
+      team.squadra
+    }" class="team-logo-small">
                 <span>${team.squadra}</span>
               </div>
             </td>
-            <td><strong style="color: var(--accent-green);">${team.punti}</strong></td>
+            <td><strong style="color: var(--accent-green);">${
+              team.punti
+            }</strong></td>
             <td>${team.giocate}</td>
             <td>${team.vinte}</td>
             <td>${team.pareggiate}</td>
