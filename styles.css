@@ -17,6 +17,8 @@
   --gradient-1: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   --gradient-2: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
   --gradient-green: linear-gradient(135deg, #00ff88 0%, #00cc6a 100%);
+  /* NUOVA VARIABILE PER IL TESTO CAMPIONE */
+  --text-champion: #ffd700;
 }
 
 :root.light {
@@ -32,6 +34,8 @@
   --gradient-1: linear-gradient(135deg, #a5b4fc 0%, #c4b5fd 100%);
   --gradient-2: linear-gradient(135deg, #fbc2eb 0%, #a6c1ee 100%);
   --gradient-green: linear-gradient(135deg, #34d399 0%, #10b981 100%);
+  /* NUOVA VARIABILE PER IL TESTO CAMPIONE */
+  --text-champion: #1f2937;
 }
 
 body {
@@ -350,7 +354,8 @@ header {
     rgba(255, 215, 0, 0.2) 0%,
     rgba(255, 170, 0, 0.2) 100%
   );
-  color: #ffd700;
+  /* Utilizza la variabile per il testo */
+  color: var(--text-champion);
   padding: 8px 16px;
   border-radius: 20px;
   font-size: 0.95rem;
