@@ -1,89 +1,50 @@
 <!DOCTYPE html>
 <html lang="it">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Serie A 2025/2026</title>
-    <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
-      rel="stylesheet"
-    />
-    <link
-      rel="icon"
-      href="https://www.calciomagazine.net/wp-content/uploads/2024/07/serie-a-enilive-logo.jpg"
-      type="image/jpeg"
-    />
-    <link rel="stylesheet" href="style.css" />
-  </head>
-  <body>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generale Stagioni | Archivio Serie A</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="icon" href="https://www.calciomagazine.net/wp-content/uploads/2024/07/serie-a-enilive-logo.jpg" type="image/jpeg" />
+
+</head>
+<body>
     <div class="bg-animation"></div>
 
     <div class="container">
-      <header>
-        <div class="header-content">
-          <div class="header-row">
-            <div class="title-wrap">
-              <h1>
-                <span class="ball-icon" aria-hidden="true">⚽</span
-                ><span class="title-text">SERIE A</span>
-              </h1>
-              <p>Stagione 2025/2026 • Calendario & Classifica</p>
+        <header>
+            <div class="header-content">
+                <div class="header-row">
+                    <div class="title-wrap">
+                        <h1>
+                            <span class="ball-icon" aria-hidden="true">⚽</span>
+                            <span class="title-text">GENERALE STAGIONI</span>
+                        </h1>
+                        <p>Archivio Completo • Serie A EnilLive</p>
+                    </div>
+                    <div class="actions-wrap">
+                        <button id="theme-toggle" class="icon-button" aria-label="Cambia tema" title="Cambia tema">
+                            <span class="theme-icon" aria-hidden="true">🌙</span>
+                        </button>
+                    </div>
+                </div>
+                <div class="tricolore-bar" aria-hidden="true"></div>
             </div>
-            <div class="actions-wrap">
-              <button
-                id="theme-toggle"
-                class="icon-button"
-                aria-label="Cambia tema"
-                title="Cambia tema"
-              >
-                <span class="theme-icon" aria-hidden="true">🌙</span>
-              </button>
+        </header>
+
+        <main class="main-content">
+            <div class="seasons-grid" id="seasonsGrid">
+                <div class="loading-message">Caricamento stagioni...</div>
             </div>
-          </div>
-          <div class="tricolore-bar" aria-hidden="true"></div>
-        </div>
-      </header>
+        </main>
 
-      <div class="view-selector">
-        <button id="show-calendar-btn" class="active">Calendario</button>
-        <button id="show-sidebar-btn">Classifica</button>
-      </div>
-
-      <div class="main-content">
-        <div class="calendar-section" id="calendar"></div>
-
-        <aside class="sidebar hidden">
-          <div class="leaderboard-card">
-            <h2>CLASSIFICA</h2>
-            <div class="leaderboard-scroll">
-              <table class="leaderboard-table">
-                <thead>
-                  <tr>
-                    <th class="col-pos">#</th>
-                    <th class="col-team">Squadra</th>
-                    <th class="col-pts">Pt</th>
-                    <th class="col-played">G</th>
-                    <th class="col-wins">V</th>
-                    <th class="col-draws">N</th>
-                    <th class="col-losses">P</th>
-                    <th class="col-gf">GF</th>
-                    <th class="col-ga">GS</th>
-                    <th class="col-gd">DR</th>
-                  </tr>
-                </thead>
-                <tbody id="leaderboard-body"></tbody>
-              </table>
+        <footer>
+            <div class="copyright">
+                © 2024 Generale Stagioni. Tutti i diritti riservati.
             </div>
-          </div>
-
-          <div class="legend-card">
-            <h3>LEGENDA</h3>
-            <div id="legend-list"></div>
-          </div>
-        </aside>
-      </div>
+        </footer>
     </div>
 
     <script src="script.js"></script>
-  </body>
+</body>
 </html>

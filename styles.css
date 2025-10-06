@@ -1,0 +1,456 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --bg-primary: #0a0e27;
+  --bg-secondary: #151934;
+  --bg-card: #1a1f3a;
+  --accent-green: #00ff88;
+  --accent-blue: #00d4ff;
+  --text-primary: #ffffff;
+  --text-secondary: #a0aec0;
+  --border: rgba(255, 255, 255, 0.1);
+  --shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
+  --gradient-1: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  --gradient-2: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+  --gradient-green: linear-gradient(135deg, #00ff88 0%, #00cc6a 100%);
+}
+
+:root.light {
+  --bg-primary: #f6f8fb;
+  --bg-secondary: #ffffff;
+  --bg-card: #ffffff;
+  --accent-green: #12b886;
+  --accent-blue: #228be6;
+  --text-primary: #1f2937;
+  --text-secondary: #4b5563;
+  --border: rgba(0, 0, 0, 0.08);
+  --shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+  --gradient-1: linear-gradient(135deg, #a5b4fc 0%, #c4b5fd 100%);
+  --gradient-2: linear-gradient(135deg, #fbc2eb 0%, #a6c1ee 100%);
+  --gradient-green: linear-gradient(135deg, #34d399 0%, #10b981 100%);
+}
+
+body {
+  font-family: "Inter", sans-serif;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  line-height: 1.6;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+.bg-animation {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  opacity: 0.3;
+  overflow: hidden;
+}
+
+.bg-animation::before,
+.bg-animation::after {
+  content: "";
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(80px);
+  animation: float 20s infinite ease-in-out;
+}
+
+.bg-animation::before {
+  width: 400px;
+  height: 400px;
+  background: var(--gradient-1);
+  top: -100px;
+  left: -100px;
+}
+
+.bg-animation::after {
+  width: 500px;
+  height: 500px;
+  background: var(--gradient-2);
+  bottom: -150px;
+  right: -150px;
+  animation-delay: -10s;
+}
+
+@keyframes float {
+  0%,
+  100% {
+    transform: translate(0, 0) scale(1);
+  }
+  33% {
+    transform: translate(100px, -100px) scale(1.1);
+  }
+  66% {
+    transform: translate(-100px, 100px) scale(0.9);
+  }
+}
+
+.container {
+  position: relative;
+  z-index: 1;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+header {
+  padding: 40px 0;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.header-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+}
+
+.header-content h1 {
+  font-size: clamp(2rem, 5vw, 4rem);
+  font-weight: 800;
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 10px;
+  letter-spacing: -2px;
+  animation: slideDown 0.8s ease-out;
+}
+
+.title-text {
+  background: var(--gradient-green);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.ball-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: clamp(28px, 4vw, 40px);
+  height: clamp(28px, 4vw, 40px);
+  border-radius: 50%;
+  background: radial-gradient(
+    circle at 30% 30%,
+    #ffffff 0 18%,
+    var(--bg-card) 19% 100%
+  );
+  border: 2px solid #0b5ed7;
+  box-shadow: 0 6px 16px rgba(11, 94, 215, 0.25);
+}
+
+.header-content p {
+  font-size: clamp(1rem, 2vw, 1.3rem);
+  color: var(--text-secondary);
+  font-weight: 500;
+  animation: slideDown 0.8s ease-out 0.2s both;
+}
+
+.icon-button {
+  background: var(--bg-card);
+  color: var(--text-primary);
+  border: 1px solid var(--border);
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.icon-button:hover {
+  border-color: var(--accent-green);
+  transform: translateY(-1px);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.12);
+}
+
+.theme-icon {
+  font-size: 1.1rem;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.tricolore-bar {
+  display: block;
+  height: 8px;
+  width: 280px;
+  margin: 18px auto 0;
+  border-radius: 999px;
+  background: linear-gradient(
+    90deg,
+    #008c45 0 33%,
+    #f4f5f0 33% 66%,
+    #cd212a 66% 100%
+  );
+  box-shadow: 0 8px 22px rgba(0, 0, 0, 0.18);
+  position: relative;
+  overflow: hidden;
+}
+
+.tricolore-bar::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.25),
+    transparent
+  );
+  transform: translateX(-100%);
+  animation: tricolore-shimmer 2.6s ease-in-out infinite;
+}
+
+@keyframes tricolore-shimmer {
+  0% {
+    transform: translateX(-100%);
+  }
+  60% {
+    transform: translateX(100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+.main-content {
+  padding: 2rem 0;
+  animation: fadeIn 0.8s ease-out 0.4s both;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.seasons-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 24px;
+  margin-top: 2rem;
+}
+
+.season-card {
+  background: var(--bg-card);
+  border-radius: 20px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  transition: all 0.3s ease;
+  position: relative;
+  text-decoration: none;
+  color: inherit;
+  display: block;
+  backdrop-filter: blur(10px);
+}
+
+.season-card:hover {
+  transform: translateY(-8px);
+  box-shadow: var(--shadow);
+  border-color: var(--accent-green);
+}
+
+.season-card-header {
+  position: relative;
+  height: 180px;
+  overflow: hidden;
+  background: linear-gradient(
+    135deg,
+    rgba(0, 255, 136, 0.1) 0%,
+    rgba(0, 212, 255, 0.1) 100%
+  );
+}
+
+.season-card-header::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 6px;
+  background: linear-gradient(
+    90deg,
+    #008c45 0 33%,
+    #f4f5f0 33% 66%,
+    #cd212a 66% 100%
+  );
+  z-index: 2;
+}
+
+.season-card-header img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  padding: 30px;
+  transition: all 0.3s ease;
+  opacity: 0.9;
+}
+
+.season-card:hover .season-card-header img {
+  transform: scale(1.1);
+  opacity: 1;
+}
+
+.season-year {
+  position: absolute;
+  bottom: 12px;
+  left: 12px;
+  background: var(--gradient-green);
+  color: var(--bg-primary);
+  padding: 8px 16px;
+  font-weight: 700;
+  border-radius: 12px;
+  font-size: 0.95rem;
+  box-shadow: 0 4px 12px rgba(0, 255, 136, 0.3);
+  z-index: 2;
+}
+
+.season-card-content {
+  padding: 24px;
+  text-align: center;
+}
+
+.season-card-content h3 {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 12px;
+}
+
+.champion-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: linear-gradient(
+    135deg,
+    rgba(255, 215, 0, 0.2) 0%,
+    rgba(255, 170, 0, 0.2) 100%
+  );
+  color: #ffd700;
+  padding: 8px 16px;
+  border-radius: 20px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  margin-bottom: 12px;
+  border: 1px solid rgba(255, 215, 0, 0.3);
+}
+
+.champion-badge::before {
+  content: "🏆";
+  font-size: 1.2rem;
+}
+
+.current-badge {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  background: var(--gradient-green);
+  color: var(--bg-primary);
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  z-index: 10;
+  box-shadow: 0 4px 12px rgba(0, 255, 136, 0.3);
+  animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+}
+
+.loading-message,
+.error-message {
+  grid-column: 1 / -1;
+  text-align: center;
+  padding: 4rem 2rem;
+  font-size: 1.1rem;
+}
+
+.loading-message {
+  color: var(--text-secondary);
+  font-style: italic;
+}
+
+.error-message {
+  color: #ef4444;
+  font-weight: 600;
+}
+
+footer {
+  margin: 60px 0 30px;
+  padding-top: 20px;
+  border-top: 1px solid var(--border);
+  text-align: center;
+}
+
+.copyright {
+  color: var(--text-secondary);
+  font-size: 0.95rem;
+}
+
+.actions-wrap {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+@media (max-width: 768px) {
+  .header-row {
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .seasons-grid {
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 16px;
+  }
+
+  .season-card-header {
+    height: 140px;
+  }
+
+  .season-card-content {
+    padding: 16px;
+  }
+
+  .season-card-content h3 {
+    font-size: 1.1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .seasons-grid {
+    grid-template-columns: 1fr;
+  }
+}
