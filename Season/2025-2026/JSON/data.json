@@ -243,6 +243,71 @@
           "awayScore": 0
         }
       ]
+    },
+    {
+      "giornata": 7,
+      "partite": [
+        {
+          "home": "Lecce",
+          "away": "Sassuolo",
+          "homeScore": null,
+          "awayScore": null
+        },
+        {
+          "home": "Pisa",
+          "away": "Verona",
+          "homeScore": null,
+          "awayScore": null
+        },
+        {
+          "home": "Torino",
+          "away": "Napoli",
+          "homeScore": null,
+          "awayScore": null
+        },
+        {
+          "home": "Roma",
+          "away": "Inter",
+          "homeScore": null,
+          "awayScore": null
+        },
+        {
+          "home": "Como",
+          "away": "Juventus",
+          "homeScore": null,
+          "awayScore": null
+        },
+        {
+          "home": "Cagliari",
+          "away": "Bologna",
+          "homeScore": null,
+          "awayScore": null
+        },
+        {
+          "home": "Genoa",
+          "away": "Parma",
+          "homeScore": null,
+          "awayScore": null
+        },
+        {
+          "home": "Atalanta",
+          "away": "Lazio",
+          "homeScore": null,
+          "awayScore": null
+        },
+        {
+          "home": "Milan",
+          "away": "Fiorentina",
+          "homeScore": null,
+          "awayScore": null
+        },
+        {
+          "home": "Cremonese",
+          "away": "Udinese",
+          "homeScore": null,
+          "awayScore": null
+        }
+      ]
     }
   ]
 }
