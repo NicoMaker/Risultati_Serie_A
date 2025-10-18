@@ -250,14 +250,14 @@
         {
           "home": "Lecce",
           "away": "Sassuolo",
-          "homeScore": null,
-          "awayScore": null
+          "homeScore": 0,
+          "awayScore": 0
         },
         {
           "home": "Pisa",
           "away": "Verona",
-          "homeScore": null,
-          "awayScore": null
+          "homeScore": 0,
+          "awayScore": 0
         },
         {
           "home": "Torino",
