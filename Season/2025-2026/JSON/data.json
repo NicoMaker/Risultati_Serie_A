@@ -268,8 +268,8 @@
         {
           "home": "Roma",
           "away": "Inter",
-          "homeScore": null,
-          "awayScore": null
+          "homeScore": 0,
+          "awayScore": 1
         },
         {
           "home": "Como",
