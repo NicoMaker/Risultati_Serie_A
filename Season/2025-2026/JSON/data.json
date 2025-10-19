@@ -280,14 +280,14 @@
         {
           "home": "Cagliari",
           "away": "Bologna",
-          "homeScore": null,
-          "awayScore": null
+          "homeScore": 0,
+          "awayScore": 2
         },
         {
           "home": "Genoa",
           "away": "Parma",
-          "homeScore": null,
-          "awayScore": null
+          "homeScore": 0,
+          "awayScore": 0
         },
         {
           "home": "Atalanta",
