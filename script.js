@@ -49,17 +49,18 @@ class SerieAApp {
       : "";
 
     return `
-      <a href="${season.url}" class="season-card">
-          ${currentBadge}
-          <div class="season-card-header">
-              <img src="${season.logo}" alt="Stagione ${season.year}">
-              <div class="season-year">${season.year}</div>
-          </div>
-          <div class="season-card-content">
-              <h3>${season.title}</h3>
-              ${championBadge}
-          </div>
-      </a>
+      <a href="${season.url}" class="season-card" style="--bg-image: url('${season.logo}')">
+        <div class="card-shine"></div>
+        ${currentBadge}
+        <div class="season-card-header">
+            <img src="${season.logo}" alt="Stagione ${season.year}" class="season-logo">
+            <div class="season-year">${season.year}</div>
+        </div>
+        <div class="season-card-content">
+            <h3 class="season-title">${season.title}</h3>
+            ${championBadge}
+        </div>
+        <div class="card-border"></div>
     `;
   }
 
