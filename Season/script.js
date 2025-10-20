@@ -52,8 +52,12 @@ class SeasonPageApp {
 
   // --- Gestione Vista (Calendario/Classifica) ---
   initViewSwitcher() {
-    this.showCalendarBtn.addEventListener("click", () => this.switchView("calendar"));
-    this.showSidebarBtn.addEventListener("click", () => this.switchView("sidebar"));
+    this.showCalendarBtn.addEventListener("click", () =>
+      this.switchView("calendar")
+    );
+    this.showSidebarBtn.addEventListener("click", () =>
+      this.switchView("sidebar")
+    );
 
     const savedView = localStorage.getItem("currentView") || "calendar";
     this.switchView(savedView);
@@ -121,11 +125,15 @@ class SeasonPageApp {
   }
 
   _renderCalendarSkeleton(days = 3, matchesPerDay = 4) {
-    this.calendarContainer.innerHTML = Array.from({ length: days }, () => `
+    this.calendarContainer.innerHTML = Array.from(
+      { length: days },
+      () => `
       <div class="day-card skeleton-card">
         <div class="skeleton skeleton-line lg" style="width: 180px; margin-bottom: 16px;"></div>
         <div class="matches-grid" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px;">
-          ${Array.from({ length: matchesPerDay }).map(() => `
+          ${Array.from({ length: matchesPerDay })
+            .map(
+              () => `
             <div class="match-card skeleton-card">
               <div style="display:flex; align-items:center; justify-content:space-between; gap:16px; margin-bottom:12px;">
                 <div class="skeleton skeleton-avatar"></div>
@@ -133,13 +141,18 @@ class SeasonPageApp {
                 <div class="skeleton skeleton-avatar"></div>
               </div>
               <div class="skeleton skeleton-line lg" style="width: 80px; margin: 0 auto;"></div>
-            </div>`).join("")}
+            </div>`
+            )
+            .join("")}
         </div>
-      </div>`).join("");
+      </div>`
+    ).join("");
   }
 
   _renderLeaderboardSkeleton(rows = 10) {
-    this.leaderboardBody.innerHTML = Array.from({ length: rows }, () => `
+    this.leaderboardBody.innerHTML = Array.from(
+      { length: rows },
+      () => `
       <tr>
         <td><div class="skeleton skeleton-line" style="width:32px; height:32px; border-radius:50%"></div></td>
         <td>
@@ -148,8 +161,14 @@ class SeasonPageApp {
             <div class="skeleton skeleton-line" style="width:140px;"></div>
           </div>
         </td>
-        ${Array.from({ length: 7 }).map(() => `<td><div class="skeleton skeleton-line" style="width:40px;"></div></td>`).join("")}
-      </tr>`).join("");
+        ${Array.from({ length: 7 })
+          .map(
+            () =>
+              `<td><div class="skeleton skeleton-line" style="width:40px;"></div></td>`
+          )
+          .join("")}
+      </tr>`
+    ).join("");
   }
 
   // --- Rendering Calendario ---
@@ -165,11 +184,13 @@ class SeasonPageApp {
     const dayCard = document.createElement("div");
     dayCard.className = "day-card";
 
-    const matchesHTML = day.partite.map((partita) => this._createMatchCard(partita, teamLogos)).join("");
+    const matchesHTML = day.partite
+      .map((partita) => this._createMatchCard(partita, teamLogos))
+      .join("");
 
     dayCard.innerHTML = `
       <div class="day-header">
-        <h2>Giornata ${day.giornata}</h2>
+        <h2>Giornata ${String(day.giornata).padStart(2, "0")}</h2>
         <div class="toggle-btn"></div>
       </div>
       <div class="matches-grid">${matchesHTML}</div>
@@ -187,12 +208,16 @@ class SeasonPageApp {
       <div class="match-card">
         <div class="teams">
           <div class="team">
-            <img src="${teamLogos[match.home]}" alt="${match.home}" class="team-logo">
+            <img src="${teamLogos[match.home]}" alt="${
+      match.home
+    }" class="team-logo">
             <span class="team-name">${match.home}</span>
           </div>
           <span class="vs">VS</span>
           <div class="team">
-            <img src="${teamLogos[match.away]}" alt="${match.away}" class="team-logo">
+            <img src="${teamLogos[match.away]}" alt="${
+      match.away
+    }" class="team-logo">
             <span class="team-name">${match.away}</span>
           </div>
         </div>
@@ -209,10 +234,24 @@ class SeasonPageApp {
     const teamsStats = {};
 
     teams.forEach((team) => {
-      teamsStats[team] = { squadra: team, punti: 0, giocate: 0, vinte: 0, pareggiate: 0, perse: 0, golFatti: 0, golSubiti: 0, differenzaReti: 0 };
+      teamsStats[team] = {
+        squadra: team,
+        punti: 0,
+        giocate: 0,
+        vinte: 0,
+        pareggiate: 0,
+        perse: 0,
+        golFatti: 0,
+        golSubiti: 0,
+        differenzaReti: 0,
+      };
     });
 
-    const allMatches = calendar.flatMap(day => day.partite.filter(match => teams.includes(match.home) && teams.includes(match.away)));
+    const allMatches = calendar.flatMap((day) =>
+      day.partite.filter(
+        (match) => teams.includes(match.home) && teams.includes(match.away)
+      )
+    );
 
     allMatches.forEach((match) => {
       if (match.homeScore !== null && match.awayScore !== null) {
@@ -227,20 +266,30 @@ class SeasonPageApp {
         teamOspite.golSubiti += match.homeScore;
 
         if (match.homeScore > match.awayScore) {
-          teamCasa.punti += 3; teamCasa.vinte++; teamOspite.perse++;
+          teamCasa.punti += 3;
+          teamCasa.vinte++;
+          teamOspite.perse++;
         } else if (match.homeScore < match.awayScore) {
-          teamOspite.punti += 3; teamOspite.vinte++; teamCasa.perse++;
+          teamOspite.punti += 3;
+          teamOspite.vinte++;
+          teamCasa.perse++;
         } else {
-          teamCasa.punti += 1; teamOspite.punti += 1; teamCasa.pareggiate++; teamOspite.pareggiate++;
+          teamCasa.punti += 1;
+          teamOspite.punti += 1;
+          teamCasa.pareggiate++;
+          teamOspite.pareggiate++;
         }
       }
     });
 
-    Object.values(teamsStats).forEach(team => {
+    Object.values(teamsStats).forEach((team) => {
       team.differenzaReti = team.golFatti - team.golSubiti;
     });
 
-    const finalSortedTeams = this._sortTeams(Object.values(teamsStats), allMatches);
+    const finalSortedTeams = this._sortTeams(
+      Object.values(teamsStats),
+      allMatches
+    );
 
     this.leaderboardBody.innerHTML = "";
     finalSortedTeams.forEach((team, index) => {
@@ -254,15 +303,23 @@ class SeasonPageApp {
       if (b.punti !== a.punti) return b.punti - a.punti;
 
       // Gestione classifica avulsa per gruppi di squadre a pari punti
-      const tiedTeams = teams.filter(t => t.punti === a.punti);
+      const tiedTeams = teams.filter((t) => t.punti === a.punti);
       if (tiedTeams.length > 1) {
-        const sortedByHeadToHead = this._calculateHeadToHead(tiedTeams, allMatches);
-        const indexA = sortedByHeadToHead.findIndex(t => t.squadra === a.squadra);
-        const indexB = sortedByHeadToHead.findIndex(t => t.squadra === b.squadra);
+        const sortedByHeadToHead = this._calculateHeadToHead(
+          tiedTeams,
+          allMatches
+        );
+        const indexA = sortedByHeadToHead.findIndex(
+          (t) => t.squadra === a.squadra
+        );
+        const indexB = sortedByHeadToHead.findIndex(
+          (t) => t.squadra === b.squadra
+        );
         if (indexA !== indexB) return indexA - indexB;
       }
 
-      if (b.differenzaReti !== a.differenzaReti) return b.differenzaReti - a.differenzaReti;
+      if (b.differenzaReti !== a.differenzaReti)
+        return b.differenzaReti - a.differenzaReti;
       if (b.golFatti !== a.golFatti) return b.golFatti - a.golFatti;
       return a.squadra.localeCompare(b.squadra); // Ordinamento alfabetico come ultima risorsa
     });
@@ -279,7 +336,8 @@ class SeasonPageApp {
     });
 
     const relevantMatches = allMatches.filter(
-      (match) => teamNames.includes(match.home) && teamNames.includes(match.away)
+      (match) =>
+        teamNames.includes(match.home) && teamNames.includes(match.away)
     );
 
     relevantMatches.forEach((match) => {
@@ -294,7 +352,10 @@ class SeasonPageApp {
 
         if (match.homeScore > match.awayScore) statsHome.punti += 3;
         else if (match.homeScore < match.awayScore) statsAway.punti += 3;
-        else { statsHome.punti += 1; statsAway.punti += 1; }
+        else {
+          statsHome.punti += 1;
+          statsAway.punti += 1;
+        }
       }
     });
 
@@ -308,7 +369,8 @@ class SeasonPageApp {
       const drB = statsB.golFatti - statsB.golSubiti;
       if (drB !== drA) return drB - drA;
 
-      if (statsB.golFatti !== statsA.golFatti) return statsB.golFatti - statsA.golFatti;
+      if (statsB.golFatti !== statsA.golFatti)
+        return statsB.golFatti - statsA.golFatti;
 
       return 0; // Mantiene l'ordine originale se ancora in parità
     });
@@ -323,7 +385,7 @@ class SeasonPageApp {
       if (posConfig.positions.includes(position)) {
         const { backgroundColor, borderColor } = posConfig;
         rowStyle = `background: linear-gradient(135deg, ${backgroundColor}20 0%, ${backgroundColor}10 100%); border-left: 4px solid ${borderColor};`;
-        if (key === 'scudetto') tr.classList.add('scudetto-row');
+        if (key === "scudetto") tr.classList.add("scudetto-row");
         break;
       }
     }
@@ -333,11 +395,15 @@ class SeasonPageApp {
       <td><div class="position">${position}</div></td>
       <td>
         <div class="team-cell">
-          <img src="${teamLogos[team.squadra]}" alt="${team.squadra}" class="team-logo-small">
+          <img src="${teamLogos[team.squadra]}" alt="${
+      team.squadra
+    }" class="team-logo-small">
           <span>${team.squadra}</span>
         </div>
       </td>
-      <td><strong style="color: var(--accent-green);">${team.punti}</strong></td>
+      <td><strong style="color: var(--accent-green);">${
+        team.punti
+      }</strong></td>
       <td>${team.giocate}</td>
       <td>${team.vinte}</td>
       <td>${team.pareggiate}</td>

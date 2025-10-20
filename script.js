@@ -17,7 +17,9 @@ class SerieAApp {
     this.applyTheme(savedTheme);
 
     this.themeToggle.addEventListener("click", () => {
-      let currentTheme = document.documentElement.classList.contains("light") ? "light" : "dark";
+      let currentTheme = document.documentElement.classList.contains("light")
+        ? "light"
+        : "dark";
       const newTheme = currentTheme === "light" ? "dark" : "light";
       this.applyTheme(newTheme);
       localStorage.setItem("theme", newTheme);
@@ -39,8 +41,12 @@ class SerieAApp {
 
   // --- Data Loading and Rendering ---
   createSeasonCard(season, isCurrent) {
-    const currentBadge = isCurrent ? '<div class="current-badge">In corso</div>' : "";
-    const championBadge = season.champion ? `<div class="champion-badge">${season.champion}</div>` : "";
+    const currentBadge = isCurrent
+      ? '<div class="current-badge">In corso</div>'
+      : "";
+    const championBadge = season.champion
+      ? `<div class="champion-badge">${season.champion}</div>`
+      : "";
 
     return `
       <a href="${season.url}" class="season-card">
@@ -72,29 +78,36 @@ class SerieAApp {
       });
 
       if (sortedSeasons.length === 0) {
-        this.seasonsGrid.innerHTML = '<div class="error-message">Nessuna stagione trovata.</div>';
+        this.seasonsGrid.innerHTML =
+          '<div class="error-message">Nessuna stagione trovata.</div>';
         return;
       }
 
-      const seasonsHtml = sortedSeasons.map((season, index) => {
-        // Assicura che la proprietà champion esista
-        if (!("champion" in season)) {
-          season.champion = null;
-        }
-        const isCurrent = index === 0 && season.champion === null;
-        return this.createSeasonCard(season, isCurrent);
-      }).join('');
+      const seasonsHtml = sortedSeasons
+        .map((season, index) => {
+          // Assicura che la proprietà champion esista
+          if (!("champion" in season)) {
+            season.champion = null;
+          }
+          const isCurrent = index === 0 && season.champion === null;
+          return this.createSeasonCard(season, isCurrent);
+        })
+        .join("");
 
       this.seasonsGrid.innerHTML = seasonsHtml;
       console.log(`Caricate ${sortedSeasons.length} stagioni con successo`);
-
     } catch (error) {
       console.error("Errore nel caricamento delle stagioni:", error);
-      let errorMessage = "Si è verificato un errore imprevisto durante il caricamento delle stagioni.";
-      if (error instanceof TypeError) { // Network error or file not found
-        errorMessage = "Impossibile caricare i dati. Verifica la connessione o che il file `seasons-data.json` esista.";
-      } else if (error instanceof SyntaxError) { // JSON parsing error
-        errorMessage = "Il file dei dati (`seasons-data.json`) sembra essere corrotto.";
+      let errorMessage =
+        "Si è verificato un errore imprevisto durante il caricamento delle stagioni.";
+      if (error instanceof TypeError) {
+        // Network error or file not found
+        errorMessage =
+          "Impossibile caricare i dati. Verifica la connessione o che il file `seasons-data.json` esista.";
+      } else if (error instanceof SyntaxError) {
+        // JSON parsing error
+        errorMessage =
+          "Il file dei dati (`seasons-data.json`) sembra essere corrotto.";
       }
       this.seasonsGrid.innerHTML = `<div class="error-message">${errorMessage}</div>`;
     }
