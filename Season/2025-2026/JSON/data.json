@@ -304,8 +304,8 @@
         {
           "home": "Cremonese",
           "away": "Udinese",
-          "homeScore": null,
-          "awayScore": null
+          "homeScore": 1,
+          "awayScore": 1
         }
       ]
     },
