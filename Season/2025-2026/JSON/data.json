@@ -308,6 +308,71 @@
           "awayScore": null
         }
       ]
+    },
+    {
+      "giornata": 8,
+      "partite": [
+        {
+          "home": "Milan",
+          "away": "Pusa",
+          "homeScore": null,
+          "awayScore": null
+        },
+        {
+          "home": "Parma",
+          "away": "COmo",
+          "homeScore": null,
+          "awayScore": null
+        },
+        {
+          "home": "Udinese",
+          "away": "Lecce",
+          "homeScore": null,
+          "awayScore": null
+        },
+        {
+          "home": "Napoli",
+          "away": "Inter",
+          "homeScore": null,
+          "awayScore": null
+        },
+        {
+          "home": "Cremonese",
+          "away": "Atalanta",
+          "homeScore": null,
+          "awayScore": null
+        },
+        {
+          "home": "Torino",
+          "away": "Genoa",
+          "homeScore": null,
+          "awayScore": null
+        },
+        {
+          "home": "Sassuolo",
+          "away": "Roma",
+          "homeScore": null,
+          "awayScore": null
+        },
+        {
+          "home": "Verona",
+          "away": "Cagliari",
+          "homeScore": null,
+          "awayScore": null
+        },
+        {
+          "home": "Fiorentina",
+          "away": "Bologna",
+          "homeScore": null,
+          "awayScore": null
+        },
+        {
+          "home": "Lazio",
+          "away": "Juventus",
+          "homeScore": null,
+          "awayScore": null
+        }
+      ]
     }
   ]
 }
