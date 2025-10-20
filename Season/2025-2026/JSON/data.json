@@ -2063,6 +2063,266 @@
           "awayScore": null
         }
       ]
+    },
+    {
+      "giornata": 35,
+      "partite": [
+        {
+          "home": "Atalanta",
+          "away": "Genoa",
+          "homeScore": null,
+          "awayScore": null
+        },
+        {
+          "home": "Bologna",
+          "away": "Cagliari",
+          "homeScore": null,
+          "awayScore": null
+        },
+        {
+          "home": "Como",
+          "away": "Napoli",
+          "homeScore": null,
+          "awayScore": null
+        },
+        {
+          "home": "Cremonese",
+          "away": "Lazio",
+          "homeScore": null,
+          "awayScore": null
+        },
+        {
+          "home": "Inter",
+          "away": "Parma",
+          "homeScore": null,
+          "awayScore": null
+        },
+        {
+          "home": "Juventus",
+          "away": "Verona",
+          "homeScore": null,
+          "awayScore": null
+        },
+        {
+          "home": "Pisa",
+          "away": "Lecce",
+          "homeScore": null,
+          "awayScore": null
+        },
+        {
+          "home": "Roma",
+          "away": "Fiorentina",
+          "homeScore": null,
+          "awayScore": null
+        },
+        {
+          "home": "Sassuolo",
+          "away": "Milan",
+          "homeScore": null,
+          "awayScore": null
+        },
+        {
+          "home": "Udinese",
+          "away": "Torino",
+          "homeScore": null,
+          "awayScore": null
+        }
+      ]
+    },
+    {
+      "giornata": 36,
+      "partite": [
+        {
+          "home": "Verona",
+          "away": "Como",
+          "homeScore": null,
+          "awayScore": null
+        },
+        {
+          "home": "Cagliari",
+          "away": "Udinese",
+          "homeScore": null,
+          "awayScore": null
+        },
+        {
+          "home": "Cremonese",
+          "away": "Pisa",
+          "homeScore": null,
+          "awayScore": null
+        },
+        {
+          "home": "Fiorentina",
+          "away": "Genoa",
+          "homeScore": null,
+          "awayScore": null
+        },
+        {
+          "home": "Lazio",
+          "away": "Inter",
+          "homeScore": null,
+          "awayScore": null
+        },
+        {
+          "home": "Lecce",
+          "away": "Juventus",
+          "homeScore": null,
+          "awayScore": null
+        },
+        {
+          "home": "Milan",
+          "away": "Atalanta",
+          "homeScore": null,
+          "awayScore": null
+        },
+        {
+          "home": "Napoli",
+          "away": "Bologna",
+          "homeScore": null,
+          "awayScore": null
+        },
+        {
+          "home": "Parma",
+          "away": "Roma",
+          "homeScore": null,
+          "awayScore": null
+        },
+        {
+          "home": "Torino",
+          "away": "Sassuolo",
+          "homeScore": null,
+          "awayScore": null
+        }
+      ]
+    },
+    {
+      "giornata": 37,
+      "partite": [
+        {
+          "home": "Atalanta",
+          "away": "Bologna",
+          "homeScore": null,
+          "awayScore": null
+        },
+        {
+          "home": "Cagliari",
+          "away": "Torino",
+          "homeScore": null,
+          "awayScore": null
+        },
+        {
+          "home": "Como",
+          "away": "Parma",
+          "homeScore": null,
+          "awayScore": null
+        },
+        {
+          "home": "Genoa",
+          "away": "Milan",
+          "homeScore": null,
+          "awayScore": null
+        },
+        {
+          "home": "Inter",
+          "away": "Verona",
+          "homeScore": null,
+          "awayScore": null
+        },
+        {
+          "home": "Juventus",
+          "away": "Fiorentina",
+          "homeScore": null,
+          "awayScore": null
+        },
+        {
+          "home": "Pisa",
+          "away": "Napoli",
+          "homeScore": null,
+          "awayScore": null
+        },
+        {
+          "home": "Roma",
+          "away": "Lazio",
+          "homeScore": null,
+          "awayScore": null
+        },
+        {
+          "home": "Sassuolo",
+          "away": "Lecce",
+          "homeScore": null,
+          "awayScore": null
+        },
+        {
+          "home": "Udinese",
+          "away": "Cremonese",
+          "homeScore": null,
+          "awayScore": null
+        }
+      ]
+    },
+    {
+      "giornata": 38,
+      "partite": [
+        {
+          "home": "Bologna",
+          "away": "Inter",
+          "homeScore": null,
+          "awayScore": null
+        },
+        {
+          "home": "Cremonese",
+          "away": "Como",
+          "homeScore": null,
+          "awayScore": null
+        },
+        {
+          "home": "Fiorentina",
+          "away": "Atalanta",
+          "homeScore": null,
+          "awayScore": null
+        },
+        {
+          "home": "Lazio",
+          "away": "Pisa",
+          "homeScore": null,
+          "awayScore": null
+        },
+        {
+          "home": "Lecce",
+          "away": "Genoa",
+          "homeScore": null,
+          "awayScore": null
+        },
+        {
+          "home": "Milan",
+          "away": "Cagliari",
+          "homeScore": null,
+          "awayScore": null
+        },
+        {
+          "home": "Napoli",
+          "away": "Udinese",
+          "homeScore": null,
+          "awayScore": null
+        },
+        {
+          "home": "Parma",
+          "away": "Sassuolo",
+          "homeScore": null,
+          "awayScore": null
+        },
+        {
+          "home": "Torino",
+          "away": "Juventus",
+          "homeScore": null,
+          "awayScore": null
+        },
+        {
+          "home": "Verona",
+          "away": "Roma",
+          "homeScore": null,
+          "awayScore": null
+        }
+      ]
     }
   ]
 }
