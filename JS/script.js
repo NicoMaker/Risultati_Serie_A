@@ -66,7 +66,7 @@ class SerieAApp {
 
   async loadSeasons() {
     try {
-      const response = await fetch("seasons-data.json");
+      const response = await fetch("JS/seasons-data.json");
       if (!response.ok) {
         throw new Error(`Errore HTTP: ${response.status}`);
       }
