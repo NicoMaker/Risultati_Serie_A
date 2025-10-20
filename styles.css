@@ -269,9 +269,8 @@ header {
 }
 
 .season-card:hover {
-  transform: translateY(-8px);
+  transform: translateY(-5px);
   box-shadow: var(--shadow);
-  border-color: var(--accent-green);
 }
 
 .season-card-header {
@@ -307,11 +306,6 @@ header {
   padding: 30px;
   transition: all 0.3s ease;
   opacity: 0.9;
-}
-
-.season-card:hover .season-card-header img {
-  transform: scale(1.1);
-  opacity: 1;
 }
 
 .season-logo {
