@@ -132,3 +132,10 @@ document.addEventListener("DOMContentLoaded", () => {
   const app = new SerieAApp();
   app.init();
 });
+
+document.getElementById("footer").innerHTML = `
+  <footer>
+      <div class="copyright">
+          © ${new Date().getFullYear()} Generale Stagioni. Tutti i diritti riservati.
+      </div>
+  </footer>`;
