@@ -45,9 +45,7 @@ class SeasonPageApp {
   _updateThemeIcon(theme) {
     if (!this.themeToggle) return;
     const icon = this.themeToggle.querySelector(".theme-icon");
-    if (icon) {
-      icon.textContent = theme === "light" ? "🌙" : "🌞";
-    }
+    icon && (icon.textContent = theme === "light" ? "🌙" : "🌞");
   }
 
   // --- Gestione Vista (Calendario/Classifica) ---

@@ -34,9 +34,7 @@ class SerieAApp {
   updateThemeIcon(theme) {
     if (!this.themeToggle) return;
     const icon = this.themeToggle.querySelector(".theme-icon");
-    if (icon) {
-      icon.textContent = theme === "light" ? "🌙" : "🌞";
-    }
+    icon && (icon.textContent = theme === "light" ? "🌙" : "🌞");
   }
 
   // --- Data Loading and Rendering ---
