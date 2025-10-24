@@ -206,16 +206,12 @@ class SeasonPageApp {
       <div class="match-card">
         <div class="teams">
           <div class="team">
-            <img src="${teamLogos[match.home]}" alt="${
-      match.home
-    }" class="team-logo">
+            <img src="${teamLogos[match.home]}" alt="${match.home}" class="team-logo">
             <span class="team-name">${match.home}</span>
           </div>
           <span class="vs">VS</span>
           <div class="team">
-            <img src="${teamLogos[match.away]}" alt="${
-      match.away
-    }" class="team-logo">
+            <img src="${teamLogos[match.away]}" alt="${match.away}" class="team-logo">
             <span class="team-name">${match.away}</span>
           </div>
         </div>
@@ -284,10 +280,7 @@ class SeasonPageApp {
       team.differenzaReti = team.golFatti - team.golSubiti;
     });
 
-    const finalSortedTeams = this._sortTeams(
-      Object.values(teamsStats),
-      allMatches
-    );
+    const finalSortedTeams = this._sortTeams(Object.values(teamsStats), allMatches);
 
     this.leaderboardBody.innerHTML = "";
     finalSortedTeams.forEach((team, index) => {
@@ -296,36 +289,24 @@ class SeasonPageApp {
     });
   }
 
-  // --- ⚙️ Ordinamento con differenza reti prioritaria ---
+  // --- ⚙️ Ordinamento aggiornato ---
   _sortTeams(teams, allMatches) {
     return teams.sort((a, b) => {
-      // 1️⃣ Punti
       if (b.punti !== a.punti) return b.punti - a.punti;
-
-      // 2️⃣ Differenza reti (valida se punti uguali)
-      if (b.differenzaReti !== a.differenzaReti)
-        return b.differenzaReti - a.differenzaReti;
-
-      // 3️⃣ Gol fatti
+      if (b.differenzaReti !== a.differenzaReti) return b.differenzaReti - a.differenzaReti;
       if (b.golFatti !== a.golFatti) return b.golFatti - a.golFatti;
 
-      // 4️⃣ Classifica avulsa (scontri diretti)
+      // 👇 nuova regola: meno gol subiti → posizione migliore
+      if (a.golSubiti !== b.golSubiti) return a.golSubiti - b.golSubiti;
+
       const tiedTeams = teams.filter((t) => t.punti === a.punti);
       if (tiedTeams.length > 1) {
-        const sortedByHeadToHead = this._calculateHeadToHead(
-          tiedTeams,
-          allMatches
-        );
-        const indexA = sortedByHeadToHead.findIndex(
-          (t) => t.squadra === a.squadra
-        );
-        const indexB = sortedByHeadToHead.findIndex(
-          (t) => t.squadra === b.squadra
-        );
+        const sortedByHeadToHead = this._calculateHeadToHead(tiedTeams, allMatches);
+        const indexA = sortedByHeadToHead.findIndex((t) => t.squadra === a.squadra);
+        const indexB = sortedByHeadToHead.findIndex((t) => t.squadra === b.squadra);
         if (indexA !== indexB) return indexA - indexB;
       }
 
-      // 5️⃣ Ultimo criterio: ordine alfabetico
       return a.squadra.localeCompare(b.squadra);
     });
   }
@@ -374,8 +355,10 @@ class SeasonPageApp {
       const drB = statsB.golFatti - statsB.golSubiti;
       if (drB !== drA) return drB - drA;
 
-      if (statsB.golFatti !== statsA.golFatti)
-        return statsB.golFatti - statsA.golFatti;
+      if (statsB.golFatti !== statsA.golFatti) return statsB.golFatti - statsA.golFatti;
+
+      // 👇 anche qui: meno gol subiti → posizione migliore
+      if (statsA.golSubiti !== statsB.golSubiti) return statsA.golSubiti - statsB.golSubiti;
 
       return 0;
     });
@@ -400,15 +383,11 @@ class SeasonPageApp {
       <td><div class="position">${position}</div></td>
       <td>
         <div class="team-cell">
-          <img src="${teamLogos[team.squadra]}" alt="${
-      team.squadra
-    }" class="team-logo-small">
+          <img src="${teamLogos[team.squadra]}" alt="${team.squadra}" class="team-logo-small">
           <span>${team.squadra}</span>
         </div>
       </td>
-      <td><strong style="color: var(--accent-green);">${
-        team.punti
-      }</strong></td>
+      <td><strong style="color: var(--accent-green);">${team.punti}</strong></td>
       <td>${team.giocate}</td>
       <td>${team.vinte}</td>
       <td>${team.pareggiate}</td>
