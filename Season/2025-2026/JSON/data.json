@@ -333,8 +333,8 @@
         {
           "home": "Napoli",
           "away": "Inter",
-          "homeScore": null,
-          "awayScore": null
+          "homeScore": 3,
+          "awayScore": 1
         },
         {
           "home": "Cremonese",
