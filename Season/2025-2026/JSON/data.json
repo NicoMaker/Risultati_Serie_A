@@ -339,8 +339,8 @@
         {
           "home": "Cremonese",
           "away": "Atalanta",
-          "homeScore": null,
-          "awayScore": null
+          "homeScore": 1,
+          "awayScore": 1
         },
         {
           "home": "Torino",
