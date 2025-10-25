@@ -321,14 +321,14 @@
         {
           "home": "Parma",
           "away": "Como",
-          "homeScore": null,
-          "awayScore": null
+          "homeScore": 0,
+          "awayScore": 0
         },
         {
           "home": "Udinese",
           "away": "Lecce",
-          "homeScore": null,
-          "awayScore": null
+          "homeScore": 3,
+          "awayScore": 2
         },
         {
           "home": "Napoli",
