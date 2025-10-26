@@ -351,14 +351,14 @@
         {
           "home": "Sassuolo",
           "away": "Roma",
-          "homeScore": null,
-          "awayScore": null
+          "homeScore": 0,
+          "awayScore": 1
         },
         {
           "home": "Verona",
           "away": "Cagliari",
-          "homeScore": null,
-          "awayScore": null
+          "homeScore": 2,
+          "awayScore": 2
         },
         {
           "home": "Fiorentina",
