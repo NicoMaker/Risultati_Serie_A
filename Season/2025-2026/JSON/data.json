@@ -345,8 +345,8 @@
         {
           "home": "Torino",
           "away": "Genoa",
-          "homeScore": null,
-          "awayScore": null
+          "homeScore": 2,
+          "awayScore": 1
         },
         {
           "home": "Sassuolo",
