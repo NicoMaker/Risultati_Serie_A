@@ -392,20 +392,20 @@
         {
           "home": "Como",
           "away": "Verona",
-          "homeScore": null,
-          "awayScore": null
+          "homeScore": 3,
+          "awayScore": 1
         },
         {
           "home": "Juventus",
           "away": "Udinese",
-          "homeScore": null,
-          "awayScore": null
+          "homeScore": 3,
+          "awayScore": 1
         },
         {
           "home": "Roma",
           "away": "Parma",
-          "homeScore": null,
-          "awayScore": null
+          "homeScore": 2,
+          "awayScore": 1
         },
         {
           "home": "Bologna",
