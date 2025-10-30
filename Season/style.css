@@ -888,35 +888,42 @@
   }
 }
 
-/* Floating football */
-.floating-ball {
+/* Pulsante "Torna Indietro" fluttuante */
+.back-to-home-btn {
   position: fixed;
   right: 18px;
-  bottom: 18px;
-  width: 54px;
-  height: 54px;
-  border-radius: 50%;
+  bottom: -60px; /* Start off-screen */
+  width: auto;
+  height: 50px;
+  padding: 0 20px 0 16px;
+  border-radius: 25px;
   display: flex;
   align-items: center;
-  justify-content: center;
-  background: radial-gradient(
-    circle at 30% 30%,
-    #ffffff 0 18%,
-    var(--bg-card) 19% 100%
-  );
-  border: 2px solid #0b5ed7; /* azzurri accent */
-  box-shadow: 0 10px 26px rgba(11, 94, 215, 0.25), var(--shadow);
-  font-size: 1.4rem;
+  gap: 8px;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow);
+  color: var(--text-primary);
+  font-size: 0.95rem;
+  font-weight: 600;
+  text-decoration: none;
   z-index: 20;
   transition: transform 0.25s ease, box-shadow 0.25s ease,
-    border-color 0.25s ease;
-  animation: floatBall 4s ease-in-out infinite;
+    border-color 0.25s ease, bottom 0.5s ease-in-out;
+  animation: float 4s ease-in-out infinite;
+  opacity: 0;
 }
 
-.floating-ball:hover {
+.back-to-home-btn.visible {
+  bottom: 18px;
+  opacity: 1;
+}
+
+.back-to-home-btn:hover {
   transform: translateY(-3px) scale(1.05);
-  border-color: #12b886;
-  box-shadow: 0 14px 30px rgba(18, 184, 134, 0.28), var(--shadow);
+  border-color: var(--accent-green);
+  box-shadow: 0 14px 30px rgba(0, 255, 136, 0.2), var(--shadow);
+  color: var(--accent-green);
 }
 
 @keyframes floatBall {

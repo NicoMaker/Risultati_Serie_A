@@ -22,6 +22,7 @@ class SeasonPageApp {
     this.initTheme();
     this.initViewSwitcher();
     await this.loadDataAndRender();
+    this.initFloatingButton();
   }
 
   // --- Gestione Tema ---
@@ -432,6 +433,15 @@ class SeasonPageApp {
       `;
       this.legendList.appendChild(div);
     }
+  }
+
+  // --- Pulsante Fluttuante ---
+  initFloatingButton() {
+    const backBtn = document.querySelector(".back-to-home-btn");
+    if (!backBtn) return;
+    setTimeout(() => {
+      backBtn.classList.add("visible");
+    }, 500); // Appare dopo 500ms
   }
 }
 
