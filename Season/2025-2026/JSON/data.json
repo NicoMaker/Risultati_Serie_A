@@ -481,8 +481,8 @@
         {
           "home": "Parma",
           "away": "Bologna",
-          "homeScore": null,
-          "awayScore": null
+          "homeScore": 1,
+          "awayScore": 3
         },
         {
           "home": "Milan",
