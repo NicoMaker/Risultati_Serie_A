@@ -469,14 +469,14 @@
         {
           "home": "Fiorentina",
           "away": "Lecce",
-          "homeScore": null,
-          "awayScore": null
+          "homeScore": 0,
+          "awayScore": 1
         },
         {
           "home": "Torino",
           "away": "Pisa",
-          "homeScore": null,
-          "awayScore": null
+          "homeScore": 2,
+          "awayScore": 2
         },
         {
           "home": "Parma",
