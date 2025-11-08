@@ -516,14 +516,14 @@
         {
           "home": "Como",
           "away": "Cagliari",
-          "homeScore": null,
-          "awayScore": null
+          "homeScore": 0,
+          "awayScore": 0
         },
         {
           "home": "Lecce",
           "away": "Verona",
-          "homeScore": null,
-          "awayScore": null
+          "homeScore": 0,
+          "awayScore": 0
         },
         {
           "home": "Juventus",
