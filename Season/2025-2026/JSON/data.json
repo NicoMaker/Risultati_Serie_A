@@ -564,8 +564,8 @@
         {
           "home": "Inter",
           "away": "Lazio",
-          "homeScore": null,
-          "awayScore": null
+          "homeScore": 2,
+          "awayScore": 0
         }
       ]
     },
