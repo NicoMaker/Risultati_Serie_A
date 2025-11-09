@@ -546,8 +546,8 @@
         {
           "home": "Bologna",
           "away": "Napoli",
-          "homeScore": null,
-          "awayScore": null
+          "homeScore": 2,
+          "awayScore": 0
         },
         {
           "home": "Genoa",
