@@ -1,4 +1,4 @@
-class SeasonPageApp {
+Class SeasonPageApp {
   constructor() {
     // Elementi UI principali
     this.calendarContainer = document.getElementById("calendar");
@@ -30,16 +30,19 @@ class SeasonPageApp {
     const savedTheme = localStorage.getItem("theme") || "dark";
     this.applyTheme(savedTheme);
 
-    this.themeToggle.addEventListener("click", () => {
-      const isLight = document.documentElement.classList.contains("light");
-      const newTheme = isLight ? "dark" : "light";
-      this.applyTheme(newTheme);
-      localStorage.setItem("theme", newTheme);
-    });
+    if (this.themeToggle) {
+        this.themeToggle.addEventListener("click", () => {
+            const isLight = document.documentElement.classList.contains("light");
+            const newTheme = isLight ? "dark" : "light";
+            this.applyTheme(newTheme);
+            localStorage.setItem("theme", newTheme);
+        });
+    }
   }
 
   applyTheme(theme) {
     document.documentElement.classList.toggle("light", theme === "light");
+    document.documentElement.classList.toggle("dark", theme === "dark");
     this._updateThemeIcon(theme);
   }
 
@@ -47,22 +50,32 @@ class SeasonPageApp {
     if (!this.themeToggle) return;
     const icon = this.themeToggle.querySelector(".theme-icon");
     icon && (icon.textContent = theme === "light" ? "🌙" : "🌞");
+    this.themeToggle.setAttribute(
+        "aria-label",
+        theme === "light" ? "Attiva tema scuro" : "Attiva tema chiaro"
+    );
   }
 
   // --- Gestione Vista (Calendario/Classifica) ---
   initViewSwitcher() {
-    this.showCalendarBtn.addEventListener("click", () =>
-      this.switchView("calendar")
-    );
-    this.showSidebarBtn.addEventListener("click", () =>
-      this.switchView("sidebar")
-    );
+    if (this.showCalendarBtn) {
+      this.showCalendarBtn.addEventListener("click", () =>
+        this.switchView("calendar")
+      );
+    }
+    if (this.showSidebarBtn) {
+      this.showSidebarBtn.addEventListener("click", () =>
+        this.switchView("sidebar")
+      );
+    }
 
     const savedView = localStorage.getItem("currentView") || "calendar";
     this.switchView(savedView);
   }
 
   switchView(view) {
+    if (!this.calendarSection || !this.sidebarSection || !this.showCalendarBtn || !this.showSidebarBtn) return;
+    
     if (view === "calendar") {
       this.calendarSection.classList.remove("hidden");
       this.sidebarSection.classList.add("hidden");
@@ -88,7 +101,9 @@ class SeasonPageApp {
     ]);
 
     if (!data || !config) {
-      this.calendarContainer.innerHTML = `<div class="error-message">Errore nel caricamento dei dati della stagione.</div>`;
+      if (this.calendarContainer) {
+          this.calendarContainer.innerHTML = `<div class="error-message">Errore nel caricamento dei dati della stagione.</div>`;
+      }
       return;
     }
 
@@ -124,6 +139,7 @@ class SeasonPageApp {
   }
 
   _renderCalendarSkeleton(days = 3, matchesPerDay = 4) {
+    if (!this.calendarContainer) return;
     this.calendarContainer.innerHTML = Array.from(
       { length: days },
       () => `
@@ -149,6 +165,7 @@ class SeasonPageApp {
   }
 
   _renderLeaderboardSkeleton(rows = 10) {
+    if (!this.leaderboardBody) return;
     this.leaderboardBody.innerHTML = Array.from(
       { length: rows },
       () => `
@@ -172,6 +189,8 @@ class SeasonPageApp {
 
   // --- Rendering Calendario ---
   _renderCalendar() {
+    if (!this.calendarContainer || !this.data || !this.data.calendar) return;
+
     this.calendarContainer.innerHTML = "";
     this.data.calendar.forEach((day) => {
       const daySection = this._createDaySection(day, this.data.teamLogos);
@@ -207,14 +226,14 @@ class SeasonPageApp {
       <div class="match-card">
         <div class="teams">
           <div class="team">
-            <img src="${teamLogos[match.home]}" alt="${
+            <img src="${teamLogos[match.home] || ''}" alt="${
       match.home
     }" class="team-logo">
             <span class="team-name">${match.home}</span>
           </div>
           <span class="vs">VS</span>
           <div class="team">
-            <img src="${teamLogos[match.away]}" alt="${
+            <img src="${teamLogos[match.away] || ''}" alt="${
       match.away
     }" class="team-logo">
             <span class="team-name">${match.away}</span>
@@ -229,14 +248,17 @@ class SeasonPageApp {
 
   // --- Rendering Classifica e Legenda ---
   _renderLeaderboard() {
+    if (!this.leaderboardBody || !this.data) return;
+
     const { calendar, teams, teamLogos } = this.data;
     const teamsStats = {};
 
+    // 1. Inizializzazione Statistiche
     teams.forEach((team) => {
       teamsStats[team] = {
         squadra: team,
         punti: 0,
-        giocate: 0,
+        giocate: 0, // Partite Giocate
         vinte: 0,
         pareggiate: 0,
         perse: 0,
@@ -246,6 +268,7 @@ class SeasonPageApp {
       };
     });
 
+    // 2. Calcolo Statistiche Totali
     const allMatches = calendar.flatMap((day) =>
       day.partite.filter(
         (match) => teams.includes(match.home) && teams.includes(match.away)
@@ -285,6 +308,7 @@ class SeasonPageApp {
       team.differenzaReti = team.golFatti - team.golSubiti;
     });
 
+    // 3. Ordinamento e Rendering
     const finalSortedTeams = this._sortTeams(
       Object.values(teamsStats),
       allMatches
@@ -297,18 +321,25 @@ class SeasonPageApp {
     });
   }
 
-  // --- ⚙️ Ordinamento aggiornato ---
+  // --- ⚙️ Ordinamento aggiornato con regola Partite Giocate ---
   _sortTeams(teams, allMatches) {
     return teams.sort((a, b) => {
+      // 1. Punti (decrescente)
       if (b.punti !== a.punti) return b.punti - a.punti;
+
+      // 👇 2. NUOVA REGOLA: Partite Giocate (crescente - meno partite è meglio)
+      if (a.giocate !== b.giocate) return a.giocate - b.giocate;
+
+      // 3. Differenza Reti (decrescente - standard)
       if (b.differenzaReti !== a.differenzaReti)
         return b.differenzaReti - a.differenzaReti;
+
+      // 4. Gol Fatti (decrescente - standard)
       if (b.golFatti !== a.golFatti) return b.golFatti - a.golFatti;
 
-      // 👇 nuova regola: meno gol subiti → posizione migliore
-      if (a.golSubiti !== b.golSubiti) return a.golSubiti - b.golSubiti;
-
-      const tiedTeams = teams.filter((t) => t.punti === a.punti);
+      // 5. Scontro Diretto (Head-to-Head) - Applicato solo se i criteri sopra non hanno risolto il pareggio
+      const tiedTeams = teams.filter((t) => t.punti === a.punti && t.giocate === a.giocate);
+      
       if (tiedTeams.length > 1) {
         const sortedByHeadToHead = this._calculateHeadToHead(
           tiedTeams,
@@ -320,9 +351,12 @@ class SeasonPageApp {
         const indexB = sortedByHeadToHead.findIndex(
           (t) => t.squadra === b.squadra
         );
+        
+        // Se lo scontro diretto ha risolto il pareggio (gli indici sono diversi)
         if (indexA !== indexB) return indexA - indexB;
       }
-
+      
+      // 6. Fallback: Ordine Alfabetico
       return a.squadra.localeCompare(b.squadra);
     });
   }
@@ -361,23 +395,24 @@ class SeasonPageApp {
       }
     });
 
+    // Ordinamento Head-to-Head
     return [...teamsWithSamePoints].sort((a, b) => {
       const statsA = h2hStats[a.squadra];
       const statsB = h2hStats[b.squadra];
 
+      // 1. Punti Head-to-Head
       if (statsB.punti !== statsA.punti) return statsB.punti - statsA.punti;
 
+      // 2. Differenza Reti Head-to-Head
       const drA = statsA.golFatti - statsA.golSubiti;
       const drB = statsB.golFatti - statsB.golSubiti;
       if (drB !== drA) return drB - drA;
 
+      // 3. Gol Fatti Head-to-Head
       if (statsB.golFatti !== statsA.golFatti)
         return statsB.golFatti - statsA.golFatti;
 
-      // 👇 anche qui: meno gol subiti → posizione migliore
-      if (statsA.golSubiti !== statsB.golSubiti)
-        return statsA.golSubiti - statsB.golSubiti;
-
+      // 4. Fallback (Mantiene l'ordine originale in H2H se tutto è uguale)
       return 0;
     });
   }
@@ -386,6 +421,7 @@ class SeasonPageApp {
     const tr = document.createElement("tr");
     let rowStyle = "";
 
+    // Applica stili in base alla posizione (zona Champions, Europa League, etc.)
     for (const key in this.config.positions) {
       const posConfig = this.config.positions[key];
       if (posConfig.positions.includes(position)) {
@@ -401,7 +437,7 @@ class SeasonPageApp {
       <td><div class="position">${position}</div></td>
       <td>
         <div class="team-cell">
-          <img src="${teamLogos[team.squadra]}" alt="${
+          <img src="${teamLogos[team.squadra] || ''}" alt="${
       team.squadra
     }" class="team-logo-small">
           <span>${team.squadra}</span>
@@ -422,6 +458,8 @@ class SeasonPageApp {
   }
 
   _renderLegend() {
+    if (!this.legendList || !this.config || !this.config.positions) return;
+
     this.legendList.innerHTML = "";
     for (const key in this.config.positions) {
       const item = this.config.positions[key];
