@@ -1,45 +1,43 @@
-/**
- * Funzione di confronto (comparator) per ordinare le squadre in classifica.
- * Implementa la regola di spareggio richiesta:
- * 1. Ordine Primario: Punti (decrescente).
- * 2. Ordine Secondario (Spareggio): Partite Giocate (crescente - meno partite è meglio).
- *
- * Questa funzione può essere utilizzata per ordinare array di squadre (es. teamArray.sort(ordinaClassificaSquadre)).
- *
- * @param {Object} squadraA - Oggetto squadra con proprietà 'punti' e 'partiteGiocate'.
- * @param {Object} squadraB - Oggetto squadra con proprietà 'punti' e 'partiteGiocate'.
- * @returns {number} Risultato del confronto per l'ordinamento.
- */
-function ordinaClassificaSquadre(squadraA, squadraB) {
-  // 1. Ordine Primario: Punti (dal più alto al più basso)
-  if (squadraA.punti !== squadraB.punti) {
-    return squadraB.punti - squadraA.punti; // Ordine decrescente
-  }
-
-  // 2. Regola di Spareggio: Se i punti sono uguali, meno partite giocate è meglio
-  if (squadraA.partiteGiocate !== squadraB.partiteGiocate) {
-    return squadraA.partiteGiocate - squadraB.partiteGiocate; // Ordine crescente (meno partite prima)
-  }
-
-  // 3. Spareggio Finale
-  return 0;
-}
-
-// =========================================================================
-// CLASSE PRINCIPALE PER LA GESTIONE DELLA PAGINA GENERALE DELLE STAGIONI
-// =========================================================================
-
 Class SerieAApp {
   constructor() {
     this.seasonsGrid = document.getElementById("seasonsGrid");
     this.themeToggle = document.getElementById("theme-toggle");
   }
 
+  // =========================================================================
+  // ⚽ NUOVO METODO STATICO DI ORDINAMENTO CLASSIFICA
+  // =========================================================================
+  /**
+   * Metodo di confronto statico per ordinare le squadre in classifica.
+   * Regola di spareggio: Se i punti sono uguali, la squadra con MENO partite giocate è più in alto.
+   *
+   * @param {Object} squadraA - Oggetto squadra (con proprietà 'punti' e 'partiteGiocate').
+   * @param {Object} squadraB - Oggetto squadra (con proprietà 'punti' e 'partiteGiocate').
+   * @returns {number} Risultato del confronto per l'ordinamento.
+   */
+  static ordinaClassificaSquadre(squadraA, squadraB) {
+    // 1. Ordine Primario: Punti (dal più alto al più basso)
+    if (squadraA.punti !== squadraB.punti) {
+      return squadraB.punti - squadraA.punti; // Ordine decrescente
+    }
+
+    // 2. Regola di Spareggio: Se i punti sono uguali, meno partite è meglio (ordine crescente)
+    if (squadraA.partiteGiocate !== squadraB.partiteGiocate) {
+      return squadraA.partiteGiocate - squadraB.partiteGiocate; // Ordine crescente
+    }
+
+    // 3. Spareggio Finale
+    return 0;
+  }
+  // =========================================================================
+
   init() {
     console.log("Inizializzazione pagina Generale Stagioni");
     this.initTheme();
     this.loadSeasons();
     this.initOnlineStatusHandling();
+    // Esempio di come usare il nuovo metodo statico:
+    // const classificaOrdinata = classificaDaOrdinare.sort(SerieAApp.ordinaClassificaSquadre);
   }
 
   // --- Theme Management ---
@@ -80,12 +78,10 @@ Class SerieAApp {
     const currentBadge = isCurrent
       ? '<div class="current-badge">In corso</div>'
       : "";
-    // Controlla se 'champion' è definito e non nullo o stringa vuota
     const championBadge = season.champion && season.champion.trim() !== ''
       ? `<div class="champion-badge">${season.champion}</div>`
       : "";
 
-    // NOTA: Ho aggiunto il tag di chiusura </a> che mancava nell'HTML originale
     return `
       <a href="${season.url}" class="season-card" style="--bg-image: url('${season.logo}')">
         <div class="card-shine"></div>
@@ -100,7 +96,7 @@ Class SerieAApp {
         </div>
         <div class="card-border"></div>
       </a>
-    `;
+    `; // Chiusura del tag <a>
   }
 
   async loadSeasons() {
@@ -118,8 +114,6 @@ Class SerieAApp {
       }
 
       const data = await response.json();
-      
-      // Ordinamento delle stagioni: dal più recente al meno recente
       const sortedSeasons = data.seasons.sort((a, b) => {
         const yearA = parseInt(a.year.split("-")[0], 10);
         const yearB = parseInt(b.year.split("-")[0], 10);
@@ -134,12 +128,10 @@ Class SerieAApp {
 
       const seasonsHtml = sortedSeasons
         .map((season, index) => {
-          // Assicura che la proprietà champion esista e che sia gestita correttamente
+          // Assicura che la proprietà champion esista
           const championValue = season.champion || null; 
-          
-          // La stagione è in corso se è la più recente (indice 0) E non ha ancora un campione
+
           const isCurrent = index === 0 && (championValue === null || championValue.trim() === '');
-          
           return this.createSeasonCard({ ...season, champion: championValue }, isCurrent);
         })
         .join("");
@@ -148,8 +140,8 @@ Class SerieAApp {
       console.log(`Caricate ${sortedSeasons.length} stagioni con successo`);
     } catch (error) {
       console.error("Errore nel caricamento delle stagioni:", error);
-      let errorMessage = "Si è verificato un errore imprevisto durante il caricamento delle stagioni.";
-      
+      let errorMessage =
+        "Si è verificato un errore imprevisto durante il caricamento delle stagioni.";
       if (error.message.includes("HTTP")) {
           errorMessage = `Impossibile caricare i dati. Errore del server: ${error.message.split(' - ')[0]}.`;
       } else if (error instanceof TypeError) {
@@ -177,10 +169,10 @@ Class SerieAApp {
 }
 
 // =========================================================================
-// INIZIALIZZAZIONE
+// INIZIALIZZAZIONE GLOBALE
 // =========================================================================
 
-// Initialize l'app al caricamento completo del DOM
+// Initialize
 document.addEventListener("DOMContentLoaded", () => {
   const app = new SerieAApp();
   app.init();
