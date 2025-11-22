@@ -593,8 +593,8 @@
         {
           "home": "Napoli",
           "away": "Atalanta",
-          "homeScore": null,
-          "awayScore": null
+          "homeScore": 3,
+          "awayScore": 1
         },
         {
           "home": "Verona",
