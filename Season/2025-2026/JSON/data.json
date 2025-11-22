@@ -575,8 +575,8 @@
         {
           "home": "Cagliari",
           "away": "Genoa",
-          "homeScore": null,
-          "awayScore": null
+          "homeScore":3,
+          "awayScore": 3
         },
         {
           "home": "Udinese",
