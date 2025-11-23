@@ -605,8 +605,8 @@
         {
           "home": "Cremonese",
           "away": "Roma",
-          "homeScore": null,
-          "awayScore": null
+          "homeScore": 1,
+          "awayScore": 3
         },
         {
           "home": "Lazio",
