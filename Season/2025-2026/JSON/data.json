@@ -623,8 +623,8 @@
         {
           "home": "Torino",
           "away": "Como",
-          "homeScore": null,
-          "awayScore": null
+          "homeScore": 1,
+          "awayScore": 5
         },
         {
           "home": "Sassuolo",
