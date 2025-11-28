@@ -640,8 +640,8 @@
         {
           "home": "Como",
           "away": "Sassuolo",
-          "homeScore": null,
-          "awayScore": null
+          "homeScore": 2,
+          "awayScore": 0
         },
         {
           "home": "Genoa",
