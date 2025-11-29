@@ -646,14 +646,14 @@
         {
           "home": "Genoa",
           "away": "Verona",
-          "homeScore": null,
-          "awayScore": null
+          "homeScore": 2,
+          "awayScore": 1
         },
         {
           "home": "Parma",
           "away": "Udinese",
-          "homeScore": null,
-          "awayScore": null
+          "homeScore": 0,
+          "awayScore": 2
         },
         {
           "home": "Juventus",
