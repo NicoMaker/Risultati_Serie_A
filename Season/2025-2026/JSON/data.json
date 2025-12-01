@@ -694,8 +694,8 @@
         {
           "home": "Bologna",
           "away": "Cremonese",
-          "homeScore": null,
-          "awayScore": null
+          "homeScore": 1,
+          "awayScore": 3
         }
       ]
     },
