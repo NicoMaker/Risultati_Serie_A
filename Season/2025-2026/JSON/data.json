@@ -705,8 +705,8 @@
         {
           "home": "Sassuolo",
           "away": "Fiorentina",
-          "homeScore": null,
-          "awayScore": null
+          "homeScore": 3,
+          "awayScore": 1
         },
         {
           "home": "Inter",
