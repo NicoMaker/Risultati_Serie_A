@@ -575,7 +575,7 @@
         {
           "home": "Cagliari",
           "away": "Genoa",
-          "homeScore":3,
+          "homeScore": 3,
           "awayScore": 3
         },
         {
@@ -711,8 +711,8 @@
         {
           "home": "Inter",
           "away": "Como",
-          "homeScore": null,
-          "awayScore": null
+          "homeScore": 4,
+          "awayScore": 0
         },
         {
           "home": "Verona",
