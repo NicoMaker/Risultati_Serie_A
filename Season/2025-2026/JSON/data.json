@@ -824,8 +824,8 @@
         {
           "home": "Roma",
           "away": "Como",
-          "homeScore": null,
-          "awayScore": null
+          "homeScore": 1,
+          "awayScore": 0
         }
       ]
     },
