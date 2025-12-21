@@ -865,8 +865,8 @@
         {
           "home": "Genoa",
           "away": "Atalanta",
-          "homeScore": null,
-          "awayScore": null
+          "homeScore": 0,
+          "awayScore": 1
         },
         {
           "home": "Napoli",
