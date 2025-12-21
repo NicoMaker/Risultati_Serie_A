@@ -847,8 +847,8 @@
         {
           "home": "Cagliari",
           "away": "Pisa",
-          "homeScore": null,
-          "awayScore": null
+          "homeScore": 2,
+          "awayScore": 2
         },
         {
           "home": "Sassuolo",
