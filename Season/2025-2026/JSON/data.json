@@ -906,14 +906,14 @@
         {
           "home": "Lecce",
           "away": "Como",
-          "homeScore": null,
-          "awayScore": null
+          "homeScore": 0,
+          "awayScore": 3
         },
         {
           "home": "Torino",
           "away": "Cagliari",
-          "homeScore": null,
-          "awayScore": null
+          "homeScore": 1,
+          "awayScore": 2
         },
         {
           "home": "Udinese",
