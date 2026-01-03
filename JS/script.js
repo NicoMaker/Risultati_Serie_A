@@ -44,24 +44,24 @@ class SerieAApp {
       if (b.points !== a.points) {
         return b.points - a.points;
       }
-      
-      // 2. A parità di punti, ordina per partite giocate (crescente - meno partite = posizione migliore)
-      if (a.played !== b.played) {
-        return a.played - b.played;
-      }
-      
-      // 3. A parità di punti e partite, ordina per differenza reti (decrescente)
+
+      // 2. A parità di punti, ordina per differenza reti (decrescente)
       const goalDiffA = a.goalsFor - a.goalsAgainst;
       const goalDiffB = b.goalsFor - b.goalsAgainst;
       if (goalDiffB !== goalDiffA) {
         return goalDiffB - goalDiffA;
       }
-      
-      // 4. A parità di tutto, ordina per gol fatti (decrescente)
+
+      // 3. A parità di punti e differenza reti, ordina per gol fatti (decrescente)
       if (b.goalsFor !== a.goalsFor) {
         return b.goalsFor - a.goalsFor;
       }
-      
+
+      // 4. A parità di tutto quanto sopra, ordina per partite giocate (crescente - meno partite = posizione migliore)
+      if (a.played !== b.played) {
+        return a.played - b.played;
+      }
+
       // 5. Infine ordina alfabeticamente per nome
       return a.name.localeCompare(b.name);
     });
@@ -101,14 +101,14 @@ class SerieAApp {
       }
 
       const data = await response.json();
-      
+
       // Ordina le squadre all'interno di ogni stagione
       data.seasons.forEach(season => {
         if (season.teams && Array.isArray(season.teams)) {
           season.teams = this.sortTeamsByRanking(season.teams);
         }
       });
-      
+
       const sortedSeasons = data.seasons.sort((a, b) => {
         const yearA = parseInt(a.year.split("-")[0], 10);
         const yearB = parseInt(b.year.split("-")[0], 10);
