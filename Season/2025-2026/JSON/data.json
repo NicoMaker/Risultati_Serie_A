@@ -977,14 +977,14 @@
         {
           "home": "Genoa",
           "away": "Pisa",
-          "homeScore": null,
-          "awayScore": null
+          "homeScore": 1,
+          "awayScore": 1
         },
         {
           "home": "Sassuolo",
           "away": "Parma",
-          "homeScore": null,
-          "awayScore": null
+          "homeScore": 1,
+          "awayScore": 1
         },
         {
           "home": "Juventus",
