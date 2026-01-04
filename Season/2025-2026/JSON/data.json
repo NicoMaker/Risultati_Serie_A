@@ -1019,8 +1019,8 @@
         {
           "home": "Inter",
           "away": "Bologna",
-          "homeScore": null,
-          "awayScore": null
+          "homeScore": 3,
+          "awayScore": 1
         }
       ]
     },
