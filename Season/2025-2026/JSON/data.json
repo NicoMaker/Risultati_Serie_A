@@ -1036,8 +1036,8 @@
         {
           "home": "Lecce",
           "away": "Roma",
-          "homeScore": null,
-          "awayScore": null
+          "homeScore": 0,
+          "awayScore": 2
         },
         {
           "home": "Sassuolo",
