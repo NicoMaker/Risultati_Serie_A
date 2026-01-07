@@ -300,14 +300,23 @@ class SeasonPageApp {
   // --- ⚙️ Ordinamento aggiornato ---
   _sortTeams(teams, allMatches) {
     return teams.sort((a, b) => {
+      // 1. Più punti = posizione migliore
       if (b.punti !== a.punti) return b.punti - a.punti;
+
+      // 2. A parità di punti, meno partite giocate = posizione migliore
+      if (a.giocate !== b.giocate) return a.giocate - b.giocate;
+
+      // 3. Migliore differenza reti
       if (b.differenzaReti !== a.differenzaReti)
         return b.differenzaReti - a.differenzaReti;
+
+      // 4. Più gol fatti
       if (b.golFatti !== a.golFatti) return b.golFatti - a.golFatti;
 
-      // 👇 nuova regola: meno gol subiti → posizione migliore
+      // 5. Meno gol subiti
       if (a.golSubiti !== b.golSubiti) return a.golSubiti - b.golSubiti;
 
+      // 6. Scontri diretti tra squadre a pari punti
       const tiedTeams = teams.filter((t) => t.punti === a.punti);
       if (tiedTeams.length > 1) {
         const sortedByHeadToHead = this._calculateHeadToHead(
@@ -323,6 +332,7 @@ class SeasonPageApp {
         if (indexA !== indexB) return indexA - indexB;
       }
 
+      // 7. Ordine alfabetico (ultimo criterio)
       return a.squadra.localeCompare(b.squadra);
     });
   }
@@ -374,7 +384,7 @@ class SeasonPageApp {
       if (statsB.golFatti !== statsA.golFatti)
         return statsB.golFatti - statsA.golFatti;
 
-      // 👇 anche qui: meno gol subiti → posizione migliore
+      // Anche negli scontri diretti: meno gol subiti = posizione migliore
       if (statsA.golSubiti !== statsB.golSubiti)
         return statsA.golSubiti - statsB.golSubiti;
 
