@@ -1048,14 +1048,14 @@
         {
           "home": "Bologna",
           "away": "Atalanta",
-          "homeScore": null,
-          "awayScore": null
+          "homeScore": 0,
+          "awayScore": 2
         },
         {
           "home": "Napoli",
           "away": "Verona",
-          "homeScore": null,
-          "awayScore": null
+          "homeScore": 2,
+          "awayScore": 2
         },
         {
           "home": "Lazio",
