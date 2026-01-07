@@ -2,7 +2,6 @@ class SerieAApp {
   constructor() {
     this.seasonsGrid = document.getElementById("seasonsGrid");
     this.themeToggle = document.getElementById("theme-toggle");
-    this.calendar = null; // Sarà popolato per calcolare gli scontri diretti
   }
 
   init() {
@@ -38,113 +37,6 @@ class SerieAApp {
     icon && (icon.textContent = theme === "light" ? "🌙" : "🌞");
   }
 
-  // --- Head-to-Head Calculation ---
-  calculateHeadToHead(team1, team2, calendar) {
-    if (!calendar || !Array.isArray(calendar)) {
-      return null;
-    }
-
-    let h2h = {
-      team1: { points: 0, goalsFor: 0, goalsAgainst: 0 },
-      team2: { points: 0, goalsFor: 0, goalsAgainst: 0 },
-    };
-
-    calendar.forEach((giornata) => {
-      if (!giornata.partite) return;
-
-      giornata.partite.forEach((match) => {
-        // Salta partite non ancora giocate
-        if (match.homeScore === null || match.awayScore === null) return;
-
-        const isTeam1Home =
-          match.home === team1.name && match.away === team2.name;
-        const isTeam1Away =
-          match.away === team1.name && match.home === team2.name;
-
-        if (isTeam1Home) {
-          h2h.team1.goalsFor += match.homeScore;
-          h2h.team1.goalsAgainst += match.awayScore;
-          h2h.team2.goalsFor += match.awayScore;
-          h2h.team2.goalsAgainst += match.homeScore;
-
-          if (match.homeScore > match.awayScore) {
-            h2h.team1.points += 3;
-          } else if (match.homeScore < match.awayScore) {
-            h2h.team2.points += 3;
-          } else {
-            h2h.team1.points += 1;
-            h2h.team2.points += 1;
-          }
-        } else if (isTeam1Away) {
-          h2h.team1.goalsFor += match.awayScore;
-          h2h.team1.goalsAgainst += match.homeScore;
-          h2h.team2.goalsFor += match.homeScore;
-          h2h.team2.goalsAgainst += match.awayScore;
-
-          if (match.awayScore > match.homeScore) {
-            h2h.team1.points += 3;
-          } else if (match.awayScore < match.homeScore) {
-            h2h.team2.points += 3;
-          } else {
-            h2h.team1.points += 1;
-            h2h.team2.points += 1;
-          }
-        }
-      });
-    });
-
-    return h2h;
-  }
-
-  // --- Sorting Logic (Regole ufficiali Serie A) ---
-  sortTeamsByRanking(teams, calendar) {
-    return teams.sort((a, b) => {
-      // 1. Ordina per punti (decrescente)
-      if (b.points !== a.points) {
-        return b.points - a.points;
-      }
-
-      // 2. A parità di punti: SCONTRI DIRETTI
-      if (calendar) {
-        const h2h = this.calculateHeadToHead(a, b, calendar);
-
-        if (h2h) {
-          // 2a. Punti negli scontri diretti
-          if (h2h.team1.points !== h2h.team2.points) {
-            return h2h.team2.points - h2h.team1.points;
-          }
-
-          // 2b. Differenza reti negli scontri diretti
-          const h2hDiffA = h2h.team1.goalsFor - h2h.team1.goalsAgainst;
-          const h2hDiffB = h2h.team2.goalsFor - h2h.team2.goalsAgainst;
-          if (h2hDiffA !== h2hDiffB) {
-            return h2hDiffB - h2hDiffA;
-          }
-
-          // 2c. Gol segnati negli scontri diretti
-          if (h2h.team1.goalsFor !== h2h.team2.goalsFor) {
-            return h2h.team2.goalsFor - h2h.team1.goalsFor;
-          }
-        }
-      }
-
-      // 3. Differenza reti generale (decrescente)
-      const goalDiffA = a.goalsFor - a.goalsAgainst;
-      const goalDiffB = b.goalsFor - b.goalsAgainst;
-      if (goalDiffB !== goalDiffA) {
-        return goalDiffB - goalDiffA;
-      }
-
-      // 4. Gol fatti generale (decrescente)
-      if (b.goalsFor !== a.goalsFor) {
-        return b.goalsFor - a.goalsFor;
-      }
-
-      // 5. Ordine alfabetico (in attesa di sorteggio)
-      return a.name.localeCompare(b.name);
-    });
-  }
-
   // --- Data Loading and Rendering ---
   createSeasonCard(season, isCurrent) {
     const currentBadge = isCurrent
@@ -167,7 +59,6 @@ class SerieAApp {
             ${championBadge}
         </div>
         <div class="card-border"></div>
-      </a>
     `;
   }
 
@@ -179,16 +70,6 @@ class SerieAApp {
       }
 
       const data = await response.json();
-
-      // Ordina le squadre all'interno di ogni stagione
-      data.seasons.forEach((season) => {
-        if (season.teams && Array.isArray(season.teams)) {
-          // Passa il calendario per calcolare gli scontri diretti
-          const calendar = season.calendar || null;
-          season.teams = this.sortTeamsByRanking(season.teams, calendar);
-        }
-      });
-
       const sortedSeasons = data.seasons.sort((a, b) => {
         const yearA = parseInt(a.year.split("-")[0], 10);
         const yearB = parseInt(b.year.split("-")[0], 10);
@@ -219,9 +100,11 @@ class SerieAApp {
       let errorMessage =
         "Si è verificato un errore imprevisto durante il caricamento delle stagioni.";
       if (error instanceof TypeError) {
+        // Network error or file not found
         errorMessage =
           "Impossibile caricare i dati. Verifica la connessione o che il file `seasons-data.json` esista.";
       } else if (error instanceof SyntaxError) {
+        // JSON parsing error
         errorMessage =
           "Il file dei dati (`seasons-data.json`) sembra essere corrotto.";
       }
