@@ -1095,14 +1095,14 @@
         {
           "home": "Como",
           "away": "Bologna",
-          "homeScore": null,
-          "awayScore": null
+          "homeScore": 1,
+          "awayScore": 1
         },
         {
           "home": "Udinese",
           "away": "Pisa",
-          "homeScore": null,
-          "awayScore": null
+          "homeScore": 2,
+          "awayScore": 2
         },
         {
           "home": "Roma",
