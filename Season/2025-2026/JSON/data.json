@@ -1149,8 +1149,8 @@
         {
           "home": "Juventus",
           "away": "Cremonese",
-          "homeScore": null,
-          "awayScore": null
+          "homeScore": 5,
+          "awayScore": 0
         }
       ]
     },
