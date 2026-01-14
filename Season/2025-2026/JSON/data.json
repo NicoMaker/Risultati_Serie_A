@@ -871,8 +871,8 @@
         {
           "home": "Napoli",
           "away": "Parma",
-          "homeScore": null,
-          "awayScore": null
+          "homeScore": 0,
+          "awayScore": 0
         },
         {
           "home": "Inter",
