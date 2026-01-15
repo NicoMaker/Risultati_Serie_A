@@ -889,8 +889,8 @@
         {
           "home": "Como",
           "away": "Milan",
-          "homeScore": null,
-          "awayScore": null
+          "homeScore": 1,
+          "awayScore": 3
         }
       ]
     },
