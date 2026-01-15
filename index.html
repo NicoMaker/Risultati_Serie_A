@@ -1,46 +1,58 @@
 <!DOCTYPE html>
 <html lang="it">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Generale Stagioni | Archivio Serie A</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    <link rel="icon" href="https://www.calciomagazine.net/wp-content/uploads/2024/07/serie-a-enilive-logo.jpg" type="image/jpeg" />
-    <link rel="stylesheet" href="styles.css">
-</head>
-<body>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="icon"
+      href="https://www.calciomagazine.net/wp-content/uploads/2024/07/serie-a-enilive-logo.jpg"
+      type="image/jpeg"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
     <div class="bg-animation"></div>
 
     <div class="container">
-        <header>
-            <div class="header-content">
-                <div class="header-row">
-                    <div class="title-wrap">
-                        <h1>
-                            <span class="ball-icon" aria-hidden="true">⚽</span>
-                            <span class="title-text">GENERALE STAGIONI</span>
-                        </h1>
-                        <p>Archivio Completo • Serie A EnilLive</p>
-                    </div>
-                    <div class="actions-wrap">
-                        <button id="theme-toggle" class="icon-button" aria-label="Cambia tema" title="Cambia tema">
-                            <span class="theme-icon" aria-hidden="true">🌙</span>
-                        </button>
-                    </div>
-                </div>
-                <div class="tricolore-bar" aria-hidden="true"></div>
+      <header>
+        <div class="header-content">
+          <div class="header-row">
+            <div class="title-wrap">
+              <h1>
+                <span class="ball-icon" aria-hidden="true">⚽</span>
+                <span class="title-text">GENERALE STAGIONI</span>
+              </h1>
+              <p>Archivio Completo • Serie A EnilLive</p>
             </div>
-        </header>
-
-        <main class="main-content">
-            <div class="seasons-grid" id="seasonsGrid">
-                <div class="loading-message">Caricamento stagioni...</div>
+            <div class="actions-wrap">
+              <button
+                id="theme-toggle"
+                class="icon-button"
+                aria-label="Cambia tema"
+                title="Cambia tema"
+              >
+                <span class="theme-icon" aria-hidden="true">🌙</span>
+              </button>
             </div>
-        </main>
+          </div>
+          <div class="tricolore-bar" aria-hidden="true"></div>
+        </div>
+      </header>
 
-        <div id="footer"></div>
+      <main class="main-content">
+        <div class="seasons-grid" id="seasonsGrid">
+          <div class="loading-message">Caricamento stagioni...</div>
+        </div>
+      </main>
+
+      <div id="footer"></div>
     </div>
 
     <script src="JS/script.js"></script>
-</body>
+  </body>
 </html>
