@@ -1184,8 +1184,8 @@
         {
           "home": "Parma",
           "away": "Genoa",
-          "homeScore": null,
-          "awayScore": null
+          "homeScore": 0,
+          "awayScore": 0
         },
         {
           "home": "Bologna",
