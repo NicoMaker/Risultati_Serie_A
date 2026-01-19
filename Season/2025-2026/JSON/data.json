@@ -1208,8 +1208,8 @@
         {
           "home": "Cremonese",
           "away": "Verona",
-          "homeScore": null,
-          "awayScore": null
+          "homeScore": 0,
+          "awayScore": 0
         },
         {
           "home": "Lazio",
