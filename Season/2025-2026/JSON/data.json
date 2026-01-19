@@ -1214,8 +1214,8 @@
         {
           "home": "Lazio",
           "away": "Como",
-          "homeScore": null,
-          "awayScore": null
+          "homeScore": 0,
+          "awayScore": 3
         }
       ]
     },
