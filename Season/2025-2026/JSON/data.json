@@ -1225,8 +1225,8 @@
         {
           "home": "Inter",
           "away": "Pisa",
-          "homeScore": null,
-          "awayScore": null
+          "homeScore": 6,
+          "awayScore": 2
         },
         {
           "home": "Como",
