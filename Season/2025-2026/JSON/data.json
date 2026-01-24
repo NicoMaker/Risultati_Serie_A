@@ -1231,8 +1231,8 @@
         {
           "home": "Como",
           "away": "Torino",
-          "homeScore": null,
-          "awayScore": null
+          "homeScore": 6,
+          "awayScore": 0
         },
         {
           "home": "Fiorentina",
