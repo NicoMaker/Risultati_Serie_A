@@ -1243,8 +1243,8 @@
         {
           "home": "Lecce",
           "away": "Lazio",
-          "homeScore": null,
-          "awayScore": null
+          "homeScore": 0,
+          "awayScore": 0
         },
         {
           "home": "Sassuolo",
