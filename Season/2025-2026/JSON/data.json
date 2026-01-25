@@ -1255,14 +1255,14 @@
         {
           "home": "Atalanta",
           "away": "Parma",
-          "homeScore": null,
-          "awayScore": null
+          "homeScore": 4,
+          "awayScore": 0
         },
         {
           "home": "Genoa",
           "away": "Bologna",
-          "homeScore": null,
-          "awayScore": null
+          "homeScore": 3,
+          "awayScore": 2
         },
         {
           "home": "Juventus",
