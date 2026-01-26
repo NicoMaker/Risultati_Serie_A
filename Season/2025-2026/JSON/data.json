@@ -1279,8 +1279,8 @@
         {
           "home": "Verona",
           "away": "Udinese",
-          "homeScore": null,
-          "awayScore": null
+          "homeScore": 1,
+          "awayScore": 3
         }
       ]
     },
