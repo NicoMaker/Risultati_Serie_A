@@ -1314,8 +1314,8 @@
         {
           "home": "Lazio",
           "away": "Genoa",
-          "homeScore": null,
-          "awayScore": null
+          "homeScore": 3,
+          "awayScore": 2
         },
         {
           "home": "Napoli",
