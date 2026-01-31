@@ -1332,8 +1332,8 @@
         {
           "home": "Pisa",
           "away": "Sassuolo",
-          "homeScore": null,
-          "awayScore": null
+          "homeScore": 1,
+          "awayScore": 3
         },
         {
           "home": "Torino",
