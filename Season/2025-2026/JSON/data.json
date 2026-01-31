@@ -1296,8 +1296,8 @@
         {
           "home": "Cagliari",
           "away": "Verona",
-          "homeScore": null,
-          "awayScore": null
+          "homeScore": 4,
+          "awayScore": 0
         },
         {
           "home": "Como",
