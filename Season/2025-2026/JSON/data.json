@@ -1326,8 +1326,8 @@
         {
           "home": "Parma",
           "away": "Juventus",
-          "homeScore": null,
-          "awayScore": null
+          "homeScore": 1,
+          "awayScore": 4
         },
         {
           "home": "Pisa",
