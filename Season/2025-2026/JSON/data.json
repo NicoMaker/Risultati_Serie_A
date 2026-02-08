@@ -1403,8 +1403,8 @@
         {
           "home": "Lecce",
           "away": "Udinese",
-          "homeScore": null,
-          "awayScore": null
+          "homeScore": 2,
+          "awayScore": 1
         },
         {
           "home": "Milan",
