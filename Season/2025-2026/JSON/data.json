@@ -1474,8 +1474,8 @@
         {
           "home": "Udinese",
           "away": "Sassuolo",
-          "homeScore": null,
-          "awayScore": null
+          "homeScore": 1,
+          "awayScore": 2
         }
       ]
     },
