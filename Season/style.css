@@ -979,3 +979,180 @@
   align-items: center;
   gap: 10px;
 }
+
+/* ==========================================
+   MOBILE RESPONSIVE IMPROVEMENTS - MATCH CARDS
+   ========================================== */
+
+/* Migliora visibilità match cards su mobile */
+@media (max-width: 768px) {
+  .match-card {
+    padding: 16px 12px;
+    min-height: 140px;
+  }
+
+  .teams {
+    margin-bottom: 12px;
+    gap: 12px;
+  }
+
+  .team {
+    gap: 6px;
+  }
+
+  .team-name {
+    font-size: 0.85rem;
+    line-height: 1.2;
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .team-logo {
+    width: 42px;
+    height: 42px;
+    padding: 5px;
+  }
+
+  .vs {
+    font-size: 0.8rem;
+  }
+
+  .score {
+    font-size: 1.3rem;
+  }
+
+  /* Migliora day header su mobile */
+  .day-header {
+    padding: 16px 18px;
+    gap: 10px;
+  }
+
+  .day-header h2 {
+    font-size: 1.3rem;
+  }
+
+  /* Actions giornata su mobile */
+  .day-actions {
+    gap: 8px;
+  }
+
+  .toggle-btn {
+    width: 36px;
+    height: 36px;
+  }
+
+  .toggle-btn::after {
+    font-size: 1rem;
+  }
+}
+
+/* Ottimizzazioni per schermi molto piccoli */
+@media (max-width: 480px) {
+  .match-card {
+    padding: 14px 10px;
+    min-height: 130px;
+  }
+
+  .teams {
+    gap: 8px;
+    margin-bottom: 10px;
+  }
+
+  .team {
+    min-width: 0;
+    flex: 1;
+  }
+
+  .team-name {
+    font-size: 0.8rem;
+    max-width: 100px;
+  }
+
+  .team-logo {
+    width: 38px;
+    height: 38px;
+    padding: 4px;
+  }
+
+  .vs {
+    font-size: 0.75rem;
+    flex-shrink: 0;
+  }
+
+  .score {
+    font-size: 1.2rem;
+  }
+
+  .day-header {
+    padding: 14px 16px;
+  }
+
+  .day-header h2 {
+    font-size: 1.2rem;
+  }
+
+  .toggle-btn {
+    width: 32px;
+    height: 32px;
+  }
+
+  .toggle-btn::after {
+    font-size: 0.9rem;
+  }
+
+  /* Pulsante WhatsApp giornata più piccolo su mobile */
+  .whatsapp-day-btn {
+    padding: 6px 10px;
+    font-size: 0.75rem;
+  }
+
+  .whatsapp-day-btn svg {
+    width: 16px;
+    height: 16px;
+  }
+}
+
+/* Per schermi extra piccoli (< 360px) */
+@media (max-width: 360px) {
+  .match-card {
+    padding: 12px 8px;
+  }
+
+  .team-name {
+    font-size: 0.75rem;
+    max-width: 85px;
+  }
+
+  .team-logo {
+    width: 34px;
+    height: 34px;
+  }
+
+  .score {
+    font-size: 1.1rem;
+  }
+
+  .day-header h2 {
+    font-size: 1.1rem;
+  }
+}
+
+/* Miglioramento grid matches per mobile */
+@media (max-width: 768px) {
+  .matches-grid {
+    grid-template-columns: 1fr;
+    gap: 14px;
+    padding: 16px;
+    max-height: 500px;
+  }
+}
+
+@media (max-width: 480px) {
+  .matches-grid {
+    gap: 12px;
+    padding: 14px;
+    max-height: 450px;
+  }
+}
