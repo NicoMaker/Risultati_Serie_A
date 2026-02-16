@@ -1156,3 +1156,58 @@
     max-height: 450px;
   }
 }
+
+/* ==========================================
+   FIX DIMENSIONI TESTO GIORNATE CONSISTENTE
+   ========================================== */
+
+/* Forza dimensione font uniforme per tutti i titoli giornata */
+.day-header h2 {
+  font-size: 1.5rem !important;
+  font-weight: 700 !important;
+  color: var(--accent-green) !important;
+  letter-spacing: -0.5px !important;
+  white-space: nowrap;
+  min-width: fit-content;
+  flex-shrink: 0;
+}
+
+/* Assicura che il layout non influenzi la dimensione */
+.day-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+}
+
+/* Fix per mobile - dimensione consistente */
+@media (max-width: 768px) {
+  .day-header h2 {
+    font-size: 1.3rem !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .day-header h2 {
+    font-size: 1.2rem !important;
+  }
+}
+
+@media (max-width: 360px) {
+  .day-header h2 {
+    font-size: 1.1rem !important;
+  }
+}
+
+/* Assicura che day-actions non comprima il titolo */
+.day-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-shrink: 0;
+}
+
+/* Previene text wrapping che potrebbe causare ridimensionamenti */
+.day-card {
+  min-width: 0;
+}
