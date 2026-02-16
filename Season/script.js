@@ -15,6 +15,7 @@ class SeasonPageApp {
     // Dati
     this.data = null;
     this.config = null;
+    this.leaderboardData = [];
   }
 
   async init() {
@@ -23,6 +24,7 @@ class SeasonPageApp {
     this.initViewSwitcher();
     await this.loadDataAndRender();
     this.initFloatingButton();
+    this.initWhatsAppButtons();
   }
 
   // --- Gestione Tema ---
@@ -182,20 +184,39 @@ class SeasonPageApp {
   _createDaySection(day, teamLogos) {
     const dayCard = document.createElement("div");
     dayCard.className = "day-card";
+    dayCard.dataset.giornata = day.giornata;
 
     const matchesHTML = day.partite
       .map((partita) => this._createMatchCard(partita, teamLogos))
       .join("");
 
+    // Aggiungi pulsante WhatsApp per la giornata
+    const whatsappBtn = `
+      <button class="whatsapp-day-btn" data-giornata="${day.giornata}">
+        <svg viewBox="0 0 24 24" fill="currentColor" width="18" height="18">
+          <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
+        </svg>
+        Condividi Giornata
+      </button>
+    `;
+
     dayCard.innerHTML = `
       <div class="day-header">
         <h2>Giornata ${String(day.giornata).padStart(2, "0")}</h2>
-        <div class="toggle-btn"></div>
+        <div class="day-actions">
+          ${whatsappBtn}
+          <div class="toggle-btn"></div>
+        </div>
       </div>
       <div class="matches-grid">${matchesHTML}</div>
     `;
 
-    dayCard.querySelector(".day-header").addEventListener("click", () => {
+    dayCard.querySelector(".day-header h2").addEventListener("click", () => {
+      dayCard.classList.toggle("open");
+    });
+
+    dayCard.querySelector(".toggle-btn").addEventListener("click", (e) => {
+      e.stopPropagation();
       dayCard.classList.toggle("open");
     });
 
@@ -290,6 +311,8 @@ class SeasonPageApp {
       allMatches
     );
 
+    this.leaderboardData = finalSortedTeams;
+
     this.leaderboardBody.innerHTML = "";
     finalSortedTeams.forEach((team, index) => {
       const tr = this._createLeaderboardRow(team, index + 1, teamLogos);
@@ -297,26 +320,15 @@ class SeasonPageApp {
     });
   }
 
-  // --- ⚙️ Ordinamento aggiornato ---
   _sortTeams(teams, allMatches) {
     return teams.sort((a, b) => {
-      // 1. Più punti = posizione migliore
       if (b.punti !== a.punti) return b.punti - a.punti;
-
-      // 2. A parità di punti, meno partite giocate = posizione migliore
       if (a.giocate !== b.giocate) return a.giocate - b.giocate;
-
-      // 3. Migliore differenza reti
       if (b.differenzaReti !== a.differenzaReti)
         return b.differenzaReti - a.differenzaReti;
-
-      // 4. Più gol fatti
       if (b.golFatti !== a.golFatti) return b.golFatti - a.golFatti;
-
-      // 5. Meno gol subiti
       if (a.golSubiti !== b.golSubiti) return a.golSubiti - b.golSubiti;
 
-      // 6. Scontri diretti tra squadre a pari punti
       const tiedTeams = teams.filter((t) => t.punti === a.punti);
       if (tiedTeams.length > 1) {
         const sortedByHeadToHead = this._calculateHeadToHead(
@@ -332,7 +344,6 @@ class SeasonPageApp {
         if (indexA !== indexB) return indexA - indexB;
       }
 
-      // 7. Ordine alfabetico (ultimo criterio)
       return a.squadra.localeCompare(b.squadra);
     });
   }
@@ -384,7 +395,6 @@ class SeasonPageApp {
       if (statsB.golFatti !== statsA.golFatti)
         return statsB.golFatti - statsA.golFatti;
 
-      // Anche negli scontri diretti: meno gol subiti = posizione migliore
       if (statsA.golSubiti !== statsB.golSubiti)
         return statsA.golSubiti - statsB.golSubiti;
 
@@ -445,13 +455,105 @@ class SeasonPageApp {
     }
   }
 
+  // --- WhatsApp Share Functions ---
+  initWhatsAppButtons() {
+    // Pulsante classifica
+    const standingsBtn = document.getElementById("whatsapp-standings-btn");
+    if (standingsBtn) {
+      standingsBtn.addEventListener("click", () => this.shareStandingsOnWhatsApp());
+    }
+
+    // Pulsanti giornate (delegazione eventi)
+    this.calendarContainer.addEventListener("click", (e) => {
+      if (e.target.closest(".whatsapp-day-btn")) {
+        const btn = e.target.closest(".whatsapp-day-btn");
+        const giornata = parseInt(btn.dataset.giornata);
+        this.shareDayOnWhatsApp(giornata);
+      }
+    });
+  }
+
+  shareDayOnWhatsApp(giornataNum) {
+    const dayData = this.data.calendar.find(d => d.giornata === giornataNum);
+    if (!dayData) {
+      alert("Dati giornata non trovati!");
+      return;
+    }
+
+    const seasonTitle = document.querySelector("header h1 .title-text").textContent;
+    const seasonSubtitle = document.querySelector("header p").textContent.split("•")[0].trim();
+
+    let message = `*${seasonTitle}*\n`;
+    message += `${seasonSubtitle}\n`;
+    message += `${"=".repeat(40)}\n\n`;
+    message += `*GIORNATA ${dayData.giornata}*\n`;
+    message += `${"=".repeat(40)}\n\n`;
+
+    dayData.partite.forEach((match) => {
+      const homeScore = match.homeScore !== null ? match.homeScore : "?";
+      const awayScore = match.awayScore !== null ? match.awayScore : "?";
+      
+      message += `${match.home} vs ${match.away}\n`;
+      message += `   Risultato: ${homeScore} - ${awayScore}\n\n`;
+    });
+
+    message += `${"=".repeat(40)}\n`;
+    message += `Serie A Archive`;
+
+    const encodedMessage = encodeURIComponent(message);
+    const whatsappURL = `https://wa.me/?text=${encodedMessage}`;
+    window.open(whatsappURL, "_blank");
+  }
+
+  shareStandingsOnWhatsApp() {
+    if (!this.leaderboardData || this.leaderboardData.length === 0) {
+      alert("Carica prima i dati della classifica!");
+      return;
+    }
+
+    const seasonTitle = document.querySelector("header h1 .title-text").textContent;
+    const seasonSubtitle = document.querySelector("header p").textContent.split("•")[0].trim();
+
+    let message = `*${seasonTitle}*\n`;
+    message += `${seasonSubtitle}\n`;
+    message += `${"=".repeat(40)}\n\n`;
+    message += `*CLASSIFICA COMPLETA*\n`;
+    message += `${"=".repeat(40)}\n\n`;
+
+    this.leaderboardData.forEach((team, index) => {
+      const position = index + 1;
+      const dr = team.differenzaReti > 0 ? `+${team.differenzaReti}` : team.differenzaReti;
+      
+      // Trova la zona
+      let zoneLabel = "";
+      for (const key in this.config.positions) {
+        const posConfig = this.config.positions[key];
+        if (posConfig.positions.includes(position)) {
+          zoneLabel = ` [${posConfig.name}]`;
+          break;
+        }
+      }
+
+      message += `${position}. ${team.squadra}${zoneLabel}\n`;
+      message += `   Pt: ${team.punti} | G: ${team.giocate} | V: ${team.vinte} | P: ${team.pareggiate} | S: ${team.perse}\n`;
+      message += `   GF: ${team.golFatti} | GS: ${team.golSubiti} | DR: ${dr}\n\n`;
+    });
+
+    message += `${"=".repeat(40)}\n`;
+    message += `Serie A Archive`;
+
+    const encodedMessage = encodeURIComponent(message);
+    const whatsappURL = `https://wa.me/?text=${encodedMessage}`;
+    window.open(whatsappURL, "_blank");
+  }
+
   // --- Pulsante Fluttuante ---
   initFloatingButton() {
     const backBtn = document.querySelector(".back-to-home-btn");
     if (!backBtn) return;
     setTimeout(() => {
       backBtn.classList.add("visible");
-    }, 500); // Appare dopo 500ms
+    }, 500);
   }
 }
 

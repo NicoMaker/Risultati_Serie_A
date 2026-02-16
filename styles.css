@@ -460,3 +460,115 @@ footer {
     transform: rotate(360deg);
   }
 }
+
+/* ==========================================
+   WHATSAPP BUTTON STYLES
+   ========================================== */
+
+/* Sezione pulsante principale */
+.whatsapp-share-section {
+  display: flex;
+  justify-content: center;
+  margin: 30px 0 40px;
+  position: relative;
+  z-index: 10;
+}
+
+/* Pulsante WhatsApp base */
+.whatsapp-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: linear-gradient(135deg, #25d366 0%, #1da851 100%);
+  color: white;
+  border: none;
+  padding: 14px 24px;
+  border-radius: 12px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  font-family: inherit;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 16px rgba(37, 211, 102, 0.3);
+}
+
+.whatsapp-btn:hover {
+  background: linear-gradient(135deg, #1da851 0%, #128c3e 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(37, 211, 102, 0.4);
+}
+
+.whatsapp-btn:active {
+  transform: translateY(0);
+}
+
+.whatsapp-btn svg {
+  flex-shrink: 0;
+}
+
+/* Pulsante WhatsApp per giornate */
+.whatsapp-day-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: linear-gradient(135deg, #25d366 0%, #1da851 100%);
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 8px rgba(37, 211, 102, 0.3);
+}
+
+.whatsapp-day-btn:hover {
+  background: linear-gradient(135deg, #1da851 0%, #128c3e 100%);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(37, 211, 102, 0.4);
+}
+
+/* Pulsante classifica sidebar */
+.whatsapp-standings-section {
+  padding: 0 0 20px 0;
+  display: flex;
+  justify-content: center;
+}
+
+/* Actions giornata */
+.day-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .whatsapp-btn {
+    width: 100%;
+    justify-content: center;
+    padding: 12px 20px;
+    font-size: 0.9rem;
+  }
+
+  .whatsapp-day-btn {
+    font-size: 0.8rem;
+    padding: 6px 12px;
+  }
+
+  .whatsapp-day-btn span {
+    display: none;
+  }
+}
+
+@media (max-width: 480px) {
+  .whatsapp-share-section {
+    margin: 20px 0 30px;
+  }
+
+  .whatsapp-btn svg {
+    width: 18px;
+    height: 18px;
+  }
+}

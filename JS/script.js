@@ -2,6 +2,7 @@ class SerieAApp {
   constructor() {
     this.seasonsGrid = document.getElementById("seasonsGrid");
     this.themeToggle = document.getElementById("theme-toggle");
+    this.seasonsData = null;
   }
 
   init() {
@@ -9,6 +10,7 @@ class SerieAApp {
     this.initTheme();
     this.loadSeasons();
     this.initOnlineStatusHandling();
+    this.initWhatsAppButton();
   }
 
   // --- Theme Management ---
@@ -82,9 +84,10 @@ class SerieAApp {
         return;
       }
 
+      this.seasonsData = sortedSeasons;
+
       const seasonsHtml = sortedSeasons
         .map((season, index) => {
-          // Assicura che la proprietà champion esista
           if (!("champion" in season)) {
             season.champion = null;
           }
@@ -100,16 +103,47 @@ class SerieAApp {
       let errorMessage =
         "Si è verificato un errore imprevisto durante il caricamento delle stagioni.";
       if (error instanceof TypeError) {
-        // Network error or file not found
         errorMessage =
           "Impossibile caricare i dati. Verifica la connessione o che il file `seasons-data.json` esista.";
       } else if (error instanceof SyntaxError) {
-        // JSON parsing error
         errorMessage =
           "Il file dei dati (`seasons-data.json`) sembra essere corrotto.";
       }
       this.seasonsGrid.innerHTML = `<div class="error-message">${errorMessage}</div>`;
     }
+  }
+
+  // --- WhatsApp Share ---
+  initWhatsAppButton() {
+    const whatsappBtn = document.getElementById("whatsapp-share-seasons-btn");
+    if (whatsappBtn) {
+      whatsappBtn.addEventListener("click", () => this.shareSeasonsOnWhatsApp());
+    }
+  }
+
+  shareSeasonsOnWhatsApp() {
+    if (!this.seasonsData || this.seasonsData.length === 0) {
+      alert("Carica prima i dati delle stagioni!");
+      return;
+    }
+
+    let message = "*SERIE A - ARCHIVIO STAGIONI*\n";
+    message += `Riepilogo completo\n`;
+    message += `${"=".repeat(40)}\n\n`;
+
+    this.seasonsData.forEach((season) => {
+      const statusText = season.champion ? "COMPLETATA" : "IN CORSO";
+      const championText = season.champion ? `\n   Campione: ${season.champion}` : "";
+      
+      message += `*${season.year}* - ${statusText}${championText}\n\n`;
+    });
+
+    message += `${"=".repeat(40)}\n`;
+    message += `Serie A Archive - ${this.seasonsData.length} stagioni disponibili`;
+
+    const encodedMessage = encodeURIComponent(message);
+    const whatsappURL = `https://wa.me/?text=${encodedMessage}`;
+    window.open(whatsappURL, "_blank");
   }
 
   // --- Event Handling ---
