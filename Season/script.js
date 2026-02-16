@@ -523,18 +523,8 @@ class SeasonPageApp {
     this.leaderboardData.forEach((team, index) => {
       const position = index + 1;
       const dr = team.differenzaReti > 0 ? `+${team.differenzaReti}` : team.differenzaReti;
-      
-      // Trova la zona
-      let zoneLabel = "";
-      for (const key in this.config.positions) {
-        const posConfig = this.config.positions[key];
-        if (posConfig.positions.includes(position)) {
-          zoneLabel = ` [${posConfig.name}]`;
-          break;
-        }
-      }
 
-      message += `${position}. ${team.squadra}${zoneLabel}\n`;
+      message += `${position}. ${team.squadra}\n`;
       message += `   Pt: ${team.punti} | G: ${team.giocate} | V: ${team.vinte} | P: ${team.pareggiate} | S: ${team.perse}\n`;
       message += `   GF: ${team.golFatti} | GS: ${team.golSubiti} | DR: ${dr}\n\n`;
     });
