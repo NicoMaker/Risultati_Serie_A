@@ -1521,8 +1521,8 @@
         {
           "home": "Lecce",
           "away": "Inter",
-          "homeScore": null,
-          "awayScore": null
+          "homeScore": 0,
+          "awayScore": 2
         },
         {
           "home": "Milan",
