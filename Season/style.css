@@ -908,11 +908,8 @@
   font-weight: 600;
   text-decoration: none;
   z-index: 20;
-  transition:
-    transform 0.25s ease,
-    box-shadow 0.25s ease,
-    border-color 0.25s ease,
-    bottom 0.5s ease-in-out;
+  transition: transform 0.25s ease, box-shadow 0.25s ease,
+    border-color 0.25s ease, bottom 0.5s ease-in-out;
   animation: float 4s ease-in-out infinite;
   opacity: 0;
 }
@@ -925,9 +922,7 @@
 .back-to-home-btn:hover {
   transform: translateY(-3px) scale(1.05);
   border-color: var(--accent-green);
-  box-shadow:
-    0 14px 30px rgba(0, 255, 136, 0.2),
-    var(--shadow);
+  box-shadow: 0 14px 30px rgba(0, 255, 136, 0.2), var(--shadow);
   color: var(--accent-green);
 }
 
@@ -1217,7 +1212,9 @@
   min-width: 0;
 }
 
-/* ===== LEADERBOARD FILTERS — Modern Pill Tabs ===== */
+
+
+/* ===== LEADERBOARD FILTERS — Tricolore ===== */
 .leaderboard-filters-card {
   margin-bottom: 12px;
 }
@@ -1225,11 +1222,10 @@
 .view-filter-group {
   display: flex;
   gap: 6px;
-  background: rgba(255, 255, 255, 0.04);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.08);
   border-radius: 16px;
   padding: 5px;
-  backdrop-filter: blur(10px);
 }
 
 .filter-btn {
@@ -1239,21 +1235,18 @@
   align-items: center;
   justify-content: center;
   gap: 7px;
-  padding: 10px 14px;
+  padding: 11px 14px;
   border-radius: 11px;
-  border: none;
+  border: 2px solid transparent;
   background: transparent;
-  color: rgba(255, 255, 255, 0.38);
+  color: rgba(255,255,255,0.4);
   font-size: 13px;
-  font-weight: 600;
+  font-weight: 700;
   cursor: pointer;
-  transition:
-    color 0.2s ease,
-    background 0.2s ease,
-    transform 0.15s ease;
+  transition: all 0.22s cubic-bezier(.4,0,.2,1);
   white-space: nowrap;
-  font-family: "Inter", sans-serif;
-  letter-spacing: 0.02em;
+  font-family: 'Inter', sans-serif;
+  letter-spacing: 0.03em;
   overflow: hidden;
   -webkit-tap-highlight-color: transparent;
 }
@@ -1265,112 +1258,93 @@
 }
 
 .filter-btn:hover:not(.active) {
-  color: rgba(255, 255, 255, 0.72);
-  background: rgba(255, 255, 255, 0.06);
+  color: rgba(255,255,255,0.65);
+  background: rgba(255,255,255,0.07);
 }
 
 .filter-btn:active {
   transform: scale(0.96);
 }
 
-/* — Globale attivo: verde iridescente — */
+/* — GLOBALE: Verde Italia — */
 .filter-btn[data-filter="globale"].active {
-  background: linear-gradient(135deg, #1de97c 0%, #00c9a7 50%, #0dd3b8 100%);
-  color: #003d2b;
+  background: linear-gradient(135deg, #009246 0%, #00b050 60%, #00c85a 100%);
+  color: #fff;
+  border-color: rgba(255,255,255,0.25);
   box-shadow:
-    0 4px 16px rgba(29, 233, 124, 0.45),
-    0 1px 4px rgba(0, 0, 0, 0.3),
-    inset 0 1px 0 rgba(255, 255, 255, 0.25);
+    0 0 0 1px rgba(0,146,70,0.6),
+    0 4px 18px rgba(0,146,70,0.55),
+    0 1px 4px rgba(0,0,0,0.4),
+    inset 0 1px 0 rgba(255,255,255,0.3);
+  text-shadow: 0 1px 3px rgba(0,0,0,0.35);
 }
 
-/* — Casa attivo: blu elettrico — */
+/* — CASA: Bianco Italia — */
 .filter-btn[data-filter="casa"].active {
-  background: linear-gradient(135deg, #4f8ef7 0%, #2563eb 50%, #1d4ed8 100%);
-  color: #fff;
+  background: linear-gradient(135deg, #e8e8e8 0%, #ffffff 50%, #f0f0f0 100%);
+  color: #1a1a2e;
+  border-color: rgba(255,255,255,0.5);
   box-shadow:
-    0 4px 16px rgba(79, 142, 247, 0.5),
-    0 1px 4px rgba(0, 0, 0, 0.3),
-    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+    0 0 0 1px rgba(200,200,200,0.5),
+    0 4px 18px rgba(255,255,255,0.3),
+    0 1px 4px rgba(0,0,0,0.4),
+    inset 0 1px 0 rgba(255,255,255,0.8);
+  text-shadow: none;
 }
 
-/* — Trasferta attivo: viola/magenta — */
+/* — TRASFERTA: Rosso Italia — */
 .filter-btn[data-filter="trasferta"].active {
-  background: linear-gradient(135deg, #a855f7 0%, #8b5cf6 50%, #7c3aed 100%);
+  background: linear-gradient(135deg, #c8102e 0%, #e8112d 55%, #f5213e 100%);
   color: #fff;
+  border-color: rgba(255,255,255,0.25);
   box-shadow:
-    0 4px 16px rgba(168, 85, 247, 0.5),
-    0 1px 4px rgba(0, 0, 0, 0.3),
-    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+    0 0 0 1px rgba(200,16,46,0.6),
+    0 4px 18px rgba(200,16,46,0.55),
+    0 1px 4px rgba(0,0,0,0.4),
+    inset 0 1px 0 rgba(255,255,255,0.25);
+  text-shadow: 0 1px 3px rgba(0,0,0,0.35);
 }
 
 .filter-btn.active .filter-icon {
-  transform: scale(1.15);
-  filter: drop-shadow(0 1px 4px rgba(255, 255, 255, 0.4));
+  transform: scale(1.18);
+  filter: drop-shadow(0 1px 3px rgba(0,0,0,0.3));
 }
 
-/* Shimmer effect on active */
+/* Shimmer on active */
 .filter-btn.active::before {
-  content: "";
+  content: '';
   position: absolute;
-  top: 0;
-  left: -100%;
-  width: 60%;
+  top: 0; left: -100%;
+  width: 55%;
   height: 100%;
-  background: linear-gradient(
-    90deg,
-    transparent,
-    rgba(255, 255, 255, 0.18),
-    transparent
-  );
-  animation: filterShimmer 2.4s ease-in-out infinite;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.22), transparent);
+  animation: filterShimmer 2.6s ease-in-out infinite;
+  pointer-events: none;
 }
 
 @keyframes filterShimmer {
-  0% {
-    left: -100%;
-  }
-  50% {
-    left: 160%;
-  }
-  100% {
-    left: 160%;
-  }
+  0%   { left: -100%; }
+  50%  { left: 170%; }
+  100% { left: 170%; }
 }
 
 /* — Light mode — */
 html.light .view-filter-group {
-  background: rgba(0, 0, 0, 0.04);
-  border-color: rgba(0, 0, 0, 0.09);
+  background: rgba(0,0,0,0.04);
+  border-color: rgba(0,0,0,0.1);
 }
 
 html.light .filter-btn {
-  color: rgba(0, 0, 0, 0.38);
+  color: rgba(0,0,0,0.38);
 }
 
 html.light .filter-btn:hover:not(.active) {
-  color: rgba(0, 0, 0, 0.7);
-  background: rgba(0, 0, 0, 0.05);
+  color: rgba(0,0,0,0.65);
+  background: rgba(0,0,0,0.06);
 }
 
-html.light .filter-btn[data-filter="globale"].active {
-  color: #002a1e;
-}
-
-html.light .filter-btn[data-filter="casa"].active,
-html.light .filter-btn[data-filter="trasferta"].active {
-  color: #fff;
-}
-
-/* ===== WHATSAPP STANDINGS BUTTON — Full Width ===== */
-.whatsapp-standings-section {
-  width: 100%;
-  margin-bottom: 12px;
-}
-
-.whatsapp-standings-section .whatsapp-btn {
-  width: 100%;
-  box-sizing: border-box;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+html.light .filter-btn[data-filter="casa"].active {
+  background: linear-gradient(135deg, #c8c8c8 0%, #e8e8e8 50%, #d8d8d8 100%);
+  color: #111;
+  box-shadow: 0 4px 18px rgba(0,0,0,0.15), inset 0 1px 0 rgba(255,255,255,0.6);
 }
