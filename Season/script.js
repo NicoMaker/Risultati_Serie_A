@@ -16,6 +16,12 @@ class SeasonPageApp {
     this.data = null;
     this.config = null;
     this.leaderboardData = [];
+    this.leaderboardDataHome = [];
+    this.leaderboardDataAway = [];
+
+    // Stato filtri classifica
+    this.activeFilter = "globale"; // globale | casa | trasferta
+    this.searchQuery = "";
   }
 
   async init() {
@@ -25,6 +31,7 @@ class SeasonPageApp {
     await this.loadDataAndRender();
     this.initFloatingButton();
     this.initWhatsAppButtons();
+    this.initLeaderboardFilters();
   }
 
   // --- Gestione Tema ---
@@ -54,10 +61,10 @@ class SeasonPageApp {
   // --- Gestione Vista (Calendario/Classifica) ---
   initViewSwitcher() {
     this.showCalendarBtn.addEventListener("click", () =>
-      this.switchView("calendar")
+      this.switchView("calendar"),
     );
     this.showSidebarBtn.addEventListener("click", () =>
-      this.switchView("sidebar")
+      this.switchView("sidebar"),
     );
 
     const savedView = localStorage.getItem("currentView") || "calendar";
@@ -142,11 +149,11 @@ class SeasonPageApp {
                 <div class="skeleton skeleton-avatar"></div>
               </div>
               <div class="skeleton skeleton-line lg" style="width: 80px; margin: 0 auto;"></div>
-            </div>`
+            </div>`,
             )
             .join("")}
         </div>
-      </div>`
+      </div>`,
     ).join("");
   }
 
@@ -165,10 +172,10 @@ class SeasonPageApp {
         ${Array.from({ length: 7 })
           .map(
             () =>
-              `<td><div class="skeleton skeleton-line" style="width:40px;"></div></td>`
+              `<td><div class="skeleton skeleton-line" style="width:40px;"></div></td>`,
           )
           .join("")}
-      </tr>`
+      </tr>`,
     ).join("");
   }
 
@@ -229,15 +236,15 @@ class SeasonPageApp {
         <div class="teams">
           <div class="team">
             <img src="${teamLogos[match.home]}" alt="${
-      match.home
-    }" class="team-logo">
+              match.home
+            }" class="team-logo">
             <span class="team-name">${match.home}</span>
           </div>
           <span class="vs">VS</span>
           <div class="team">
             <img src="${teamLogos[match.away]}" alt="${
-      match.away
-    }" class="team-logo">
+              match.away
+            }" class="team-logo">
             <span class="team-name">${match.away}</span>
           </div>
         </div>
@@ -251,72 +258,169 @@ class SeasonPageApp {
   // --- Rendering Classifica e Legenda ---
   _renderLeaderboard() {
     const { calendar, teams, teamLogos } = this.data;
-    const teamsStats = {};
 
-    teams.forEach((team) => {
-      teamsStats[team] = {
-        squadra: team,
-        punti: 0,
-        giocate: 0,
-        vinte: 0,
-        pareggiate: 0,
-        perse: 0,
-        golFatti: 0,
-        golSubiti: 0,
-        differenzaReti: 0,
-      };
-    });
+    const makeStats = () =>
+      Object.fromEntries(
+        teams.map((team) => [
+          team,
+          {
+            squadra: team,
+            punti: 0,
+            giocate: 0,
+            vinte: 0,
+            pareggiate: 0,
+            perse: 0,
+            golFatti: 0,
+            golSubiti: 0,
+            differenzaReti: 0,
+          },
+        ]),
+      );
+
+    const teamsStats = makeStats();
+    const homeStats = makeStats();
+    const awayStats = makeStats();
 
     const allMatches = calendar.flatMap((day) =>
       day.partite.filter(
-        (match) => teams.includes(match.home) && teams.includes(match.away)
-      )
+        (match) => teams.includes(match.home) && teams.includes(match.away),
+      ),
     );
 
     allMatches.forEach((match) => {
       if (match.homeScore !== null && match.awayScore !== null) {
-        const teamCasa = teamsStats[match.home];
-        const teamOspite = teamsStats[match.away];
+        const updateStats = (stats, homeName, awayName, hGoal, aGoal) => {
+          const h = stats[homeName];
+          const a = stats[awayName];
+          h.giocate++;
+          a.giocate++;
+          h.golFatti += hGoal;
+          h.golSubiti += aGoal;
+          a.golFatti += aGoal;
+          a.golSubiti += hGoal;
+          if (hGoal > aGoal) {
+            h.punti += 3;
+            h.vinte++;
+            a.perse++;
+          } else if (hGoal < aGoal) {
+            a.punti += 3;
+            a.vinte++;
+            h.perse++;
+          } else {
+            h.punti++;
+            a.punti++;
+            h.pareggiate++;
+            a.pareggiate++;
+          }
+        };
 
-        teamCasa.giocate++;
-        teamOspite.giocate++;
-        teamCasa.golFatti += match.homeScore;
-        teamCasa.golSubiti += match.awayScore;
-        teamOspite.golFatti += match.awayScore;
-        teamOspite.golSubiti += match.homeScore;
+        updateStats(
+          teamsStats,
+          match.home,
+          match.away,
+          match.homeScore,
+          match.awayScore,
+        );
 
+        // solo stat casa per home team
+        const hHome = homeStats[match.home];
+        hHome.giocate++;
+        hHome.golFatti += match.homeScore;
+        hHome.golSubiti += match.awayScore;
         if (match.homeScore > match.awayScore) {
-          teamCasa.punti += 3;
-          teamCasa.vinte++;
-          teamOspite.perse++;
+          hHome.punti += 3;
+          hHome.vinte++;
         } else if (match.homeScore < match.awayScore) {
-          teamOspite.punti += 3;
-          teamOspite.vinte++;
-          teamCasa.perse++;
+          hHome.perse++;
         } else {
-          teamCasa.punti += 1;
-          teamOspite.punti += 1;
-          teamCasa.pareggiate++;
-          teamOspite.pareggiate++;
+          hHome.punti++;
+          hHome.pareggiate++;
+        }
+
+        // solo stat trasferta per away team
+        const aAway = awayStats[match.away];
+        aAway.giocate++;
+        aAway.golFatti += match.awayScore;
+        aAway.golSubiti += match.homeScore;
+        if (match.awayScore > match.homeScore) {
+          aAway.punti += 3;
+          aAway.vinte++;
+        } else if (match.awayScore < match.homeScore) {
+          aAway.perse++;
+        } else {
+          aAway.punti++;
+          aAway.pareggiate++;
         }
       }
     });
 
-    Object.values(teamsStats).forEach((team) => {
-      team.differenzaReti = team.golFatti - team.golSubiti;
-    });
-
-    const finalSortedTeams = this._sortTeams(
-      Object.values(teamsStats),
-      allMatches
+    [teamsStats, homeStats, awayStats].forEach((s) =>
+      Object.values(s).forEach((t) => {
+        t.differenzaReti = t.golFatti - t.golSubiti;
+      }),
     );
 
-    this.leaderboardData = finalSortedTeams;
+    this.leaderboardData = this._sortTeams(
+      Object.values(teamsStats),
+      allMatches,
+    );
+    this.leaderboardDataHome = this._sortTeams(
+      Object.values(homeStats),
+      allMatches,
+    );
+    this.leaderboardDataAway = this._sortTeams(
+      Object.values(awayStats),
+      allMatches,
+    );
+
+    this._applyLeaderboardView();
+  }
+
+  _getActiveLeaderboardData() {
+    if (this.activeFilter === "casa") return this.leaderboardDataHome;
+    if (this.activeFilter === "trasferta") return this.leaderboardDataAway;
+    return this.leaderboardData;
+  }
+
+  _applyLeaderboardView() {
+    const { teamLogos } = this.data;
+    const data = this._getActiveLeaderboardData();
+
+    const titleEl = document.getElementById("leaderboard-title");
+    if (titleEl) {
+      const labels = {
+        globale: "CLASSIFICA",
+        casa: "CLASSIFICA CASA",
+        trasferta: "CLASSIFICA TRASFERTA",
+      };
+      titleEl.textContent = labels[this.activeFilter] || "CLASSIFICA";
+    }
 
     this.leaderboardBody.innerHTML = "";
-    finalSortedTeams.forEach((team, index) => {
+    data.forEach((team, index) => {
       const tr = this._createLeaderboardRow(team, index + 1, teamLogos);
       this.leaderboardBody.appendChild(tr);
+    });
+  }
+
+  initLeaderboardFilters() {
+    // Ripristina filtro salvato
+    const savedFilter = localStorage.getItem("leaderboardFilter") || "globale";
+    this.activeFilter = savedFilter;
+    document.querySelectorAll(".filter-btn").forEach((btn) => {
+      btn.classList.toggle("active", btn.dataset.filter === savedFilter);
+    });
+
+    document.querySelectorAll(".filter-btn").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        document
+          .querySelectorAll(".filter-btn")
+          .forEach((b) => b.classList.remove("active"));
+        btn.classList.add("active");
+        this.activeFilter = btn.dataset.filter;
+        localStorage.setItem("leaderboardFilter", this.activeFilter);
+        if (this.data) this._applyLeaderboardView();
+      });
     });
   }
 
@@ -333,13 +437,13 @@ class SeasonPageApp {
       if (tiedTeams.length > 1) {
         const sortedByHeadToHead = this._calculateHeadToHead(
           tiedTeams,
-          allMatches
+          allMatches,
         );
         const indexA = sortedByHeadToHead.findIndex(
-          (t) => t.squadra === a.squadra
+          (t) => t.squadra === a.squadra,
         );
         const indexB = sortedByHeadToHead.findIndex(
-          (t) => t.squadra === b.squadra
+          (t) => t.squadra === b.squadra,
         );
         if (indexA !== indexB) return indexA - indexB;
       }
@@ -360,7 +464,7 @@ class SeasonPageApp {
 
     const relevantMatches = allMatches.filter(
       (match) =>
-        teamNames.includes(match.home) && teamNames.includes(match.away)
+        teamNames.includes(match.home) && teamNames.includes(match.away),
     );
 
     relevantMatches.forEach((match) => {
@@ -422,8 +526,8 @@ class SeasonPageApp {
       <td>
         <div class="team-cell">
           <img src="${teamLogos[team.squadra]}" alt="${
-      team.squadra
-    }" class="team-logo-small">
+            team.squadra
+          }" class="team-logo-small">
           <span>${team.squadra}</span>
         </div>
       </td>
@@ -460,7 +564,9 @@ class SeasonPageApp {
     // Pulsante classifica
     const standingsBtn = document.getElementById("whatsapp-standings-btn");
     if (standingsBtn) {
-      standingsBtn.addEventListener("click", () => this.shareStandingsOnWhatsApp());
+      standingsBtn.addEventListener("click", () =>
+        this.shareStandingsOnWhatsApp(),
+      );
     }
 
     // Pulsanti giornate (delegazione eventi)
@@ -474,14 +580,19 @@ class SeasonPageApp {
   }
 
   shareDayOnWhatsApp(giornataNum) {
-    const dayData = this.data.calendar.find(d => d.giornata === giornataNum);
+    const dayData = this.data.calendar.find((d) => d.giornata === giornataNum);
     if (!dayData) {
       alert("Dati giornata non trovati!");
       return;
     }
 
-    const seasonTitle = document.querySelector("header h1 .title-text").textContent;
-    const seasonSubtitle = document.querySelector("header p").textContent.split("•")[0].trim();
+    const seasonTitle = document.querySelector(
+      "header h1 .title-text",
+    ).textContent;
+    const seasonSubtitle = document
+      .querySelector("header p")
+      .textContent.split("•")[0]
+      .trim();
 
     let message = `*${seasonTitle}*\n`;
     message += `${seasonSubtitle}\n`;
@@ -492,7 +603,7 @@ class SeasonPageApp {
     dayData.partite.forEach((match) => {
       const homeScore = match.homeScore !== null ? match.homeScore : "?";
       const awayScore = match.awayScore !== null ? match.awayScore : "?";
-      
+
       message += `${match.home} vs ${match.away}\n`;
       message += `   Risultato: ${homeScore} - ${awayScore}\n\n`;
     });
@@ -506,26 +617,40 @@ class SeasonPageApp {
   }
 
   shareStandingsOnWhatsApp() {
-    if (!this.leaderboardData || this.leaderboardData.length === 0) {
+    const data = this._getActiveLeaderboardData();
+    if (!data || data.length === 0) {
       alert("Carica prima i dati della classifica!");
       return;
     }
 
-    const seasonTitle = document.querySelector("header h1 .title-text").textContent;
-    const seasonSubtitle = document.querySelector("header p").textContent.split("•")[0].trim();
+    const seasonTitle = document.querySelector(
+      "header h1 .title-text",
+    ).textContent;
+    const seasonSubtitle = document
+      .querySelector("header p")
+      .textContent.split("•")[0]
+      .trim();
+    const labels = {
+      globale: "CLASSIFICA COMPLETA",
+      casa: "CLASSIFICA CASA",
+      trasferta: "CLASSIFICA TRASFERTA",
+    };
+    const titleLabel = labels[this.activeFilter] || "CLASSIFICA";
 
     let message = `*${seasonTitle}*\n`;
     message += `${seasonSubtitle}\n`;
     message += `${"=".repeat(40)}\n\n`;
-    message += `*CLASSIFICA COMPLETA*\n`;
+    message += `*${titleLabel}*\n`;
     message += `${"=".repeat(40)}\n\n`;
 
-    this.leaderboardData.forEach((team, index) => {
+    data.forEach((team, index) => {
       const position = index + 1;
-      const dr = team.differenzaReti > 0 ? `+${team.differenzaReti}` : team.differenzaReti;
-
+      const dr =
+        team.differenzaReti > 0
+          ? `+${team.differenzaReti}`
+          : team.differenzaReti;
       message += `${position}. ${team.squadra}\n`;
-      message += `   Pt: ${team.punti} | G: ${team.giocate} | V: ${team.vinte} | P: ${team.pareggiate} | S: ${team.perse}\n`;
+      message += `   Pt: ${team.punti} | G: ${team.giocate} | V: ${team.vinte} | N: ${team.pareggiate} | P: ${team.perse}\n`;
       message += `   GF: ${team.golFatti} | GS: ${team.golSubiti} | DR: ${dr}\n\n`;
     });
 
@@ -533,8 +658,7 @@ class SeasonPageApp {
     message += `Serie A Archive`;
 
     const encodedMessage = encodeURIComponent(message);
-    const whatsappURL = `https://wa.me/?text=${encodedMessage}`;
-    window.open(whatsappURL, "_blank");
+    window.open(`https://wa.me/?text=${encodedMessage}`, "_blank");
   }
 
   // --- Pulsante Fluttuante ---
