@@ -572,3 +572,57 @@ footer {
     height: 18px;
   }
 }
+
+/* Da questo: */
+.whatsapp-share-section {
+  display: flex;
+  justify-content: center;
+  margin: 30px 0 40px;
+  position: relative;
+  z-index: 10;
+}
+
+.whatsapp-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: linear-gradient(135deg, #25d366 0%, #1da851 100%);
+  color: white;
+  border: none;
+  padding: 14px 24px;
+  border-radius: 12px;
+  font-size: 0.95rem;
+  font-weight: 600;
+  font-family: inherit;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 16px rgba(37, 211, 102, 0.3);
+}
+
+/* A questo: */
+.whatsapp-share-section {
+  display: flex;
+  justify-content: center;
+  margin: 30px 0 40px;
+  position: relative;
+  z-index: 10;
+}
+
+.whatsapp-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;   /* ← testo centrato */
+  gap: 10px;
+  width: 100%;               /* ← larghezza piena */
+  background: linear-gradient(135deg, #25d366 0%, #1da851 100%);
+  color: white;
+  border: none;
+  padding: 18px 24px;        /* ← un po' più alto */
+  border-radius: 12px;
+  font-size: 1rem;
+  font-weight: 600;
+  font-family: inherit;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 16px rgba(37, 211, 102, 0.3);
+}
