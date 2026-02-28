@@ -1604,8 +1604,8 @@
         {
           "home": "Como",
           "away": "Lecce",
-          "homeScore": null,
-          "awayScore": null
+          "homeScore": 3,
+          "awayScore": 1
         }
       ]
     },
