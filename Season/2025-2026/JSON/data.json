@@ -1598,8 +1598,8 @@
         {
           "home": "Sassuolo",
           "away": "Atalanta",
-          "homeScore": null,
-          "awayScore": null
+          "homeScore": 2,
+          "awayScore": 1
         },
         {
           "home": "Como",
