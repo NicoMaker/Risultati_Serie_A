@@ -1586,8 +1586,8 @@
         {
           "home": "Udinese",
           "away": "Fiorentina",
-          "homeScore": null,
-          "awayScore": null
+          "homeScore": 3,
+          "awayScore": 0
         },
         {
           "home": "Torino",
