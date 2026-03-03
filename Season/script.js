@@ -34,6 +34,16 @@ class SeasonPageApp {
     this.initLeaderboardFilters();
   }
 
+  // --- Helper: percorso logo normalizzato ---
+  _getLogoPath(rawPath) {
+    if (!rawPath) return "";
+    if (rawPath.startsWith("http") || rawPath.startsWith("data:"))
+      return rawPath;
+    // Rimuove eventuali ../../ già presenti, poi li riaggunge sempre
+    const cleaned = rawPath.replace(/^(\.\.\/)+/, "");
+    return `../../${cleaned}`;
+  }
+
   // --- Gestione Tema ---
   initTheme() {
     const savedTheme = localStorage.getItem("theme") || "dark";
@@ -235,16 +245,12 @@ class SeasonPageApp {
       <div class="match-card">
         <div class="teams">
           <div class="team">
-            <img src="../../${teamLogos[match.home]}" alt="${
-              match.home
-            }" class="team-logo">
+            <img src="${this._getLogoPath(teamLogos[match.home])}" alt="${match.home}" class="team-logo">
             <span class="team-name">${match.home}</span>
           </div>
           <span class="vs">VS</span>
           <div class="team">
-            <img src="../../${teamLogos[match.away]}" alt="${
-              match.away
-            }" class="team-logo">
+            <img src="${this._getLogoPath(teamLogos[match.away])}" alt="${match.away}" class="team-logo">
             <span class="team-name">${match.away}</span>
           </div>
         </div>
@@ -525,15 +531,11 @@ class SeasonPageApp {
       <td><div class="position">${position}</div></td>
       <td>
         <div class="team-cell">
-          <img src="../../${teamLogos[team.squadra]}" alt="${
-            team.squadra
-          }" class="team-logo-small">
+          <img src="${this._getLogoPath(teamLogos[team.squadra])}" alt="${team.squadra}" class="team-logo-small">
           <span>${team.squadra}</span>
         </div>
       </td>
-      <td><strong style="color: var(--accent-green);">${
-        team.punti
-      }</strong></td>
+      <td><strong style="color: var(--accent-green);">${team.punti}</strong></td>
       <td>${team.giocate}</td>
       <td>${team.vinte}</td>
       <td>${team.pareggiate}</td>
