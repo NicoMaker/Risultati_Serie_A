@@ -235,14 +235,14 @@ class SeasonPageApp {
       <div class="match-card">
         <div class="teams">
           <div class="team">
-            <img src="${teamLogos[match.home]}" alt="${
+            <img src="../../${teamLogos[match.home]}" alt="${
               match.home
             }" class="team-logo">
             <span class="team-name">${match.home}</span>
           </div>
           <span class="vs">VS</span>
           <div class="team">
-            <img src="${teamLogos[match.away]}" alt="${
+            <img src="../../${teamLogos[match.away]}" alt="${
               match.away
             }" class="team-logo">
             <span class="team-name">${match.away}</span>
@@ -525,7 +525,7 @@ class SeasonPageApp {
       <td><div class="position">${position}</div></td>
       <td>
         <div class="team-cell">
-          <img src="${teamLogos[team.squadra]}" alt="${
+          <img src="../../${teamLogos[team.squadra]}" alt="${
             team.squadra
           }" class="team-logo-small">
           <span>${team.squadra}</span>
