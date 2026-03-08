@@ -1663,8 +1663,8 @@
         {
           "home": "Milan",
           "away": "Inter",
-          "homeScore": null,
-          "awayScore": null
+          "homeScore": 1,
+          "awayScore": 0
         },
         {
           "home": "Bologna",
