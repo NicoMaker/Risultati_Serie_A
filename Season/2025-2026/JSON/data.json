@@ -1633,8 +1633,8 @@
         {
           "home": "Fiorentina",
           "away": "Parma",
-          "homeScore": null,
-          "awayScore": null
+          "homeScore": 0,
+          "awayScore": 0
         },
         {
           "home": "Genoa",
@@ -1669,8 +1669,8 @@
         {
           "home": "Bologna",
           "away": "Verona",
-          "homeScore": null,
-          "awayScore": null
+          "homeScore": 1,
+          "awayScore": 2
         }
       ]
     },
