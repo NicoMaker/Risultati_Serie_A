@@ -301,8 +301,8 @@ class SeasonPageApp {
       );
 
     const teamsStats = makeStats();
-    const homeStats  = makeStats();
-    const awayStats  = makeStats();
+    const homeStats = makeStats();
+    const awayStats = makeStats();
 
     // Filtra per range di giornate
     const filteredCalendar = calendar.filter((day) => {
@@ -323,31 +323,63 @@ class SeasonPageApp {
         const updateStats = (stats, homeName, awayName, hGoal, aGoal) => {
           const h = stats[homeName];
           const a = stats[awayName];
-          h.giocate++; a.giocate++;
-          h.golFatti += hGoal; h.golSubiti += aGoal;
-          a.golFatti += aGoal; a.golSubiti += hGoal;
-          if (hGoal > aGoal) { h.punti += 3; h.vinte++; a.perse++; }
-          else if (hGoal < aGoal) { a.punti += 3; a.vinte++; h.perse++; }
-          else { h.punti++; a.punti++; h.pareggiate++; a.pareggiate++; }
+          h.giocate++;
+          a.giocate++;
+          h.golFatti += hGoal;
+          h.golSubiti += aGoal;
+          a.golFatti += aGoal;
+          a.golSubiti += hGoal;
+          if (hGoal > aGoal) {
+            h.punti += 3;
+            h.vinte++;
+            a.perse++;
+          } else if (hGoal < aGoal) {
+            a.punti += 3;
+            a.vinte++;
+            h.perse++;
+          } else {
+            h.punti++;
+            a.punti++;
+            h.pareggiate++;
+            a.pareggiate++;
+          }
         };
 
-        updateStats(teamsStats, match.home, match.away, match.homeScore, match.awayScore);
+        updateStats(
+          teamsStats,
+          match.home,
+          match.away,
+          match.homeScore,
+          match.awayScore,
+        );
 
         const hHome = homeStats[match.home];
         hHome.giocate++;
         hHome.golFatti += match.homeScore;
         hHome.golSubiti += match.awayScore;
-        if (match.homeScore > match.awayScore) { hHome.punti += 3; hHome.vinte++; }
-        else if (match.homeScore < match.awayScore) { hHome.perse++; }
-        else { hHome.punti++; hHome.pareggiate++; }
+        if (match.homeScore > match.awayScore) {
+          hHome.punti += 3;
+          hHome.vinte++;
+        } else if (match.homeScore < match.awayScore) {
+          hHome.perse++;
+        } else {
+          hHome.punti++;
+          hHome.pareggiate++;
+        }
 
         const aAway = awayStats[match.away];
         aAway.giocate++;
         aAway.golFatti += match.awayScore;
         aAway.golSubiti += match.homeScore;
-        if (match.awayScore > match.homeScore) { aAway.punti += 3; aAway.vinte++; }
-        else if (match.awayScore < match.homeScore) { aAway.perse++; }
-        else { aAway.punti++; aAway.pareggiate++; }
+        if (match.awayScore > match.homeScore) {
+          aAway.punti += 3;
+          aAway.vinte++;
+        } else if (match.awayScore < match.homeScore) {
+          aAway.perse++;
+        } else {
+          aAway.punti++;
+          aAway.pareggiate++;
+        }
       }
     });
 
@@ -357,16 +389,27 @@ class SeasonPageApp {
       }),
     );
 
-    this.leaderboardData     = this._sortTeams(Object.values(teamsStats), allMatches);
-    this.leaderboardDataHome = this._sortTeams(Object.values(homeStats),  allMatches);
-    this.leaderboardDataAway = this._sortTeams(Object.values(awayStats),  allMatches);
+    this.leaderboardData = this._sortTeams(
+      Object.values(teamsStats),
+      allMatches,
+    );
+    this.leaderboardDataHome = this._sortTeams(
+      Object.values(homeStats),
+      allMatches,
+    );
+    this.leaderboardDataAway = this._sortTeams(
+      Object.values(awayStats),
+      allMatches,
+    );
 
     this._applyLeaderboardView();
   }
 
   // Inizializza e aggiorna il range slider giornate
   _initRoundRangeSlider() {
-    const rounds = [...new Set(this.data.calendar.map((d) => d.giornata))].sort((a, b) => a - b);
+    const rounds = [...new Set(this.data.calendar.map((d) => d.giornata))].sort(
+      (a, b) => a - b,
+    );
     if (rounds.length === 0) return;
 
     const minPossible = rounds[0];
@@ -391,15 +434,22 @@ class SeasonPageApp {
       let vMin = parseInt(sliderMin.value);
       let vMax = parseInt(sliderMax.value);
       if (vMin > vMax) {
-        if (document.activeElement === sliderMin) { vMin = vMax; sliderMin.value = vMin; }
-        else { vMax = vMin; sliderMax.value = vMax; }
+        if (document.activeElement === sliderMin) {
+          vMin = vMax;
+          sliderMin.value = vMin;
+        } else {
+          vMax = vMin;
+          sliderMax.value = vMax;
+        }
       }
       this.minRound = vMin === minPossible ? null : vMin;
       this.maxRound = vMax === maxPossible ? null : vMax;
       // Salva in localStorage
-      if (this.minRound !== null) localStorage.setItem("minRound", this.minRound);
+      if (this.minRound !== null)
+        localStorage.setItem("minRound", this.minRound);
       else localStorage.removeItem("minRound");
-      if (this.maxRound !== null) localStorage.setItem("maxRound", this.maxRound);
+      if (this.maxRound !== null)
+        localStorage.setItem("maxRound", this.maxRound);
       else localStorage.removeItem("maxRound");
       this._updateRangeUI(minPossible, maxPossible);
       if (this.data) this._computeAndApplyLeaderboard();
@@ -421,12 +471,12 @@ class SeasonPageApp {
     const vMin = parseInt(sliderMin.value);
     const vMax = parseInt(sliderMax.value);
     const range = maxPossible - minPossible || 1;
-    const leftPct  = ((vMin - minPossible) / range) * 100;
+    const leftPct = ((vMin - minPossible) / range) * 100;
     const rightPct = ((vMax - minPossible) / range) * 100;
 
     if (fill) {
-      fill.style.left  = leftPct + "%";
-      fill.style.width = (rightPct - leftPct) + "%";
+      fill.style.left = leftPct + "%";
+      fill.style.width = rightPct - leftPct + "%";
     }
     if (minVal) minVal.textContent = `G${vMin}`;
     if (maxVal) maxVal.textContent = `G${vMax}`;
@@ -446,7 +496,9 @@ class SeasonPageApp {
         localStorage.removeItem("minRound");
         localStorage.removeItem("maxRound");
         // Ripristina slider ai valori min/max
-        const rounds = [...new Set(this.data.calendar.map((d) => d.giornata))].sort((a, b) => a - b);
+        const rounds = [
+          ...new Set(this.data.calendar.map((d) => d.giornata)),
+        ].sort((a, b) => a - b);
         const sliderMin = document.getElementById("round-range-min");
         const sliderMax = document.getElementById("round-range-max");
         if (sliderMin) sliderMin.value = rounds[0];
@@ -735,41 +787,52 @@ class SeasonPageApp {
       return;
     }
 
-    const seasonTitle = document.querySelector("header h1 .title-text").textContent;
-    const seasonSubtitle = document.querySelector("header p").textContent.split("•")[0].trim();
+    const seasonTitle = document.querySelector(
+      "header h1 .title-text",
+    ).textContent;
+    const seasonSubtitle = document
+      .querySelector("header p")
+      .textContent.split("•")[0]
+      .trim();
 
     // Filtro vista
     const filterLabels = {
-      globale:   "CLASSIFICA COMPLETA",
-      casa:      "CLASSIFICA CASA",
+      globale: "CLASSIFICA COMPLETA",
+      casa: "CLASSIFICA CASA",
       trasferta: "CLASSIFICA TRASFERTA",
     };
     let titleLabel = filterLabels[this.activeFilter] || "CLASSIFICA";
 
-    // Filtro giornata
-    const roundNote = this.maxRound !== null
-      ? `Fino alla Giornata ${String(this.maxRound).padStart(2, "0")}`
-      : "Tutte le giornate";
+    // Filtro giornata — range
+    const rounds = [...new Set(this.data.calendar.map((d) => d.giornata))].sort(
+      (a, b) => a - b,
+    );
+    const firstRound = rounds[0];
+    const lastRound = rounds[rounds.length - 1];
+    const effectiveMin = this.minRound !== null ? this.minRound : firstRound;
+    const effectiveMax = this.maxRound !== null ? this.maxRound : lastRound;
+    const isAllRounds =
+      effectiveMin === firstRound && effectiveMax === lastRound;
+    const roundNote = isAllRounds
+      ? "Tutte le giornate"
+      : `Giornata ${String(effectiveMin).padStart(2, "0")} → Giornata ${String(effectiveMax).padStart(2, "0")}`;
 
     // Criterio ordinamento
     const criteriaLabels = {
-      punti:          "Punti",
-      vinte:          "Vittorie",
-      pareggiate:     "Pareggi",
-      perse:          "Sconfitte",
-      golFatti:       "Gol Fatti",
-      golSubiti:      "Gol Subiti",
+      punti: "Punti",
+      giocate: "Giornate",
+      vinte: "Vittorie",
+      pareggiate: "Pareggi",
+      perse: "Sconfitte",
+      golFatti: "Gol Fatti",
+      golSubiti: "Gol Subiti",
       differenzaReti: "Diff. Reti",
-      squadra:        "Nome",
+      squadra: "Nome",
     };
-    let sortNote;
-    if (this.sortColumn) {
-      const name = criteriaLabels[this.sortColumn] || this.sortColumn;
-      const dir  = this.sortDirection === "asc" ? "crescente ↑" : "decrescente ↓";
-      sortNote = `Ordinata per: ${name} (${dir})`;
-    } else {
-      sortNote = "Ordinata per: Punti (decrescente ↓)";
-    }
+    const col = this.sortColumn || "punti";
+    const name = criteriaLabels[col] || col;
+    const dir = this.sortDirection === "asc" ? "crescente ↑" : "decrescente ↓";
+    const sortNote = `Ordinata per: ${name} (${dir})`;
 
     let message = `*${seasonTitle}*\n`;
     message += `${seasonSubtitle}\n`;
@@ -781,7 +844,10 @@ class SeasonPageApp {
 
     data.forEach((team, index) => {
       const pos = index + 1;
-      const dr = team.differenzaReti > 0 ? `+${team.differenzaReti}` : `${team.differenzaReti}`;
+      const dr =
+        team.differenzaReti > 0
+          ? `+${team.differenzaReti}`
+          : `${team.differenzaReti}`;
       message += `${pos}. ${team.squadra}\n`;
       message += `   Pt: ${team.punti} | G: ${team.giocate} | V: ${team.vinte} | N: ${team.pareggiate} | P: ${team.perse}\n`;
       message += `   GF: ${team.golFatti} | GS: ${team.golSubiti} | DR: ${dr}\n\n`;
@@ -795,7 +861,9 @@ class SeasonPageApp {
   }
 
   initLeaderboardSearch() {
-    const searchContainer = document.getElementById("leaderboard-search-container");
+    const searchContainer = document.getElementById(
+      "leaderboard-search-container",
+    );
     if (!searchContainer) return;
 
     searchContainer.addEventListener("input", (e) => {
@@ -814,13 +882,17 @@ class SeasonPageApp {
 
   initLeaderboardSort() {
     document.querySelectorAll(".sort-criteria-btn").forEach((btn) => {
-      btn.addEventListener("click", () => this._applySortCriteria(btn.dataset.criteria));
+      btn.addEventListener("click", () =>
+        this._applySortCriteria(btn.dataset.criteria),
+      );
     });
-    document.querySelector(".leaderboard-table thead")?.addEventListener("click", (e) => {
-      const th = e.target.closest("th[data-sort]");
-      if (!th) return;
-      this._applySortCriteria(th.dataset.sort);
-    });
+    document
+      .querySelector(".leaderboard-table thead")
+      ?.addEventListener("click", (e) => {
+        const th = e.target.closest("th[data-sort]");
+        if (!th) return;
+        this._applySortCriteria(th.dataset.sort);
+      });
   }
 
   _defaultDirection(criteria) {
@@ -843,15 +915,15 @@ class SeasonPageApp {
 
   _getSortLabel(criteria) {
     const map = {
-      punti:          "Punti",
-      giocate:        "Giornate",
-      vinte:          "Vittorie",
-      pareggiate:     "Pareggi",
-      perse:          "Sconfitte",
-      golFatti:       "Gol Fatti",
-      golSubiti:      "Gol Subiti",
+      punti: "Punti",
+      giocate: "Giornate",
+      vinte: "Vittorie",
+      pareggiate: "Pareggi",
+      perse: "Sconfitte",
+      golFatti: "Gol Fatti",
+      golSubiti: "Gol Subiti",
       differenzaReti: "Diff. Reti",
-      squadra:        "Nome",
+      squadra: "Nome",
     };
     return map[criteria] || criteria;
   }
@@ -880,14 +952,15 @@ class SeasonPageApp {
   }
 
   _updateSortIndicators() {
-    document.querySelectorAll(".leaderboard-table th[data-sort]").forEach((th) => {
-      th.classList.remove("sort-asc", "sort-desc", "sort-active");
-      if (th.dataset.sort === this.sortColumn) {
-        th.classList.add("sort-active", `sort-${this.sortDirection}`);
-      }
-    });
+    document
+      .querySelectorAll(".leaderboard-table th[data-sort]")
+      .forEach((th) => {
+        th.classList.remove("sort-asc", "sort-desc", "sort-active");
+        if (th.dataset.sort === this.sortColumn) {
+          th.classList.add("sort-active", `sort-${this.sortDirection}`);
+        }
+      });
   }
-
 
   initFloatingButton() {
     const backBtn = document.querySelector(".back-to-home-btn");
