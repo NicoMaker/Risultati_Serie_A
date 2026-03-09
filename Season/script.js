@@ -22,10 +22,14 @@ class SeasonPageApp {
     // Stato filtri classifica
     this.activeFilter = "globale"; // globale | casa | trasferta
     this.searchQuery = "";
+    const savedMin = localStorage.getItem("minRound");
+    const savedMax = localStorage.getItem("maxRound");
+    this.minRound = savedMin ? parseInt(savedMin) : null; // null = dalla prima
+    this.maxRound = savedMax ? parseInt(savedMax) : null; // null = all'ultima
 
-    // Stato ordinamento classifica
-    this.sortColumn = null;   // null = default
-    this.sortDirection = "asc"; // asc | desc
+    // Stato ordinamento classifica — default: punti decrescente
+    this.sortColumn = localStorage.getItem("sortColumn") || "punti";
+    this.sortDirection = localStorage.getItem("sortDirection") || "desc";
   }
 
   async init() {
@@ -38,6 +42,7 @@ class SeasonPageApp {
     this.initLeaderboardFilters();
     this.initLeaderboardSearch();
     this.initLeaderboardSort();
+    this.initLeaderboardRoundFilter();
   }
 
   // --- Helper: percorso logo normalizzato ---
@@ -269,6 +274,12 @@ class SeasonPageApp {
 
   // --- Rendering Classifica e Legenda ---
   _renderLeaderboard() {
+    this._computeAndApplyLeaderboard();
+    this._initRoundRangeSlider();
+  }
+
+  // Calcola le statistiche fino alla giornata maxRound (null = tutte)
+  _computeAndApplyLeaderboard() {
     const { calendar, teams, teamLogos } = this.data;
 
     const makeStats = () =>
@@ -290,10 +301,18 @@ class SeasonPageApp {
       );
 
     const teamsStats = makeStats();
-    const homeStats = makeStats();
-    const awayStats = makeStats();
+    const homeStats  = makeStats();
+    const awayStats  = makeStats();
 
-    const allMatches = calendar.flatMap((day) =>
+    // Filtra per range di giornate
+    const filteredCalendar = calendar.filter((day) => {
+      const g = day.giornata;
+      const aboveMin = this.minRound === null || g >= this.minRound;
+      const belowMax = this.maxRound === null || g <= this.maxRound;
+      return aboveMin && belowMax;
+    });
+
+    const allMatches = filteredCalendar.flatMap((day) =>
       day.partite.filter(
         (match) => teams.includes(match.home) && teams.includes(match.away),
       ),
@@ -304,65 +323,31 @@ class SeasonPageApp {
         const updateStats = (stats, homeName, awayName, hGoal, aGoal) => {
           const h = stats[homeName];
           const a = stats[awayName];
-          h.giocate++;
-          a.giocate++;
-          h.golFatti += hGoal;
-          h.golSubiti += aGoal;
-          a.golFatti += aGoal;
-          a.golSubiti += hGoal;
-          if (hGoal > aGoal) {
-            h.punti += 3;
-            h.vinte++;
-            a.perse++;
-          } else if (hGoal < aGoal) {
-            a.punti += 3;
-            a.vinte++;
-            h.perse++;
-          } else {
-            h.punti++;
-            a.punti++;
-            h.pareggiate++;
-            a.pareggiate++;
-          }
+          h.giocate++; a.giocate++;
+          h.golFatti += hGoal; h.golSubiti += aGoal;
+          a.golFatti += aGoal; a.golSubiti += hGoal;
+          if (hGoal > aGoal) { h.punti += 3; h.vinte++; a.perse++; }
+          else if (hGoal < aGoal) { a.punti += 3; a.vinte++; h.perse++; }
+          else { h.punti++; a.punti++; h.pareggiate++; a.pareggiate++; }
         };
 
-        updateStats(
-          teamsStats,
-          match.home,
-          match.away,
-          match.homeScore,
-          match.awayScore,
-        );
+        updateStats(teamsStats, match.home, match.away, match.homeScore, match.awayScore);
 
-        // solo stat casa per home team
         const hHome = homeStats[match.home];
         hHome.giocate++;
         hHome.golFatti += match.homeScore;
         hHome.golSubiti += match.awayScore;
-        if (match.homeScore > match.awayScore) {
-          hHome.punti += 3;
-          hHome.vinte++;
-        } else if (match.homeScore < match.awayScore) {
-          hHome.perse++;
-        } else {
-          hHome.punti++;
-          hHome.pareggiate++;
-        }
+        if (match.homeScore > match.awayScore) { hHome.punti += 3; hHome.vinte++; }
+        else if (match.homeScore < match.awayScore) { hHome.perse++; }
+        else { hHome.punti++; hHome.pareggiate++; }
 
-        // solo stat trasferta per away team
         const aAway = awayStats[match.away];
         aAway.giocate++;
         aAway.golFatti += match.awayScore;
         aAway.golSubiti += match.homeScore;
-        if (match.awayScore > match.homeScore) {
-          aAway.punti += 3;
-          aAway.vinte++;
-        } else if (match.awayScore < match.homeScore) {
-          aAway.perse++;
-        } else {
-          aAway.punti++;
-          aAway.pareggiate++;
-        }
+        if (match.awayScore > match.homeScore) { aAway.punti += 3; aAway.vinte++; }
+        else if (match.awayScore < match.homeScore) { aAway.perse++; }
+        else { aAway.punti++; aAway.pareggiate++; }
       }
     });
 
@@ -372,20 +357,104 @@ class SeasonPageApp {
       }),
     );
 
-    this.leaderboardData = this._sortTeams(
-      Object.values(teamsStats),
-      allMatches,
-    );
-    this.leaderboardDataHome = this._sortTeams(
-      Object.values(homeStats),
-      allMatches,
-    );
-    this.leaderboardDataAway = this._sortTeams(
-      Object.values(awayStats),
-      allMatches,
-    );
+    this.leaderboardData     = this._sortTeams(Object.values(teamsStats), allMatches);
+    this.leaderboardDataHome = this._sortTeams(Object.values(homeStats),  allMatches);
+    this.leaderboardDataAway = this._sortTeams(Object.values(awayStats),  allMatches);
 
     this._applyLeaderboardView();
+  }
+
+  // Inizializza e aggiorna il range slider giornate
+  _initRoundRangeSlider() {
+    const rounds = [...new Set(this.data.calendar.map((d) => d.giornata))].sort((a, b) => a - b);
+    if (rounds.length === 0) return;
+
+    const minPossible = rounds[0];
+    const maxPossible = rounds[rounds.length - 1];
+
+    const sliderMin = document.getElementById("round-range-min");
+    const sliderMax = document.getElementById("round-range-max");
+    if (!sliderMin || !sliderMax) return;
+
+    sliderMin.min = minPossible;
+    sliderMin.max = maxPossible;
+    sliderMax.min = minPossible;
+    sliderMax.max = maxPossible;
+
+    // Ripristina da stato o usa valori di default
+    sliderMin.value = this.minRound !== null ? this.minRound : minPossible;
+    sliderMax.value = this.maxRound !== null ? this.maxRound : maxPossible;
+
+    this._updateRangeUI(minPossible, maxPossible);
+
+    const onInput = () => {
+      let vMin = parseInt(sliderMin.value);
+      let vMax = parseInt(sliderMax.value);
+      if (vMin > vMax) {
+        if (document.activeElement === sliderMin) { vMin = vMax; sliderMin.value = vMin; }
+        else { vMax = vMin; sliderMax.value = vMax; }
+      }
+      this.minRound = vMin === minPossible ? null : vMin;
+      this.maxRound = vMax === maxPossible ? null : vMax;
+      // Salva in localStorage
+      if (this.minRound !== null) localStorage.setItem("minRound", this.minRound);
+      else localStorage.removeItem("minRound");
+      if (this.maxRound !== null) localStorage.setItem("maxRound", this.maxRound);
+      else localStorage.removeItem("maxRound");
+      this._updateRangeUI(minPossible, maxPossible);
+      if (this.data) this._computeAndApplyLeaderboard();
+    };
+
+    sliderMin.addEventListener("input", onInput);
+    sliderMax.addEventListener("input", onInput);
+  }
+
+  _updateRangeUI(minPossible, maxPossible) {
+    const sliderMin = document.getElementById("round-range-min");
+    const sliderMax = document.getElementById("round-range-max");
+    const fill = document.getElementById("round-range-fill");
+    const labelEl = document.getElementById("round-range-label");
+    const minVal = document.getElementById("round-min-val");
+    const maxVal = document.getElementById("round-max-val");
+    if (!sliderMin || !sliderMax) return;
+
+    const vMin = parseInt(sliderMin.value);
+    const vMax = parseInt(sliderMax.value);
+    const range = maxPossible - minPossible || 1;
+    const leftPct  = ((vMin - minPossible) / range) * 100;
+    const rightPct = ((vMax - minPossible) / range) * 100;
+
+    if (fill) {
+      fill.style.left  = leftPct + "%";
+      fill.style.width = (rightPct - leftPct) + "%";
+    }
+    if (minVal) minVal.textContent = `G${vMin}`;
+    if (maxVal) maxVal.textContent = `G${vMax}`;
+    if (labelEl) {
+      const isAll = vMin === minPossible && vMax === maxPossible;
+      labelEl.textContent = isAll ? "Tutte" : `G${vMin} → G${vMax}`;
+      labelEl.classList.toggle("active", !isAll);
+    }
+  }
+
+  initLeaderboardRoundFilter() {
+    const resetBtn = document.getElementById("round-reset-btn");
+    if (resetBtn) {
+      resetBtn.addEventListener("click", () => {
+        this.minRound = null;
+        this.maxRound = null;
+        localStorage.removeItem("minRound");
+        localStorage.removeItem("maxRound");
+        // Ripristina slider ai valori min/max
+        const rounds = [...new Set(this.data.calendar.map((d) => d.giornata))].sort((a, b) => a - b);
+        const sliderMin = document.getElementById("round-range-min");
+        const sliderMax = document.getElementById("round-range-max");
+        if (sliderMin) sliderMin.value = rounds[0];
+        if (sliderMax) sliderMax.value = rounds[rounds.length - 1];
+        this._updateRangeUI(rounds[0], rounds[rounds.length - 1]);
+        if (this.data) this._computeAndApplyLeaderboard();
+      });
+    }
   }
 
   _getActiveLeaderboardData() {
@@ -414,30 +483,23 @@ class SeasonPageApp {
       data = data.filter((t) => t.squadra.toLowerCase().includes(q));
     }
 
-    // Applica ordinamento personalizzato per colonna
-    if (this.sortColumn) {
-      const col = this.sortColumn;
-      const dir = this.sortDirection === "asc" ? 1 : -1;
-      data.sort((a, b) => {
-        let valA = a[col];
-        let valB = b[col];
-        if (col === "squadra") return dir * valA.localeCompare(valB);
-        return dir * (valA - valB);
-      });
-    }
+    // Applica ordinamento personalizzato per colonna (sempre attivo)
+    const col = this.sortColumn || "punti";
+    const dir = this.sortDirection === "asc" ? 1 : -1;
+    data.sort((a, b) => {
+      let valA = a[col];
+      let valB = b[col];
+      if (col === "squadra") return dir * valA.localeCompare(valB);
+      return dir * (valA - valB);
+    });
 
     this.leaderboardBody.innerHTML = "";
     data.forEach((team, index) => {
-      // Se c'è un sort personalizzato la posizione segue l'ordine visualizzato,
-      // altrimenti è la posizione reale nella classifica originale
-      const pos = this.sortColumn
-        ? index + 1
-        : this._getActiveLeaderboardData().findIndex(t => t.squadra === team.squadra) + 1;
+      const pos = index + 1;
       const tr = this._createLeaderboardRow(team, pos, teamLogos);
       this.leaderboardBody.appendChild(tr);
     });
 
-    // Aggiorna UI ordinamento (bottoni + frecce + testo)
     this._updateSortUI();
   }
 
@@ -656,10 +718,9 @@ class SeasonPageApp {
       return;
     }
 
-    // Prendi i dati nell'ordine attualmente visualizzato (stesso di _applyLeaderboardView)
+    // Dati nell'ordine attualmente visualizzato
     let data = [...this._getActiveLeaderboardData()];
 
-    // Applica lo stesso sort personalizzato attivo
     if (this.sortColumn) {
       const col = this.sortColumn;
       const dir = this.sortDirection === "asc" ? 1 : -1;
@@ -675,21 +736,22 @@ class SeasonPageApp {
     }
 
     const seasonTitle = document.querySelector("header h1 .title-text").textContent;
-    const seasonSubtitle = document
-      .querySelector("header p")
-      .textContent.split("•")[0]
-      .trim();
+    const seasonSubtitle = document.querySelector("header p").textContent.split("•")[0].trim();
 
-    // --- Costruzione intestazione descrittiva ---
-    // Parte 1: filtro (globale/casa/trasferta)
+    // Filtro vista
     const filterLabels = {
-      globale:    "CLASSIFICA COMPLETA",
-      casa:       "CLASSIFICA CASA",
-      trasferta:  "CLASSIFICA TRASFERTA",
+      globale:   "CLASSIFICA COMPLETA",
+      casa:      "CLASSIFICA CASA",
+      trasferta: "CLASSIFICA TRASFERTA",
     };
     let titleLabel = filterLabels[this.activeFilter] || "CLASSIFICA";
 
-    // Parte 2: criterio di ordinamento
+    // Filtro giornata
+    const roundNote = this.maxRound !== null
+      ? `Fino alla Giornata ${String(this.maxRound).padStart(2, "0")}`
+      : "Tutte le giornate";
+
+    // Criterio ordinamento
     const criteriaLabels = {
       punti:          "Punti",
       vinte:          "Vittorie",
@@ -700,22 +762,20 @@ class SeasonPageApp {
       differenzaReti: "Diff. Reti",
       squadra:        "Nome",
     };
-
-    let sortNote = "";
+    let sortNote;
     if (this.sortColumn) {
-      const criteriaName = criteriaLabels[this.sortColumn] || this.sortColumn;
-      const dirLabel = this.sortDirection === "asc" ? "crescente ↑" : "decrescente ↓";
-      sortNote = `Ordinata per: ${criteriaName} (${dirLabel})`;
+      const name = criteriaLabels[this.sortColumn] || this.sortColumn;
+      const dir  = this.sortDirection === "asc" ? "crescente ↑" : "decrescente ↓";
+      sortNote = `Ordinata per: ${name} (${dir})`;
     } else {
-      // Ordine punti standard — specifica comunque che è decrescente
       sortNote = "Ordinata per: Punti (decrescente ↓)";
     }
 
-    // --- Costruzione messaggio ---
     let message = `*${seasonTitle}*\n`;
     message += `${seasonSubtitle}\n`;
     message += `${"=".repeat(40)}\n\n`;
     message += `*${titleLabel}*\n`;
+    message += `${roundNote}\n`;
     message += `${sortNote}\n`;
     message += `${"=".repeat(40)}\n\n`;
 
@@ -753,14 +813,9 @@ class SeasonPageApp {
   }
 
   initLeaderboardSort() {
-    // Bottoni criteri ordinamento
     document.querySelectorAll(".sort-criteria-btn").forEach((btn) => {
-      btn.addEventListener("click", () => {
-        this._applySortCriteria(btn.dataset.criteria);
-      });
+      btn.addEventListener("click", () => this._applySortCriteria(btn.dataset.criteria));
     });
-
-    // Click sulle intestazioni della tabella
     document.querySelector(".leaderboard-table thead")?.addEventListener("click", (e) => {
       const th = e.target.closest("th[data-sort]");
       if (!th) return;
@@ -768,7 +823,6 @@ class SeasonPageApp {
     });
   }
 
-  // Direzione di default per ogni criterio (primo click)
   _defaultDirection(criteria) {
     if (criteria === "golSubiti" || criteria === "perse") return "asc";
     if (criteria === "squadra") return "asc";
@@ -776,22 +830,19 @@ class SeasonPageApp {
   }
 
   _applySortCriteria(criteria) {
-    if (criteria === "default") {
-      this.sortColumn = null;
-      this.sortDirection = "asc";
-    } else if (this.sortColumn === criteria) {
-      // Stesso criterio → inverti direzione
+    if (this.sortColumn === criteria) {
       this.sortDirection = this.sortDirection === "asc" ? "desc" : "asc";
     } else {
       this.sortColumn = criteria;
       this.sortDirection = this._defaultDirection(criteria);
     }
+    localStorage.setItem("sortColumn", this.sortColumn);
+    localStorage.setItem("sortDirection", this.sortDirection);
     if (this.data) this._applyLeaderboardView();
   }
 
   _getSortLabel(criteria) {
     const map = {
-      default:        "Classifica",
       punti:          "Punti",
       vinte:          "Vittorie",
       pareggiate:     "Pareggi",
@@ -805,15 +856,13 @@ class SeasonPageApp {
   }
 
   _updateSortUI() {
-    const active = this.sortColumn || "default";
-
-    // Bottoni criteri
+    const active = this.sortColumn || "punti";
     document.querySelectorAll(".sort-criteria-btn").forEach((btn) => {
       const isActive = btn.dataset.criteria === active;
       btn.classList.toggle("active", isActive);
       const arrow = btn.querySelector(".sort-arrow");
       if (arrow) {
-        if (isActive && this.sortColumn) {
+        if (isActive) {
           arrow.textContent = this.sortDirection === "asc" ? " ↑" : " ↓";
           arrow.style.display = "";
         } else {
@@ -821,17 +870,11 @@ class SeasonPageApp {
         }
       }
     });
-
-    // Testo "Ordinato per:"
     const infoLabel = document.getElementById("sort-info-label");
     if (infoLabel) {
-      const dir = this.sortColumn
-        ? (this.sortDirection === "asc" ? " ↑" : " ↓")
-        : "";
+      const dir = this.sortDirection === "asc" ? " ↑" : " ↓";
       infoLabel.textContent = this._getSortLabel(active) + dir;
     }
-
-    // Frecce intestazioni tabella
     this._updateSortIndicators();
   }
 

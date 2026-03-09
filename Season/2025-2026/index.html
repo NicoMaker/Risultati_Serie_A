@@ -113,40 +113,90 @@
               />
             </div>
 
+            <!-- FILTRO GIORNATE — RANGE -->
+            <div class="leaderboard-round-filter-wrap">
+              <div class="round-filter-header">
+                <span class="round-filter-label">📅 Giornate:</span>
+                <span id="round-range-label" class="round-range-label"
+                  >Tutte</span
+                >
+                <button id="round-reset-btn" class="round-reset-btn">
+                  ✕ Reset
+                </button>
+              </div>
+              <div class="round-range-wrap">
+                <div class="round-range-track-wrap">
+                  <div class="round-range-track" id="round-range-track"></div>
+                  <div class="round-range-fill" id="round-range-fill"></div>
+                  <input
+                    type="range"
+                    id="round-range-min"
+                    class="round-range-input"
+                    min="1"
+                    max="38"
+                    value="1"
+                    step="1"
+                  />
+                  <input
+                    type="range"
+                    id="round-range-max"
+                    class="round-range-input"
+                    min="1"
+                    max="38"
+                    value="38"
+                    step="1"
+                  />
+                </div>
+                <div class="round-range-labels">
+                  <span id="round-min-val" class="round-range-val">G1</span>
+                  <span id="round-max-val" class="round-range-val">G38</span>
+                </div>
+              </div>
+            </div>
+
             <!-- BOTTONI ORDINAMENTO STATISTICHE -->
             <div class="leaderboard-sort-section">
               <div class="sort-label">Ordina per:</div>
               <div class="sort-criteria-btns">
-                <button class="sort-criteria-btn active" data-criteria="default">
-                  <span>Classifica</span><span class="sort-arrow" style="display:none"></span>
-                </button>
-                <button class="sort-criteria-btn" data-criteria="punti">
-                  <span>Pt</span><span class="sort-arrow" style="display:none"></span>
+                <button class="sort-criteria-btn active" data-criteria="punti">
+                  <span>Pt</span
+                  ><span class="sort-arrow" style="display: none"></span>
                 </button>
                 <button class="sort-criteria-btn" data-criteria="vinte">
-                  <span>Vittorie</span><span class="sort-arrow" style="display:none"></span>
+                  <span>Vittorie</span
+                  ><span class="sort-arrow" style="display: none"></span>
                 </button>
                 <button class="sort-criteria-btn" data-criteria="pareggiate">
-                  <span>Pareggi</span><span class="sort-arrow" style="display:none"></span>
+                  <span>Pareggi</span
+                  ><span class="sort-arrow" style="display: none"></span>
                 </button>
                 <button class="sort-criteria-btn" data-criteria="perse">
-                  <span>Sconfitte</span><span class="sort-arrow" style="display:none"></span>
+                  <span>Sconfitte</span
+                  ><span class="sort-arrow" style="display: none"></span>
                 </button>
                 <button class="sort-criteria-btn" data-criteria="golFatti">
-                  <span>Gol Fatti</span><span class="sort-arrow" style="display:none"></span>
+                  <span>Gol Fatti</span
+                  ><span class="sort-arrow" style="display: none"></span>
                 </button>
                 <button class="sort-criteria-btn" data-criteria="golSubiti">
-                  <span>Gol Subiti</span><span class="sort-arrow" style="display:none"></span>
+                  <span>Gol Subiti</span
+                  ><span class="sort-arrow" style="display: none"></span>
                 </button>
-                <button class="sort-criteria-btn" data-criteria="differenzaReti">
-                  <span>Diff. Reti</span><span class="sort-arrow" style="display:none"></span>
+                <button
+                  class="sort-criteria-btn"
+                  data-criteria="differenzaReti"
+                >
+                  <span>Diff. Reti</span
+                  ><span class="sort-arrow" style="display: none"></span>
                 </button>
                 <button class="sort-criteria-btn" data-criteria="squadra">
-                  <span>Nome</span><span class="sort-arrow" style="display:none"></span>
+                  <span>Nome</span
+                  ><span class="sort-arrow" style="display: none"></span>
                 </button>
               </div>
+              <div class="sort-info-divider"></div>
               <div class="sort-info-text">
-                Ordinato per: <span id="sort-info-label">Classifica</span>
+                Ordinato per: <span id="sort-info-label">Punti ↓</span>
               </div>
             </div>
 
