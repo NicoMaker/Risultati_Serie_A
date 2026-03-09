@@ -844,6 +844,7 @@ class SeasonPageApp {
   _getSortLabel(criteria) {
     const map = {
       punti:          "Punti",
+      giocate:        "Giornate",
       vinte:          "Vittorie",
       pareggiate:     "Pareggi",
       perse:          "Sconfitte",
