@@ -99,20 +99,71 @@
 
           <div class="leaderboard-card">
             <h2 id="leaderboard-title">CLASSIFICA</h2>
+
+            <!-- RICERCA SQUADRA -->
+            <div class="leaderboard-search-wrap">
+              <span class="search-icon" aria-hidden="true">🔍</span>
+              <input
+                type="text"
+                id="leaderboard-search-container"
+                class="leaderboard-search"
+                placeholder="Cerca squadra..."
+                autocomplete="off"
+                spellcheck="false"
+              />
+            </div>
+
+            <!-- BOTTONI ORDINAMENTO STATISTICHE -->
+            <div class="leaderboard-sort-section">
+              <div class="sort-label">Ordina per:</div>
+              <div class="sort-criteria-btns">
+                <button class="sort-criteria-btn active" data-criteria="default">
+                  <span>Classifica</span><span class="sort-arrow" style="display:none"></span>
+                </button>
+                <button class="sort-criteria-btn" data-criteria="punti">
+                  <span>Pt</span><span class="sort-arrow" style="display:none"></span>
+                </button>
+                <button class="sort-criteria-btn" data-criteria="vinte">
+                  <span>Vittorie</span><span class="sort-arrow" style="display:none"></span>
+                </button>
+                <button class="sort-criteria-btn" data-criteria="pareggiate">
+                  <span>Pareggi</span><span class="sort-arrow" style="display:none"></span>
+                </button>
+                <button class="sort-criteria-btn" data-criteria="perse">
+                  <span>Sconfitte</span><span class="sort-arrow" style="display:none"></span>
+                </button>
+                <button class="sort-criteria-btn" data-criteria="golFatti">
+                  <span>Gol Fatti</span><span class="sort-arrow" style="display:none"></span>
+                </button>
+                <button class="sort-criteria-btn" data-criteria="golSubiti">
+                  <span>Gol Subiti</span><span class="sort-arrow" style="display:none"></span>
+                </button>
+                <button class="sort-criteria-btn" data-criteria="differenzaReti">
+                  <span>Diff. Reti</span><span class="sort-arrow" style="display:none"></span>
+                </button>
+                <button class="sort-criteria-btn" data-criteria="squadra">
+                  <span>Nome</span><span class="sort-arrow" style="display:none"></span>
+                </button>
+              </div>
+              <div class="sort-info-text">
+                Ordinato per: <span id="sort-info-label">Classifica</span>
+              </div>
+            </div>
+
             <div class="leaderboard-scroll">
               <table class="leaderboard-table">
                 <thead>
                   <tr>
                     <th class="col-pos">#</th>
-                    <th class="col-team">Squadra</th>
-                    <th class="col-pts">Pt</th>
-                    <th class="col-played">G</th>
-                    <th class="col-wins">V</th>
-                    <th class="col-draws">N</th>
-                    <th class="col-losses">P</th>
-                    <th class="col-gf">GF</th>
-                    <th class="col-ga">GS</th>
-                    <th class="col-gd">DR</th>
+                    <th class="col-team" data-sort="squadra">Squadra</th>
+                    <th class="col-pts" data-sort="punti">Pt</th>
+                    <th class="col-played" data-sort="giocate">G</th>
+                    <th class="col-wins" data-sort="vinte">V</th>
+                    <th class="col-draws" data-sort="pareggiate">N</th>
+                    <th class="col-losses" data-sort="perse">P</th>
+                    <th class="col-gf" data-sort="golFatti">GF</th>
+                    <th class="col-ga" data-sort="golSubiti">GS</th>
+                    <th class="col-gd" data-sort="differenzaReti">DR</th>
                   </tr>
                 </thead>
                 <tbody id="leaderboard-body"></tbody>

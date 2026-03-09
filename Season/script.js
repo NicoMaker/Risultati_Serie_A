@@ -22,6 +22,10 @@ class SeasonPageApp {
     // Stato filtri classifica
     this.activeFilter = "globale"; // globale | casa | trasferta
     this.searchQuery = "";
+
+    // Stato ordinamento classifica
+    this.sortColumn = null;   // null = default
+    this.sortDirection = "asc"; // asc | desc
   }
 
   async init() {
@@ -32,6 +36,8 @@ class SeasonPageApp {
     this.initFloatingButton();
     this.initWhatsAppButtons();
     this.initLeaderboardFilters();
+    this.initLeaderboardSearch();
+    this.initLeaderboardSort();
   }
 
   // --- Helper: percorso logo normalizzato ---
@@ -390,7 +396,7 @@ class SeasonPageApp {
 
   _applyLeaderboardView() {
     const { teamLogos } = this.data;
-    const data = this._getActiveLeaderboardData();
+    let data = [...this._getActiveLeaderboardData()];
 
     const titleEl = document.getElementById("leaderboard-title");
     if (titleEl) {
@@ -402,11 +408,37 @@ class SeasonPageApp {
       titleEl.textContent = labels[this.activeFilter] || "CLASSIFICA";
     }
 
+    // Applica filtro ricerca
+    if (this.searchQuery) {
+      const q = this.searchQuery.toLowerCase();
+      data = data.filter((t) => t.squadra.toLowerCase().includes(q));
+    }
+
+    // Applica ordinamento personalizzato per colonna
+    if (this.sortColumn) {
+      const col = this.sortColumn;
+      const dir = this.sortDirection === "asc" ? 1 : -1;
+      data.sort((a, b) => {
+        let valA = a[col];
+        let valB = b[col];
+        if (col === "squadra") return dir * valA.localeCompare(valB);
+        return dir * (valA - valB);
+      });
+    }
+
     this.leaderboardBody.innerHTML = "";
     data.forEach((team, index) => {
-      const tr = this._createLeaderboardRow(team, index + 1, teamLogos);
+      // Se c'è un sort personalizzato la posizione segue l'ordine visualizzato,
+      // altrimenti è la posizione reale nella classifica originale
+      const pos = this.sortColumn
+        ? index + 1
+        : this._getActiveLeaderboardData().findIndex(t => t.squadra === team.squadra) + 1;
+      const tr = this._createLeaderboardRow(team, pos, teamLogos);
       this.leaderboardBody.appendChild(tr);
     });
+
+    // Aggiorna UI ordinamento (bottoni + frecce + testo)
+    this._updateSortUI();
   }
 
   initLeaderboardFilters() {
@@ -619,39 +651,78 @@ class SeasonPageApp {
   }
 
   shareStandingsOnWhatsApp() {
-    const data = this._getActiveLeaderboardData();
-    if (!data || data.length === 0) {
+    if (!this.data) {
       alert("Carica prima i dati della classifica!");
       return;
     }
 
-    const seasonTitle = document.querySelector(
-      "header h1 .title-text",
-    ).textContent;
+    // Prendi i dati nell'ordine attualmente visualizzato (stesso di _applyLeaderboardView)
+    let data = [...this._getActiveLeaderboardData()];
+
+    // Applica lo stesso sort personalizzato attivo
+    if (this.sortColumn) {
+      const col = this.sortColumn;
+      const dir = this.sortDirection === "asc" ? 1 : -1;
+      data.sort((a, b) => {
+        if (col === "squadra") return dir * a.squadra.localeCompare(b.squadra);
+        return dir * (a[col] - b[col]);
+      });
+    }
+
+    if (data.length === 0) {
+      alert("Nessun dato disponibile!");
+      return;
+    }
+
+    const seasonTitle = document.querySelector("header h1 .title-text").textContent;
     const seasonSubtitle = document
       .querySelector("header p")
       .textContent.split("•")[0]
       .trim();
-    const labels = {
-      globale: "CLASSIFICA COMPLETA",
-      casa: "CLASSIFICA CASA",
-      trasferta: "CLASSIFICA TRASFERTA",
-    };
-    const titleLabel = labels[this.activeFilter] || "CLASSIFICA";
 
+    // --- Costruzione intestazione descrittiva ---
+    // Parte 1: filtro (globale/casa/trasferta)
+    const filterLabels = {
+      globale:    "CLASSIFICA COMPLETA",
+      casa:       "CLASSIFICA CASA",
+      trasferta:  "CLASSIFICA TRASFERTA",
+    };
+    let titleLabel = filterLabels[this.activeFilter] || "CLASSIFICA";
+
+    // Parte 2: criterio di ordinamento
+    const criteriaLabels = {
+      punti:          "Punti",
+      vinte:          "Vittorie",
+      pareggiate:     "Pareggi",
+      perse:          "Sconfitte",
+      golFatti:       "Gol Fatti",
+      golSubiti:      "Gol Subiti",
+      differenzaReti: "Diff. Reti",
+      squadra:        "Nome",
+    };
+
+    let sortNote = "";
+    if (this.sortColumn) {
+      const criteriaName = criteriaLabels[this.sortColumn] || this.sortColumn;
+      const dirLabel = this.sortDirection === "asc" ? "crescente ↑" : "decrescente ↓";
+      sortNote = `Ordinata per: ${criteriaName} (${dirLabel})`;
+    } else {
+      // Ordine punti standard — specifica comunque che è decrescente
+      sortNote = "Ordinata per: Punti (decrescente ↓)";
+    }
+
+    // --- Costruzione messaggio ---
     let message = `*${seasonTitle}*\n`;
     message += `${seasonSubtitle}\n`;
     message += `${"=".repeat(40)}\n\n`;
     message += `*${titleLabel}*\n`;
+    message += `${sortNote}\n`;
     message += `${"=".repeat(40)}\n\n`;
 
     data.forEach((team, index) => {
-      const position = index + 1;
-      const dr =
-        team.differenzaReti > 0
-          ? `+${team.differenzaReti}`
-          : team.differenzaReti;
-      message += `${position}. ${team.squadra}\n`;
+      const pos = index + 1;
+      const dr = team.differenzaReti > 0 ? `+${team.differenzaReti}` : `${team.differenzaReti}`;
+      message += `${pos}. ${team.squadra}\n`;
       message += `   Pt: ${team.punti} | G: ${team.giocate} | V: ${team.vinte} | N: ${team.pareggiate} | P: ${team.perse}\n`;
       message += `   GF: ${team.golFatti} | GS: ${team.golSubiti} | DR: ${dr}\n\n`;
     });
@@ -663,7 +734,117 @@ class SeasonPageApp {
     window.open(`https://wa.me/?text=${encodedMessage}`, "_blank");
   }
 
-  // --- Pulsante Fluttuante ---
+  initLeaderboardSearch() {
+    const searchContainer = document.getElementById("leaderboard-search-container");
+    if (!searchContainer) return;
+
+    searchContainer.addEventListener("input", (e) => {
+      this.searchQuery = e.target.value.trim();
+      if (this.data) this._applyLeaderboardView();
+    });
+
+    searchContainer.addEventListener("keydown", (e) => {
+      if (e.key === "Escape") {
+        searchContainer.value = "";
+        this.searchQuery = "";
+        if (this.data) this._applyLeaderboardView();
+      }
+    });
+  }
+
+  initLeaderboardSort() {
+    // Bottoni criteri ordinamento
+    document.querySelectorAll(".sort-criteria-btn").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        this._applySortCriteria(btn.dataset.criteria);
+      });
+    });
+
+    // Click sulle intestazioni della tabella
+    document.querySelector(".leaderboard-table thead")?.addEventListener("click", (e) => {
+      const th = e.target.closest("th[data-sort]");
+      if (!th) return;
+      this._applySortCriteria(th.dataset.sort);
+    });
+  }
+
+  // Direzione di default per ogni criterio (primo click)
+  _defaultDirection(criteria) {
+    if (criteria === "golSubiti" || criteria === "perse") return "asc";
+    if (criteria === "squadra") return "asc";
+    return "desc";
+  }
+
+  _applySortCriteria(criteria) {
+    if (criteria === "default") {
+      this.sortColumn = null;
+      this.sortDirection = "asc";
+    } else if (this.sortColumn === criteria) {
+      // Stesso criterio → inverti direzione
+      this.sortDirection = this.sortDirection === "asc" ? "desc" : "asc";
+    } else {
+      this.sortColumn = criteria;
+      this.sortDirection = this._defaultDirection(criteria);
+    }
+    if (this.data) this._applyLeaderboardView();
+  }
+
+  _getSortLabel(criteria) {
+    const map = {
+      default:        "Classifica",
+      punti:          "Punti",
+      vinte:          "Vittorie",
+      pareggiate:     "Pareggi",
+      perse:          "Sconfitte",
+      golFatti:       "Gol Fatti",
+      golSubiti:      "Gol Subiti",
+      differenzaReti: "Diff. Reti",
+      squadra:        "Nome",
+    };
+    return map[criteria] || criteria;
+  }
+
+  _updateSortUI() {
+    const active = this.sortColumn || "default";
+
+    // Bottoni criteri
+    document.querySelectorAll(".sort-criteria-btn").forEach((btn) => {
+      const isActive = btn.dataset.criteria === active;
+      btn.classList.toggle("active", isActive);
+      const arrow = btn.querySelector(".sort-arrow");
+      if (arrow) {
+        if (isActive && this.sortColumn) {
+          arrow.textContent = this.sortDirection === "asc" ? " ↑" : " ↓";
+          arrow.style.display = "";
+        } else {
+          arrow.style.display = "none";
+        }
+      }
+    });
+
+    // Testo "Ordinato per:"
+    const infoLabel = document.getElementById("sort-info-label");
+    if (infoLabel) {
+      const dir = this.sortColumn
+        ? (this.sortDirection === "asc" ? " ↑" : " ↓")
+        : "";
+      infoLabel.textContent = this._getSortLabel(active) + dir;
+    }
+
+    // Frecce intestazioni tabella
+    this._updateSortIndicators();
+  }
+
+  _updateSortIndicators() {
+    document.querySelectorAll(".leaderboard-table th[data-sort]").forEach((th) => {
+      th.classList.remove("sort-asc", "sort-desc", "sort-active");
+      if (th.dataset.sort === this.sortColumn) {
+        th.classList.add("sort-active", `sort-${this.sortDirection}`);
+      }
+    });
+  }
+
+
   initFloatingButton() {
     const backBtn = document.querySelector(".back-to-home-btn");
     if (!backBtn) return;
