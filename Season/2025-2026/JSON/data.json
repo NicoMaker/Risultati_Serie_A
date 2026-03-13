@@ -1722,8 +1722,8 @@
         {
           "home": "Torino",
           "away": "Parma",
-          "homeScore": null,
-          "awayScore": null
+          "homeScore": 4,
+          "awayScore": 1
         },
         {
           "home": "Udinese",
