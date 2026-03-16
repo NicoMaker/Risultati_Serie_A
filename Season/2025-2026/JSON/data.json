@@ -1686,8 +1686,8 @@
         {
           "home": "Cremonese",
           "away": "Fiorentina",
-          "homeScore": null,
-          "awayScore": null
+          "homeScore": 1,
+          "awayScore": 4
         },
         {
           "home": "Inter",
