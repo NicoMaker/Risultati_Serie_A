@@ -1745,14 +1745,14 @@
         {
           "home": "Atalanta",
           "away": "Verona",
-          "homeScore": null,
-          "awayScore": null
+          "homeScore": 1,
+          "awayScore": 0
         },
         {
           "home": "Bologna",
           "away": "Lazio",
-          "homeScore": null,
-          "awayScore": null
+          "homeScore": 0,
+          "awayScore": 2
         },
         {
           "home": "Cagliari",
