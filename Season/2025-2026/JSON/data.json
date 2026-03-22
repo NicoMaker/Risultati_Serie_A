@@ -1763,8 +1763,8 @@
         {
           "home": "Como",
           "away": "Pisa",
-          "homeScore": null,
-          "awayScore": null
+          "homeScore": 5,
+          "awayScore": 0
         },
         {
           "home": "Fiorentina",
