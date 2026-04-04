@@ -1852,8 +1852,8 @@
         {
           "home": "Sassuolo",
           "away": "Cagliari",
-          "homeScore": null,
-          "awayScore": null
+          "homeScore": 2,
+          "awayScore": 1
         },
         {
           "home": "Udinese",
