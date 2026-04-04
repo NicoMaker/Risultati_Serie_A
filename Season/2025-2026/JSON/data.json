@@ -1864,8 +1864,8 @@
         {
           "home": "Verona",
           "away": "Fiorentina",
-          "homeScore": null,
-          "awayScore": null
+          "homeScore": 0,
+          "awayScore": 1
         }
       ]
     },
