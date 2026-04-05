@@ -1810,8 +1810,8 @@
         {
           "home": "Cremonese",
           "away": "Bologna",
-          "homeScore": null,
-          "awayScore": null
+          "homeScore": 1,
+          "awayScore": 2
         },
         {
           "home": "Inter",
