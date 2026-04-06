@@ -1834,8 +1834,8 @@
         {
           "home": "Lecce",
           "away": "Atalanta",
-          "homeScore": null,
-          "awayScore": null
+          "homeScore": 0,
+          "awayScore": 3
         },
         {
           "home": "Napoli",
