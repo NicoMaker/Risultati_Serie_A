@@ -1887,8 +1887,8 @@
         {
           "home": "Cagliari",
           "away": "Cremonese",
-          "homeScore": null,
-          "awayScore": null
+          "homeScore": 1,
+          "awayScore": 0
         },
         {
           "home": "Como",
@@ -1929,8 +1929,8 @@
         {
           "home": "Torino",
           "away": "Verona",
-          "homeScore": null,
-          "awayScore": null
+          "homeScore": 2,
+          "awayScore": 1
         }
       ]
     },
