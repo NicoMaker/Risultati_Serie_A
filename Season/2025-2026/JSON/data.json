@@ -1893,8 +1893,8 @@
         {
           "home": "Como",
           "away": "Inter",
-          "homeScore": null,
-          "awayScore": null
+          "homeScore": 3,
+          "awayScore": 4
         },
         {
           "home": "Fiorentina",
