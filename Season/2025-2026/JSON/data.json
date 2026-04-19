@@ -1946,8 +1946,8 @@
         {
           "home": "Juventus",
           "away": "Bologna",
-          "homeScore": null,
-          "awayScore": null
+          "homeScore": 2,
+          "awayScore": 0
         },
         {
           "home": "Lecce",
