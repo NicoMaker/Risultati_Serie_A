@@ -1994,8 +1994,8 @@
         {
           "home": "Cremonese",
           "away": "Torino",
-          "homeScore": null,
-          "awayScore": null
+          "homeScore": 0,
+          "awayScore": 0
         }
       ]
     },
