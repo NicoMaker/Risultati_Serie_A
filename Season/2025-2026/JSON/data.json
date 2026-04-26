@@ -2053,8 +2053,8 @@
         {
           "home": "Torino",
           "away": "Inter",
-          "homeScore": null,
-          "awayScore": null
+          "homeScore": 2,
+          "awayScore": 2
         },
         {
           "home": "Verona",
