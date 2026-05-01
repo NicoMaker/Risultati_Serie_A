@@ -2106,8 +2106,8 @@
         {
           "home": "Pisa",
           "away": "Lecce",
-          "homeScore": null,
-          "awayScore": null
+          "homeScore": 1,
+          "awayScore": 2
         },
         {
           "home": "Roma",
