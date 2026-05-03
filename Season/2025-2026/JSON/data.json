@@ -2094,8 +2094,8 @@
         {
           "home": "Inter",
           "away": "Parma",
-          "homeScore": null,
-          "awayScore": null
+          "homeScore": 2,
+          "awayScore": 0
         },
         {
           "home": "Juventus",
