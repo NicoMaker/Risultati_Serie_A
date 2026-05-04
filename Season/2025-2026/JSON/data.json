@@ -2112,8 +2112,8 @@
         {
           "home": "Roma",
           "away": "Fiorentina",
-          "homeScore": null,
-          "awayScore": null
+          "homeScore": 4,
+          "awayScore": 0
         },
         {
           "home": "Sassuolo",
