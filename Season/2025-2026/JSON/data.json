@@ -2088,8 +2088,8 @@
         {
           "home": "Cremonese",
           "away": "Lazio",
-          "homeScore": null,
-          "awayScore": null
+          "homeScore": 1,
+          "awayScore": 2
         },
         {
           "home": "Inter",
