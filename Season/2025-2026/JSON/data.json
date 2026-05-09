@@ -2141,8 +2141,8 @@
         {
           "home": "Cagliari",
           "away": "Udinese",
-          "homeScore": null,
-          "awayScore": null
+          "homeScore": 0,
+          "awayScore": 2
         },
         {
           "home": "Cremonese",
