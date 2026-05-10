@@ -2171,8 +2171,8 @@
         {
           "home": "Milan",
           "away": "Atalanta",
-          "homeScore": null,
-          "awayScore": null
+          "homeScore": 2,
+          "awayScore": 3
         },
         {
           "home": "Napoli",
