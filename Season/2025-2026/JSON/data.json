@@ -2183,8 +2183,8 @@
         {
           "home": "Parma",
           "away": "Roma",
-          "homeScore": null,
-          "awayScore": null
+          "homeScore": 2,
+          "awayScore": 3
         },
         {
           "home": "Torino",
