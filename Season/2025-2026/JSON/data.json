@@ -2177,8 +2177,8 @@
         {
           "home": "Napoli",
           "away": "Bologna",
-          "homeScore": null,
-          "awayScore": null
+          "homeScore": 2,
+          "awayScore": 3
         },
         {
           "home": "Parma",
