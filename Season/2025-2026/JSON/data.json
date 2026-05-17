@@ -2212,8 +2212,8 @@
         {
           "home": "Como",
           "away": "Parma",
-          "homeScore": null,
-          "awayScore": null
+          "homeScore": 1,
+          "awayScore": 0
         },
         {
           "home": "Genoa",
@@ -2230,20 +2230,20 @@
         {
           "home": "Juventus",
           "away": "Fiorentina",
-          "homeScore": null,
-          "awayScore": null
+          "homeScore": 0,
+          "awayScore": 2
         },
         {
           "home": "Pisa",
           "away": "Napoli",
-          "homeScore": null,
-          "awayScore": null
+          "homeScore": 0,
+          "awayScore": 3
         },
         {
           "home": "Roma",
           "away": "Lazio",
-          "homeScore": null,
-          "awayScore": null
+          "homeScore": 2,
+          "awayScore": 0
         },
         {
           "home": "Sassuolo",
