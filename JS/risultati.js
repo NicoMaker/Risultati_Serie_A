@@ -576,87 +576,108 @@ class SeasonPageApp {
     });
   }
 
+  // ─────────────────────────────────────────────────────────────────────────────
+  // SORTING — versione corretta con scontri diretti calcolati per gruppi
+  // ─────────────────────────────────────────────────────────────────────────────
+
+  /**
+   * Ordina i team applicando:
+   *   1. Punti (desc)
+   *   2. Differenza reti globale (desc)
+   *   3. Gol fatti globali (desc)
+   *   4. Gol subiti globali (asc)
+   *   5. Scontri diretti (punti, poi diff reti, poi gol fatti, poi gol subiti)
+   *      — calcolati per blocco, non coppia per coppia
+   *   6. Nome alfabetico (asc)
+   */
   _sortTeams(teams, allMatches) {
-    return teams.sort((a, b) => {
+    // Fase 1: ordine generale senza scontri diretti
+    const sorted = [...teams].sort((a, b) => {
       if (b.punti !== a.punti) return b.punti - a.punti;
-      if (a.giocate !== b.giocate) return a.giocate - b.giocate;
       if (b.differenzaReti !== a.differenzaReti)
         return b.differenzaReti - a.differenzaReti;
       if (b.golFatti !== a.golFatti) return b.golFatti - a.golFatti;
       if (a.golSubiti !== b.golSubiti) return a.golSubiti - b.golSubiti;
-
-      const tiedTeams = teams.filter((t) => t.punti === a.punti);
-      if (tiedTeams.length > 1) {
-        const sortedByHeadToHead = this._calculateHeadToHead(
-          tiedTeams,
-          allMatches,
-        );
-        const indexA = sortedByHeadToHead.findIndex(
-          (t) => t.squadra === a.squadra,
-        );
-        const indexB = sortedByHeadToHead.findIndex(
-          (t) => t.squadra === b.squadra,
-        );
-        if (indexA !== indexB) return indexA - indexB;
-      }
-
       return a.squadra.localeCompare(b.squadra);
     });
+
+    // Fase 2: per ogni gruppo a pari punti, applica scontri diretti
+    const result = [];
+    let i = 0;
+    while (i < sorted.length) {
+      let j = i + 1;
+      while (j < sorted.length && sorted[j].punti === sorted[i].punti) j++;
+
+      const group = sorted.slice(i, j);
+      if (group.length > 1) {
+        result.push(...this._resolveByHeadToHead(group, allMatches));
+      } else {
+        result.push(group[0]);
+      }
+      i = j;
+    }
+    return result;
   }
 
-  _calculateHeadToHead(teamsWithSamePoints, allMatches) {
-    if (teamsWithSamePoints.length <= 1) return teamsWithSamePoints;
-
-    const teamNames = teamsWithSamePoints.map((t) => t.squadra);
-    const h2hStats = {};
-
-    teamNames.forEach((name) => {
-      h2hStats[name] = { punti: 0, golFatti: 0, golSubiti: 0 };
+  /**
+   * Risolve l'ordine interno di un gruppo di squadre a pari punti
+   * usando esclusivamente i risultati degli scontri diretti tra loro.
+   */
+  _resolveByHeadToHead(group, allMatches) {
+    const names = group.map((t) => t.squadra);
+    const h2h = {};
+    names.forEach((n) => {
+      h2h[n] = { punti: 0, golFatti: 0, golSubiti: 0 };
     });
 
-    const relevantMatches = allMatches.filter(
-      (match) =>
-        teamNames.includes(match.home) && teamNames.includes(match.away),
-    );
+    // Considera solo le partite tra squadre del gruppo
+    allMatches.forEach((m) => {
+      if (
+        m.homeScore !== null &&
+        m.awayScore !== null &&
+        names.includes(m.home) &&
+        names.includes(m.away)
+      ) {
+        h2h[m.home].golFatti += m.homeScore;
+        h2h[m.home].golSubiti += m.awayScore;
+        h2h[m.away].golFatti += m.awayScore;
+        h2h[m.away].golSubiti += m.homeScore;
 
-    relevantMatches.forEach((match) => {
-      if (match.homeScore !== null && match.awayScore !== null) {
-        const statsHome = h2hStats[match.home];
-        const statsAway = h2hStats[match.away];
-
-        statsHome.golFatti += match.homeScore;
-        statsHome.golSubiti += match.awayScore;
-        statsAway.golFatti += match.awayScore;
-        statsAway.golSubiti += match.homeScore;
-
-        if (match.homeScore > match.awayScore) statsHome.punti += 3;
-        else if (match.homeScore < match.awayScore) statsAway.punti += 3;
-        else {
-          statsHome.punti += 1;
-          statsAway.punti += 1;
+        if (m.homeScore > m.awayScore) {
+          h2h[m.home].punti += 3;
+        } else if (m.homeScore < m.awayScore) {
+          h2h[m.away].punti += 3;
+        } else {
+          h2h[m.home].punti += 1;
+          h2h[m.away].punti += 1;
         }
       }
     });
 
-    return [...teamsWithSamePoints].sort((a, b) => {
-      const statsA = h2hStats[a.squadra];
-      const statsB = h2hStats[b.squadra];
+    return [...group].sort((a, b) => {
+      const ha = h2h[a.squadra];
+      const hb = h2h[b.squadra];
 
-      if (statsB.punti !== statsA.punti) return statsB.punti - statsA.punti;
+      // 1. Punti negli scontri diretti
+      if (hb.punti !== ha.punti) return hb.punti - ha.punti;
 
-      const drA = statsA.golFatti - statsA.golSubiti;
-      const drB = statsB.golFatti - statsB.golSubiti;
+      // 2. Differenza reti negli scontri diretti
+      const drA = ha.golFatti - ha.golSubiti;
+      const drB = hb.golFatti - hb.golSubiti;
       if (drB !== drA) return drB - drA;
 
-      if (statsB.golFatti !== statsA.golFatti)
-        return statsB.golFatti - statsA.golFatti;
+      // 3. Gol fatti negli scontri diretti
+      if (hb.golFatti !== ha.golFatti) return hb.golFatti - ha.golFatti;
 
-      if (statsA.golSubiti !== statsB.golSubiti)
-        return statsA.golSubiti - statsB.golSubiti;
+      // 4. Gol subiti negli scontri diretti
+      if (ha.golSubiti !== hb.golSubiti) return ha.golSubiti - hb.golSubiti;
 
-      return 0;
+      // 5. Fallback alfabetico
+      return a.squadra.localeCompare(b.squadra);
     });
   }
+
+  // ─────────────────────────────────────────────────────────────────────────────
 
   _createLeaderboardRow(team, position, teamLogos) {
     const tr = document.createElement("tr");
