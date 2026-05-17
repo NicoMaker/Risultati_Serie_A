@@ -2224,8 +2224,8 @@
         {
           "home": "Inter",
           "away": "Verona",
-          "homeScore": null,
-          "awayScore": null
+          "homeScore": 1,
+          "awayScore": 1
         },
         {
           "home": "Juventus",
