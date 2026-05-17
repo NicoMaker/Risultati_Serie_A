@@ -2206,8 +2206,8 @@
         {
           "home": "Cagliari",
           "away": "Torino",
-          "homeScore": null,
-          "awayScore": null
+          "homeScore": 2,
+          "awayScore": 1
         },
         {
           "home": "Como",
@@ -2248,14 +2248,14 @@
         {
           "home": "Sassuolo",
           "away": "Lecce",
-          "homeScore": null,
-          "awayScore": null
+          "homeScore": 2,
+          "awayScore": 3
         },
         {
           "home": "Udinese",
           "away": "Cremonese",
-          "homeScore": null,
-          "awayScore": null
+          "homeScore": 0,
+          "awayScore": 1
         }
       ]
     },
