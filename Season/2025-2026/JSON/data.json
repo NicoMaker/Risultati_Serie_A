@@ -2265,8 +2265,8 @@
         {
           "home": "Bologna",
           "away": "Inter",
-          "homeScore": null,
-          "awayScore": null
+          "homeScore": 3,
+          "awayScore": 3
         },
         {
           "home": "Cremonese",
