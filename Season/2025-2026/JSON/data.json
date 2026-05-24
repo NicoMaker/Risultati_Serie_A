@@ -2271,8 +2271,8 @@
         {
           "home": "Cremonese",
           "away": "Como",
-          "homeScore": null,
-          "awayScore": null
+          "homeScore": 1,
+          "awayScore": 4
         },
         {
           "home": "Fiorentina",
@@ -2289,8 +2289,8 @@
         {
           "home": "Lecce",
           "away": "Genoa",
-          "homeScore": null,
-          "awayScore": null
+          "homeScore": 1,
+          "awayScore": 0
         },
         {
           "home": "Milan",
