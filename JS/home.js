@@ -61,11 +61,22 @@ class SerieAApp {
         ? `<div class="champion-badge">${season.champion}</div>`
         : "";
 
+    // Se la stagione ha un campione, mostra lo stemma della squadra
+    // vincitrice al posto del logo generico Serie A.
+    const hasChampionCrest = Boolean(season.champion && season.championLogo);
+    const crestSrc = hasChampionCrest ? season.championLogo : season.logo;
+    const crestAlt = hasChampionCrest
+      ? `Scudetto ${season.champion}`
+      : `Stagione ${season.year}`;
+    const crestClass = hasChampionCrest
+      ? "crest-wrap crest-wrap--champion"
+      : "crest-wrap";
+
     return `
       <a href="${season.url}" class="season-card">
         <div class="season-card-main">
-          <div class="crest-wrap">
-            <img src="${season.logo}" alt="Stagione ${season.year}" class="season-logo">
+          <div class="${crestClass}">
+            <img src="${crestSrc}" alt="${crestAlt}" class="season-logo">
           </div>
           <div class="season-card-body">
             <span class="season-tag">Stagione</span>

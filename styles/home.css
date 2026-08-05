@@ -159,16 +159,15 @@ header {
   position: relative;
 }
 
-.ball-icon {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: clamp(24px, 3.6vw, 34px);
-  height: clamp(24px, 3.6vw, 34px);
+.brand-logo {
+  height: clamp(30px, 5vw, 44px);
+  width: auto;
   flex-shrink: 0;
-  background: var(--gradient-green);
-  clip-path: var(--cut);
-  box-shadow: 0 6px 18px rgba(33, 226, 138, 0.28);
+  background: #ffffff;
+  padding: 4px 8px;
+  border-radius: 6px;
+  border: 1px solid var(--border);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.22);
 }
 
 .header-content p {
@@ -431,11 +430,35 @@ a:focus-visible {
   width: 72px;
   height: 72px;
   border-radius: 50%;
-  background: var(--bg-card-alt);
+  background: #ffffff;
   display: flex;
   align-items: center;
   justify-content: center;
   border: 1px solid var(--border);
+}
+
+.crest-wrap--champion {
+  border: 2px solid var(--accent-gold);
+  box-shadow:
+    0 0 0 3px rgba(255, 204, 51, 0.16),
+    0 6px 16px rgba(0, 0, 0, 0.22);
+  position: relative;
+}
+
+.crest-wrap--champion::after {
+  content: "🏆";
+  position: absolute;
+  bottom: -6px;
+  right: -6px;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: var(--accent-gold);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.7rem;
+  border: 2px solid var(--bg-card);
 }
 
 .season-logo {
