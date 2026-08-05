@@ -8,9 +8,23 @@ class SerieAApp {
   init() {
     console.log("Inizializzazione pagina Generale Stagioni");
     this.initTheme();
+    this.renderDateline();
     this.loadSeasons();
     this.initOnlineStatusHandling();
     this.initWhatsAppButton();
+  }
+
+  // --- Dateline in stile testata giornale ---
+  renderDateline() {
+    const el = document.getElementById("dateline");
+    if (!el) return;
+    const formatted = new Date().toLocaleDateString("it-IT", {
+      weekday: "long",
+      day: "numeric",
+      month: "long",
+      year: "numeric",
+    });
+    el.textContent = formatted;
   }
 
   // --- Theme Management ---
@@ -41,26 +55,29 @@ class SerieAApp {
 
   // --- Data Loading and Rendering ---
   createSeasonCard(season, isCurrent) {
-    const currentBadge = isCurrent
+    const statusBadge = isCurrent
       ? '<div class="current-badge">In corso</div>'
-      : "";
-    const championBadge = season.champion
-      ? `<div class="champion-badge">${season.champion}</div>`
-      : "";
+      : season.champion
+        ? `<div class="champion-badge">${season.champion}</div>`
+        : "";
 
     return `
-      <a href="${season.url}" class="season-card" style="--bg-image: url('${season.logo}')">
-        <div class="card-shine"></div>
-        ${currentBadge}
-        <div class="season-card-header">
+      <a href="${season.url}" class="season-card">
+        <div class="season-card-main">
+          <div class="crest-wrap">
             <img src="${season.logo}" alt="Stagione ${season.year}" class="season-logo">
-            <div class="season-year">${season.year}</div>
-        </div>
-        <div class="season-card-content">
+          </div>
+          <div class="season-card-body">
+            <span class="season-tag">Stagione</span>
             <h3 class="season-title">${season.title}</h3>
-            ${championBadge}
+            ${statusBadge}
+          </div>
         </div>
-        <div class="card-border"></div>
+        <div class="ticket-perforation" aria-hidden="true"></div>
+        <div class="ticket-stub">
+          <span class="ticket-stub-year">${season.year}</span>
+        </div>
+      </a>
     `;
   }
 

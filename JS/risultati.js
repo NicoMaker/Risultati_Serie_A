@@ -35,6 +35,7 @@ class SeasonPageApp {
   async init() {
     console.log("Inizializzazione pagina Stagione");
     this.initTheme();
+    this.renderDateline();
     this.initViewSwitcher();
     await this.loadDataAndRender();
     this.initFloatingButton();
@@ -77,6 +78,19 @@ class SeasonPageApp {
     if (!this.themeToggle) return;
     const icon = this.themeToggle.querySelector(".theme-icon");
     icon && (icon.textContent = theme === "light" ? "🌙" : "🌞");
+  }
+
+  // --- Dateline in stile testata giornale ---
+  renderDateline() {
+    const el = document.getElementById("dateline");
+    if (!el) return;
+    const formatted = new Date().toLocaleDateString("it-IT", {
+      weekday: "long",
+      day: "numeric",
+      month: "long",
+      year: "numeric",
+    });
+    el.textContent = formatted;
   }
 
   // --- Gestione Vista (Calendario/Classifica) ---
@@ -228,9 +242,13 @@ class SeasonPageApp {
       </button>
     `;
 
+    const giornataPadded = String(day.giornata).padStart(2, "0");
     dayCard.innerHTML = `
       <div class="day-header">
-        <h2>Giornata ${String(day.giornata).padStart(2, "0")}</h2>
+        <div class="day-heading">
+          <span class="day-tag">G${giornataPadded}</span>
+          <h2>Giornata ${giornataPadded}</h2>
+        </div>
         <div class="day-actions">
           ${whatsappBtn}
           <div class="toggle-btn"></div>
@@ -265,8 +283,10 @@ class SeasonPageApp {
             <span class="team-name">${match.away}</span>
           </div>
         </div>
-        <div class="score">
-          ${match.homeScore ?? "?"} - ${match.awayScore ?? "?"}
+        <div class="score-wrap">
+          <div class="score">
+            ${match.homeScore ?? "?"} - ${match.awayScore ?? "?"}
+          </div>
         </div>
       </div>
     `;
