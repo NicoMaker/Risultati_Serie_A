@@ -119,7 +119,7 @@ class SerieAApp {
           if (!("champion" in season)) {
             season.champion = null;
           }
-          const isCurrent = index === 0 && season.champion === null;
+          const isCurrent = index === 0 && !season.champion;
           return this.createSeasonCard(season, isCurrent);
         })
         .join("");
