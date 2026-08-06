@@ -16,7 +16,7 @@
     },
     "europa": {
       "name": "Europa League",
-      "positions": [5,6],
+      "positions": [5, 6],
       "backgroundColor": "#fff3e0",
       "borderColor": "#f57c00",
       "description": "Accesso diretto alla fase a gironi UEFA Europa League"

@@ -146,7 +146,9 @@ class SerieAApp {
   initWhatsAppButton() {
     const whatsappBtn = document.getElementById("whatsapp-share-seasons-btn");
     if (whatsappBtn) {
-      whatsappBtn.addEventListener("click", () => this.shareSeasonsOnWhatsApp());
+      whatsappBtn.addEventListener("click", () =>
+        this.shareSeasonsOnWhatsApp(),
+      );
     }
   }
 
@@ -162,8 +164,10 @@ class SerieAApp {
 
     this.seasonsData.forEach((season) => {
       const statusText = season.champion ? "COMPLETATA" : "IN CORSO";
-      const championText = season.champion ? `\n   Campione: ${season.champion}` : "";
-      
+      const championText = season.champion
+        ? `\n   Campione: ${season.champion}`
+        : "";
+
       message += `*${season.year}* - ${statusText}${championText}\n\n`;
     });
 
