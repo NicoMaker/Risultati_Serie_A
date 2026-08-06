@@ -544,6 +544,27 @@ a:focus-visible {
   font-size: 1rem;
 }
 
+.season-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 12px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--accent-green);
+}
+
+.season-cta-arrow {
+  display: inline-block;
+  transition: transform 0.25s ease;
+}
+
+.season-card:hover .season-cta-arrow {
+  transform: translateX(4px);
+}
+
 /* Il taglio: cursore/divisore diagonale che separa lo stemma dalla scheda */
 .ticket-perforation {
   width: 0;
