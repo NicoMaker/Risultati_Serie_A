@@ -74,8 +74,8 @@
         {
           "home": "Inter",
           "away": "Monza",
-          "homeScore": null,
-          "awayScore": null
+          "homeScore": 4,
+          "awayScore": 1
         },
         {
           "home": "Parma",
@@ -98,8 +98,8 @@
         {
           "home": "Udinese",
           "away": "Como",
-          "homeScore": null,
-          "awayScore": null
+          "homeScore": 1,
+          "awayScore": 1
         },
         {
           "home": "Venezia",
