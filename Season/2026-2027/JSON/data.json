@@ -56,8 +56,8 @@
         {
           "home": "Bologna",
           "away": "Lazio",
-          "homeScore": null,
-          "awayScore": null
+          "homeScore": 0,
+          "awayScore": 1
         },
         {
           "home": "Frosinone",
@@ -86,8 +86,8 @@
         {
           "home": "Roma",
           "away": "Fiorentina",
-          "homeScore": null,
-          "awayScore": null
+          "homeScore": 4,
+          "awayScore": 0
         },
         {
           "home": "Torino",
