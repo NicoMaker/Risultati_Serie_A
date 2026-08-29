@@ -146,9 +146,10 @@
   background: var(--bg-card-alt);
   cursor: pointer;
   display: flex;
+  flex-wrap: wrap;
   justify-content: space-between;
   align-items: center;
-  gap: 16px;
+  gap: 10px 16px;
   transition: background 0.25s ease;
   flex-shrink: 0;
   min-width: 0;
@@ -1056,8 +1057,17 @@ th[data-sort].sort-desc::after {
     padding: 14px 18px;
   }
 
+  .day-heading {
+    max-width: 100%;
+    overflow: hidden;
+  }
+
   .day-header h2 {
     font-size: 1.1rem !important;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    flex-shrink: 1;
+    min-width: 0;
   }
 
   .day-tag {
@@ -1168,6 +1178,11 @@ th[data-sort].sort-desc::after {
 
   .day-header h2 {
     font-size: 1rem !important;
+  }
+
+  .day-tag {
+    font-size: 0.65rem;
+    padding: 3px 8px 3px 6px;
   }
 
   .leaderboard-round-filter-wrap {
