@@ -127,14 +127,14 @@
         {
           "home": "Fiorentina",
           "away": "Frosinone",
-          "homeScore": null,
-          "awayScore": null
+          "homeScore": 0,
+          "awayScore": 3
         },
         {
           "home": "Juventus",
           "away": "Parma",
-          "homeScore": null,
-          "awayScore": null
+          "homeScore": 2,
+          "awayScore": 0
         },
         {
           "home": "Lazio",
@@ -157,8 +157,8 @@
         {
           "home": "Monza",
           "away": "Udinese",
-          "homeScore": null,
-          "awayScore": null
+          "homeScore": 2,
+          "awayScore": 3
         },
         {
           "home": "Napoli",
@@ -169,8 +169,8 @@
         {
           "home": "Sassuolo",
           "away": "Torino",
-          "homeScore": null,
-          "awayScore": null
+          "homeScore": 2,
+          "awayScore": 1
         }
       ]
     },
