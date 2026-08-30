@@ -6,6 +6,10 @@ class SeasonPageApp {
     this.legendList = document.getElementById("legend-list");
     this.themeToggle = document.getElementById("theme-toggle");
 
+    // Percorsi dei file JSON della stagione (impostati in JSON/<stagione>/)
+    this.dataUrl = document.getElementById("resultsdata").getAttribute("link");
+    this.configUrl = document.getElementById("configdata").getAttribute("link");
+
     // Elementi per lo switch della vista
     this.showCalendarBtn = document.getElementById("show-calendar-btn");
     this.showSidebarBtn = document.getElementById("show-sidebar-btn");
@@ -127,8 +131,8 @@ class SeasonPageApp {
     this._renderSkeletons();
 
     const [data, config] = await Promise.all([
-      this._loadJSON("JSON/data.json"),
-      this._loadJSON("JSON/config.json"),
+      this._loadJSON(this.dataUrl),
+      this._loadJSON(this.configUrl),
     ]);
 
     if (!data || !config) {
