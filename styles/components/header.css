@@ -1,0 +1,158 @@
+/* ===================== HEADER ===================== */
+
+header {
+  padding: 44px 0 26px;
+  text-align: center;
+  position: relative;
+}
+
+.header-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+}
+
+.title-wrap {
+  text-align: center;
+}
+
+.actions-wrap {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.header-content h1 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(2.4rem, 7vw, 4.4rem);
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+  letter-spacing: 0.01em;
+  text-transform: uppercase;
+  color: var(--text-primary);
+  animation: slideDown 0.7s ease-out;
+}
+
+.title-text {
+  position: relative;
+}
+
+.brand-logo {
+  height: clamp(30px, 5vw, 44px);
+  width: auto;
+  flex-shrink: 0;
+  background: #ffffff;
+  padding: 4px 8px;
+  border-radius: 6px;
+  border: 1px solid var(--border);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.22);
+}
+
+.header-content p {
+  font-size: clamp(0.78rem, 1.6vw, 0.95rem);
+  color: var(--text-secondary);
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin-top: 10px;
+  animation: slideDown 0.7s ease-out 0.15s both;
+}
+
+.header-content p .dateline {
+  display: block;
+  margin-top: 4px;
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  text-transform: none;
+  opacity: 0.7;
+}
+
+.icon-button {
+  background: var(--bg-card);
+  color: var(--text-primary);
+  border: 1px solid var(--border);
+  width: 44px;
+  height: 44px;
+  border-radius: 8px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  text-decoration: none;
+  transition:
+    border-color 0.2s ease,
+    transform 0.2s ease,
+    background 0.2s ease;
+}
+
+.icon-button:hover {
+  border-color: var(--accent-green);
+  background: var(--bg-card-alt);
+  transform: translateY(-1px);
+}
+
+.icon-button:focus-visible,
+button:focus-visible,
+input:focus-visible,
+a:focus-visible {
+  outline: 2px solid var(--accent-green);
+  outline-offset: 2px;
+}
+
+.theme-icon {
+  font-size: 1.05rem;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-18px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Il "taglio" — barra diagonale, firma grafica della Lega Serie A */
+.tricolore-bar {
+  display: block;
+  height: 8px;
+  width: 210px;
+  margin: 20px auto 0;
+  background: var(--gradient-green);
+  clip-path: polygon(4% 0, 100% 0, 96% 100%, 0 100%);
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 8px 20px rgba(33, 226, 138, 0.22);
+}
+
+.tricolore-bar::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.45),
+    transparent
+  );
+  transform: translateX(-100%);
+  animation: cut-shimmer 3.2s ease-in-out infinite;
+}
+
+@keyframes cut-shimmer {
+  0% {
+    transform: translateX(-100%);
+  }
+  55% {
+    transform: translateX(100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}

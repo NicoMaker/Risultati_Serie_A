@@ -1,0 +1,177 @@
+/* ===================== RESPONSIVE ===================== */
+
+@media (max-width: 1024px) {
+  .main-content {
+    display: block;
+  }
+  .sidebar,
+  .calendar-section {
+    width: 100%;
+  }
+  .leaderboard-card {
+    padding: 20px;
+  }
+}
+
+@media (max-width: 768px) {
+  .container {
+    padding: 0 15px;
+  }
+
+  .matches-grid {
+    grid-template-columns: 1fr;
+    padding: 16px;
+    max-height: 500px;
+  }
+
+  .day-header {
+    padding: 14px 18px;
+  }
+
+  .day-heading {
+    max-width: 100%;
+    overflow: hidden;
+  }
+
+  .day-header h2 {
+    font-size: 1.1rem !important;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    flex-shrink: 1;
+    min-width: 0;
+  }
+
+  .day-tag {
+    font-size: 0.7rem;
+    padding: 4px 9px 4px 7px;
+  }
+
+  .toggle-btn {
+    width: 32px;
+    height: 32px;
+  }
+
+  .match-card {
+    padding: 14px 12px;
+  }
+
+  .team-name {
+    font-size: 0.82rem;
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .team-logo {
+    width: 40px;
+    height: 40px;
+  }
+
+  .score {
+    font-size: 1.25rem;
+  }
+
+  .leaderboard-card {
+    padding: 16px;
+  }
+
+  .leaderboard-card h2 {
+    font-size: 1.35rem;
+    margin-bottom: 16px;
+  }
+
+  .leaderboard-table {
+    min-width: 700px;
+  }
+
+  .leaderboard-table th {
+    padding: 10px 6px;
+    font-size: 0.68rem;
+  }
+
+  .leaderboard-table td {
+    padding: 11px 6px;
+    font-size: 0.82rem;
+  }
+
+  .col-pos {
+    width: 46px;
+    min-width: 46px;
+  }
+  .col-team {
+    min-width: 140px;
+  }
+  .col-pts,
+  .col-played,
+  .col-wins,
+  .col-draws,
+  .col-losses {
+    width: 48px;
+    min-width: 48px;
+  }
+  .col-gf,
+  .col-ga {
+    width: 56px;
+    min-width: 56px;
+  }
+  .col-gd {
+    width: 66px;
+    min-width: 66px;
+  }
+
+  .team-logo-small {
+    width: 26px;
+    height: 26px;
+  }
+
+  .position {
+    min-width: 28px;
+    height: 28px;
+    font-size: 0.78rem;
+  }
+
+  .sort-criteria-btn {
+    padding: 6px 10px;
+    font-size: 11px;
+  }
+}
+
+@media (max-width: 480px) {
+  .score {
+    font-size: 1.1rem;
+    padding: 3px 16px 3px 12px;
+  }
+
+  .team-name {
+    max-width: 90px;
+  }
+
+  .day-header h2 {
+    font-size: 1rem !important;
+  }
+
+  .day-tag {
+    font-size: 0.65rem;
+    padding: 3px 8px 3px 6px;
+  }
+
+  .leaderboard-round-filter-wrap {
+    padding: 12px;
+  }
+
+  .round-range-input::-webkit-slider-thumb {
+    width: 18px;
+    height: 18px;
+  }
+
+  .whatsapp-day-btn {
+    padding: 6px 10px;
+    font-size: 0.72rem;
+  }
+
+  .whatsapp-day-btn svg {
+    width: 15px;
+    height: 15px;
+  }
+}

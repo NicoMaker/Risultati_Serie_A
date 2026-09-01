@@ -1,0 +1,123 @@
+/* ===================== BOTTONI ORDINAMENTO ===================== */
+
+.leaderboard-sort-section {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding-top: 4px;
+}
+
+.sort-label {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+}
+
+.sort-criteria-btns {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.sort-criteria-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  padding: 7px 13px;
+  background: var(--bg-secondary);
+  border: 1.5px solid var(--border);
+  border-radius: 6px;
+  color: var(--text-secondary);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  cursor: pointer;
+  transition: all 0.18s ease;
+  white-space: nowrap;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.sort-criteria-btn:hover {
+  border-color: var(--accent-green);
+  color: var(--text-primary);
+}
+
+.sort-criteria-btn:active {
+  transform: scale(0.97);
+}
+
+.sort-criteria-btn.active {
+  background: var(--accent-green) !important;
+  border-color: var(--accent-green) !important;
+  color: var(--ink-on-accent) !important;
+}
+
+.sort-criteria-btn .sort-arrow {
+  font-size: 12px;
+  font-weight: 900;
+  line-height: 1;
+  margin-left: 2px;
+  opacity: 0.9;
+}
+
+.sort-info-divider {
+  height: 1px;
+  background: var(--border);
+  margin: 2px 0;
+}
+
+.sort-info-text {
+  font-size: 12px;
+  color: var(--text-secondary);
+}
+
+.sort-info-text span {
+  font-weight: 700;
+  color: var(--accent-green);
+}
+
+/* ===================== INDICATORI ORDINAMENTO TABELLA ===================== */
+
+th[data-sort] {
+  cursor: pointer;
+  user-select: none;
+  position: relative;
+  padding-right: 20px !important;
+  transition: color 0.15s;
+}
+
+th[data-sort]:hover {
+  color: var(--text-primary) !important;
+}
+
+th[data-sort]::after {
+  content: "⇅";
+  position: absolute;
+  right: 3px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 0.6rem;
+  opacity: 0.25;
+}
+
+th[data-sort]:hover::after {
+  opacity: 0.6;
+}
+
+th[data-sort].sort-active {
+  color: var(--accent-green) !important;
+}
+
+th[data-sort].sort-active::after {
+  opacity: 1;
+  color: var(--accent-green);
+}
+
+th[data-sort].sort-asc::after {
+  content: "↑";
+}
+th[data-sort].sort-desc::after {
+  content: "↓";
+}
