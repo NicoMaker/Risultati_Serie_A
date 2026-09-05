@@ -111,6 +111,78 @@
   font-weight: 800;
 }
 
+/* ===================== INTESTAZIONI COLORATE ===================== */
+.leaderboard-table th:nth-child(1) { color: #9E9E9E; }  /* Posizione */
+.leaderboard-table th:nth-child(2) { color: var(--text-primary); }  /* Squadra */
+.leaderboard-table th:nth-child(3) { color: var(--accent-green); }  /* Punti */
+.leaderboard-table th:nth-child(4) { color: #1565C0; }  /* Partite */
+.leaderboard-table th:nth-child(5) { color: #2196F3; }  /* Vittorie */
+.leaderboard-table th:nth-child(6) { color: #FF9800; }  /* Pareggi */
+.leaderboard-table th:nth-child(7) { color: #f44336; }  /* Sconfitte */
+.leaderboard-table th:nth-child(8) { color: #4CAF50; }  /* Gol Fatti */
+.leaderboard-table th:nth-child(9) { color: #c62828; }  /* Gol Subiti */
+.leaderboard-table th:nth-child(10) { color: #9C27B0; } /* Differenza Reti */
+
+/* ===================== DATI COLORATI ===================== */
+/* Vittorie - Azzurro */
+.leaderboard-table td:nth-child(5) {
+  color: #2196F3;
+  font-weight: 700;
+}
+
+/* Pareggi - Arancione */
+.leaderboard-table td:nth-child(6) {
+  color: #FF9800;
+  font-weight: 700;
+}
+
+/* Sconfitte - Rosso */
+.leaderboard-table td:nth-child(7) {
+  color: #f44336;
+  font-weight: 700;
+}
+
+/* Gol Fatti - Verde */
+.leaderboard-table td:nth-child(8) {
+  color: #4CAF50;
+  font-weight: 700;
+}
+
+/* Gol Subiti - Rosso scuro */
+.leaderboard-table td:nth-child(9) {
+  color: #c62828;
+  font-weight: 700;
+}
+
+/* ===================== DIFFERENZA RETI ===================== */
+/* 
+   Regole:
+   - DR > 0 (positivo) → Verde (#4CAF50)
+   - DR < 0 (negativo) → Rosso (#f44336)
+   - DR = 0 (zero)    → Viola (#9C27B0)
+*/
+
+/* Base - Viola (per DR = 0) */
+.leaderboard-table .col-gd {
+  color: #9C27B0;
+  font-weight: 800;
+}
+
+/* Differenza Reti positiva - Verde */
+.leaderboard-table .col-gd[data-value^="+"] {
+  color: #4CAF50;
+}
+
+/* Differenza Reti negativa - Rosso */
+.leaderboard-table .col-gd[data-value^="-"] {
+  color: #f44336;
+}
+
+/* Differenza Reti zero - Viola (rimane come base) */
+.leaderboard-table .col-gd[data-value="0"] {
+  color: #9C27B0;
+}
+
 .leaderboard-table tbody tr {
   transition: background 0.2s ease;
 }

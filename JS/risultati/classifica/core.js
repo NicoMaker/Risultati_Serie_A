@@ -258,6 +258,10 @@ Object.assign(SeasonPageApp.prototype, {
     }
     tr.style.cssText = rowStyle;
 
+    // Calcolo differenza reti con segno
+    const goalDifference = team.differenzaReti;
+    const goalDiffText = goalDifference > 0 ? `+${goalDifference}` : goalDifference.toString();
+
     tr.innerHTML = `
       <td><div class="position">${position}</div></td>
       <td>
@@ -273,7 +277,7 @@ Object.assign(SeasonPageApp.prototype, {
       <td>${team.perse}</td>
       <td>${team.golFatti}</td>
       <td>${team.golSubiti}</td>
-      <td>${team.differenzaReti > 0 ? "+" : ""}${team.differenzaReti}</td>
+      <td class="col-gd" data-value="${goalDiffText}">${goalDiffText}</td>
     `;
     return tr;
   },
