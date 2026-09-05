@@ -86,5 +86,5 @@ Object.assign(SerieAApp.prototype, {
       }
       this.seasonsGrid.innerHTML = `<div class="error-message">${errorMessage}</div>`;
     }
-  }
+  },
 });

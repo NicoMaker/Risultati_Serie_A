@@ -100,5 +100,5 @@ Object.assign(SeasonPageApp.prototype, {
           th.classList.add("sort-active", `sort-${this.sortDirection}`);
         }
       });
-  }
+  },
 });

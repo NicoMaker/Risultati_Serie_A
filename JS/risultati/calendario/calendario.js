@@ -75,5 +75,5 @@ Object.assign(SeasonPageApp.prototype, {
         </div>
       </div>
     `;
-  }
+  },
 });

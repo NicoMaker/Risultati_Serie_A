@@ -50,5 +50,5 @@ Object.assign(SeasonPageApp.prototype, {
           .join("")}
       </tr>`,
     ).join("");
-  }
+  },
 });

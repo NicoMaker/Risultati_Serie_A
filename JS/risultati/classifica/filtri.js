@@ -168,7 +168,7 @@ Object.assign(SeasonPageApp.prototype, {
         if (this.data) this._applyLeaderboardView();
       });
     });
-  }
+  },
 
   // ─────────────────────────────────────────────────────────────────────────────
   // SORTING — versione corretta con scontri diretti calcolati per gruppi

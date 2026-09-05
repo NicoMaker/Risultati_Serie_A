@@ -260,7 +260,8 @@ Object.assign(SeasonPageApp.prototype, {
 
     // Calcolo differenza reti con segno
     const goalDifference = team.differenzaReti;
-    const goalDiffText = goalDifference > 0 ? `+${goalDifference}` : goalDifference.toString();
+    const goalDiffText =
+      goalDifference > 0 ? `+${goalDifference}` : goalDifference.toString();
 
     tr.innerHTML = `
       <td><div class="position">${position}</div></td>
@@ -294,5 +295,5 @@ Object.assign(SeasonPageApp.prototype, {
       `;
       this.legendList.appendChild(div);
     }
-  }
+  },
 });

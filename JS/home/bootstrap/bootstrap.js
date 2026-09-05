@@ -9,7 +9,7 @@ Object.assign(SerieAApp.prototype, {
     window.addEventListener("offline", () => {
       console.log("Connessione persa");
     });
-  }
+  },
 });
 
 // Initialize

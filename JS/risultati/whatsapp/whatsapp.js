@@ -150,5 +150,5 @@ Object.assign(SeasonPageApp.prototype, {
 
     const encodedMessage = encodeURIComponent(message);
     window.open(`https://wa.me/?text=${encodedMessage}`, "_blank");
-  }
+  },
 });

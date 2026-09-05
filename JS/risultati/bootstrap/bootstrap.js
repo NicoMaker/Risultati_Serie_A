@@ -6,7 +6,7 @@ Object.assign(SeasonPageApp.prototype, {
     setTimeout(() => {
       backBtn.classList.add("visible");
     }, 500);
-  }
+  },
 });
 
 // Inizializzazione dell'applicazione
