@@ -192,8 +192,8 @@
         {
           "home": "Fiorentina",
           "away": "Torino",
-          "homeScore": null,
-          "awayScore": null
+          "homeScore": 1,
+          "awayScore": 2
         },
         {
           "home": "Frosinone",
