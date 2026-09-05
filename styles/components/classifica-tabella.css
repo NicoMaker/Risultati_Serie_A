@@ -10,7 +10,6 @@
   border-radius: 10px;
   padding: 28px;
   border: 1px solid var(--border);
-  border-top: 4px solid var(--accent-green);
   margin-bottom: 18px;
   position: relative;
   overflow-x: auto;
@@ -92,6 +91,7 @@
   width: 66px;
   min-width: 66px;
   font-weight: 800;
+  color: var(--accent-green);
 }
 .col-played,
 .col-wins,
@@ -109,7 +109,6 @@
   width: 76px;
   min-width: 76px;
   font-weight: 800;
-  color: var(--accent-green) !important;
 }
 
 .leaderboard-table tbody tr {
