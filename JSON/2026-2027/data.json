@@ -198,8 +198,8 @@
         {
           "home": "Frosinone",
           "away": "Venezia",
-          "homeScore": null,
-          "awayScore": null
+          "homeScore": 3,
+          "awayScore": 2
         },
         {
           "home": "Genoa",
@@ -222,8 +222,8 @@
         {
           "home": "Parma",
           "away": "Monza",
-          "homeScore": null,
-          "awayScore": null
+          "homeScore": 1,
+          "awayScore": 1
         },
         {
           "home": "Roma",
