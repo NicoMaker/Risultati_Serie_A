@@ -2,6 +2,17 @@
 <html lang="it">
   <head>
     <meta charset="UTF-8" />
+    <script>
+      (function () {
+        var path = window.location.pathname;
+        var marker = "/Season/";
+        var idx = path.indexOf(marker);
+        var root = idx !== -1 ? path.slice(0, idx + 1) : "./";
+        var base = document.createElement("base");
+        base.href = root;
+        document.head.appendChild(base);
+      })();
+    </script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Serie A 2026/2027</title>
     <link
@@ -13,48 +24,48 @@
       href="https://www.calciomagazine.net/wp-content/uploads/2024/07/serie-a-enilive-logo.jpg"
       type="image/jpeg"
     />
-    <link rel="stylesheet" href="../../styles/base/foundation.css" />
-    <link rel="stylesheet" href="../../styles/components/header.css" />
-    <link rel="stylesheet" href="../../styles/components/whatsapp-button.css" />
-    <link rel="stylesheet" href="../../styles/components/footer.css" />
-    <link rel="stylesheet" href="../../styles/components/view-switcher.css" />
+    <link rel="stylesheet" href="styles/base/foundation.css" />
+    <link rel="stylesheet" href="styles/components/header.css" />
+    <link rel="stylesheet" href="styles/components/whatsapp-button.css" />
+    <link rel="stylesheet" href="styles/components/footer.css" />
+    <link rel="stylesheet" href="styles/components/view-switcher.css" />
     <link
       rel="stylesheet"
-      href="../../styles/components/skeleton-loading.css"
+      href="styles/components/skeleton-loading.css"
     />
     <link
       rel="stylesheet"
-      href="../../styles/components/giornate-calendario.css"
+      href="styles/components/giornate-calendario.css"
     />
-    <link rel="stylesheet" href="../../styles/components/match-card.css" />
+    <link rel="stylesheet" href="styles/components/match-card.css" />
     <link
       rel="stylesheet"
-      href="../../styles/components/classifica-tabella.css"
-    />
-    <link
-      rel="stylesheet"
-      href="../../styles/components/classifica-filtri.css"
+      href="styles/components/classifica-tabella.css"
     />
     <link
       rel="stylesheet"
-      href="../../styles/components/classifica-slider-giornate.css"
+      href="styles/components/classifica-filtri.css"
     />
     <link
       rel="stylesheet"
-      href="../../styles/components/classifica-ordinamento.css"
+      href="styles/components/classifica-slider-giornate.css"
     />
-    <link rel="stylesheet" href="../../styles/components/floating-button.css" />
-    <link rel="stylesheet" href="../../styles/responsive/home-responsive.css" />
     <link
       rel="stylesheet"
-      href="../../styles/responsive/risultati-responsive.css"
+      href="styles/components/classifica-ordinamento.css"
+    />
+    <link rel="stylesheet" href="styles/components/floating-button.css" />
+    <link rel="stylesheet" href="styles/responsive/home-responsive.css" />
+    <link
+      rel="stylesheet"
+      href="styles/responsive/risultati-responsive.css"
     />
   </head>
   <body>
     <div class="bg-animation"></div>
 
-    <div id="resultsdata" link="../../JSON/2026-2027/data.json"></div>
-    <div id="configdata" link="../../JSON/2026-2027/config.json"></div>
+    <div id="resultsdata" link="JSON/2026-2027/data.json"></div>
+    <div id="configdata" link="JSON/2026-2027/config.json"></div>
 
     <div class="container">
       <header>
@@ -73,7 +84,7 @@
             </div>
             <div class="actions-wrap">
               <a
-                href="../../index.html"
+                href="index.html"
                 class="icon-button"
                 aria-label="Torna alle stagioni"
                 title="Torna alle stagioni"
@@ -274,13 +285,13 @@
       </div>
     </div>
 
-    <script src="../../JS/risultati/core/core.js"></script>
-    <script src="../../JS/risultati/skeletons/skeletons.js"></script>
-    <script src="../../JS/risultati/calendario/calendario.js"></script>
-    <script src="../../JS/risultati/classifica/core.js"></script>
-    <script src="../../JS/risultati/classifica/filtri.js"></script>
-    <script src="../../JS/risultati/classifica/ricerca-ordinamento.js"></script>
-    <script src="../../JS/risultati/whatsapp/whatsapp.js"></script>
-    <script src="../../JS/risultati/bootstrap/bootstrap.js"></script>
+    <script src="JS/risultati/core/core.js"></script>
+    <script src="JS/risultati/skeletons/skeletons.js"></script>
+    <script src="JS/risultati/calendario/calendario.js"></script>
+    <script src="JS/risultati/classifica/core.js"></script>
+    <script src="JS/risultati/classifica/filtri.js"></script>
+    <script src="JS/risultati/classifica/ricerca-ordinamento.js"></script>
+    <script src="JS/risultati/whatsapp/whatsapp.js"></script>
+    <script src="JS/risultati/bootstrap/bootstrap.js"></script>
   </body>
 </html>
