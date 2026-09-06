@@ -51,14 +51,13 @@ class SeasonPageApp {
   }
 
   // --- Helper: percorso logo normalizzato ---
-  // Il tag <base> iniettato in <head> (vedi index.html) punta già alla root
-  // del progetto, calcolata automaticamente in base all'URL corrente: i
-  // percorsi salvati nel JSON sono quindi root-relative e vengono risolti
-  // dal browser stesso, senza bisogno di anteporre manualmente "../../".
   _getLogoPath(rawPath) {
     if (!rawPath) return "";
-    // Rimuove eventuali "../" residui, nel caso siano presenti in dati esterni
-    return rawPath.replace(/^(\.\.\/)+/, "");
+    if (rawPath.startsWith("http") || rawPath.startsWith("data:"))
+      return rawPath;
+    // Rimuove eventuali ../../ già presenti, poi li riaggunge sempre
+    const cleaned = rawPath.replace(/^(\.\.\/)+/, "");
+    return `../../${cleaned}`;
   }
 
   // --- Gestione Tema ---
