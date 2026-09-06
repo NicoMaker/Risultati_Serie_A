@@ -1,0 +1,118 @@
+/* ===================================================================
+   SERIE A · ARCHIVIO STAGIONI
+   Direzione: identità broadcast ufficiale Lega Serie A — fondo scuro,
+   verde acceso, tipografia condensata bold e il taglio diagonale che
+   la lega usa in loghi, grafiche TV e social.
+   =================================================================== */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  /* --- Tema scuro (default) --- */
+  --bg-primary: #060a13;
+  --bg-secondary: #0c1220;
+  --bg-card: #111827;
+  --bg-card-alt: #171f30;
+
+  --text-primary: #f2f5fa;
+  --text-secondary: #8791a8;
+  --text-champion: #ffcc33;
+
+  --border: rgba(255, 255, 255, 0.09);
+  --shadow: 0 16px 40px rgba(0, 0, 0, 0.5);
+
+  --ink-on-accent: #06150e;
+
+  --accent-green: #21e28a;
+  --accent-green-deep: #0fae63;
+  --accent-red: #ff4757;
+  --accent-gold: #ffcc33;
+
+  --gradient-green: linear-gradient(115deg, #21e28a 0%, #0fae63 100%);
+
+  --grid-opacity: 0.05;
+  --cut: polygon(0 0, 100% 0, 100% 100%, 4% 100%);
+
+  --font-display: "Rajdhani", sans-serif;
+  --font-body: "Inter", sans-serif;
+}
+
+:root.light {
+  /* --- Tema chiaro --- */
+  --bg-primary: #eef1f6;
+  --bg-secondary: #e1e7ef;
+  --bg-card: #ffffff;
+  --bg-card-alt: #eef1f6;
+
+  --text-primary: #0a1020;
+  --text-secondary: #5b6478;
+  --text-champion: #a3760a;
+
+  --border: rgba(10, 16, 32, 0.12);
+  --shadow: 0 16px 34px rgba(10, 20, 40, 0.12);
+
+  --ink-on-accent: #ffffff;
+
+  --accent-green: #0fae63;
+  --accent-green-deep: #0b7d48;
+  --accent-red: #d6293b;
+  --accent-gold: #a3760a;
+
+  --gradient-green: linear-gradient(115deg, #16c273 0%, #0b7d48 100%);
+
+  --grid-opacity: 0.05;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-body);
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  line-height: 1.6;
+  min-height: 100vh;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+.tabular {
+  font-variant-numeric: tabular-nums;
+}
+
+/* --- Sfondo: griglia tecnica sottile, non un blob gradiente --- */
+.bg-animation {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background-image:
+    linear-gradient(currentColor 1px, transparent 1px),
+    linear-gradient(90deg, currentColor 1px, transparent 1px);
+  background-size: 42px 42px;
+  color: var(--text-primary);
+  opacity: var(--grid-opacity);
+  mask-image: linear-gradient(to bottom, black 0%, black 25%, transparent 70%);
+}
+
+.container {
+  position: relative;
+  z-index: 1;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
