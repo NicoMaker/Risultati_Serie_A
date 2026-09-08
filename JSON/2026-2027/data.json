@@ -186,8 +186,8 @@
         {
           "home": "Cagliari",
           "away": "Lecce",
-          "homeScore": null,
-          "awayScore": null
+          "homeScore": 1,
+          "awayScore": 0
         },
         {
           "home": "Fiorentina",
@@ -234,8 +234,8 @@
         {
           "home": "Udinese",
           "away": "Lazio",
-          "homeScore": null,
-          "awayScore": null
+          "homeScore": 1,
+          "awayScore": 2
         }
       ]
     },

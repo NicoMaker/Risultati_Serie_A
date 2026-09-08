@@ -19,23 +19,26 @@ Object.assign(SerieAApp.prototype, {
       : "crest-wrap";
 
     return `
-      <a href="${season.url}" class="season-card">
-        <div class="season-card-main">
-          <div class="${crestClass}">
-            <img src="${crestSrc}" alt="${crestAlt}" class="season-logo">
+      <div class="season-card-wrap">
+        <div class="italy-flag-badge italy-flag-badge--card" aria-hidden="true" title="Italia"></div>
+        <a href="${season.url}" class="season-card">
+          <div class="season-card-main">
+            <div class="${crestClass}">
+              <img src="${crestSrc}" alt="${crestAlt}" class="season-logo">
+            </div>
+            <div class="season-card-body">
+              <span class="season-tag">Stagione</span>
+              <h3 class="season-title">${season.title}</h3>
+              ${statusBadge}
+              <span class="season-cta">Vai alla stagione <span class="season-cta-arrow" aria-hidden="true">→</span></span>
+            </div>
           </div>
-          <div class="season-card-body">
-            <span class="season-tag">Stagione</span>
-            <h3 class="season-title">${season.title}</h3>
-            ${statusBadge}
-            <span class="season-cta">Vai alla stagione <span class="season-cta-arrow" aria-hidden="true">→</span></span>
+          <div class="ticket-perforation" aria-hidden="true"></div>
+          <div class="ticket-stub">
+            <span class="ticket-stub-year">${season.year}</span>
           </div>
-        </div>
-        <div class="ticket-perforation" aria-hidden="true"></div>
-        <div class="ticket-stub">
-          <span class="ticket-stub-year">${season.year}</span>
-        </div>
-      </a>
+        </a>
+      </div>
     `;
   },
 

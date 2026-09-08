@@ -29,6 +29,7 @@ Object.assign(SeasonPageApp.prototype, {
 
     const giornataPadded = String(day.giornata).padStart(2, "0");
     dayCard.innerHTML = `
+      <div class="italy-flag-badge" aria-hidden="true" title="Italia"></div>
       <div class="day-header">
         <div class="day-heading">
           <span class="day-tag">G${giornataPadded}</span>
@@ -56,21 +57,24 @@ Object.assign(SeasonPageApp.prototype, {
 
   _createMatchCard(match, teamLogos) {
     return `
-      <div class="match-card">
-        <div class="teams">
-          <div class="team">
-            <img src="${this._getLogoPath(teamLogos[match.home])}" alt="${match.home}" class="team-logo">
-            <span class="team-name">${match.home}</span>
+      <div class="match-card-wrap">
+        <div class="italy-flag-badge italy-flag-badge--match" aria-hidden="true" title="Italia"></div>
+        <div class="match-card">
+          <div class="teams">
+            <div class="team">
+              <img src="${this._getLogoPath(teamLogos[match.home])}" alt="${match.home}" class="team-logo">
+              <span class="team-name">${match.home}</span>
+            </div>
+            <span class="vs">VS</span>
+            <div class="team">
+              <img src="${this._getLogoPath(teamLogos[match.away])}" alt="${match.away}" class="team-logo">
+              <span class="team-name">${match.away}</span>
+            </div>
           </div>
-          <span class="vs">VS</span>
-          <div class="team">
-            <img src="${this._getLogoPath(teamLogos[match.away])}" alt="${match.away}" class="team-logo">
-            <span class="team-name">${match.away}</span>
-          </div>
-        </div>
-        <div class="score-wrap">
-          <div class="score">
-            ${match.homeScore ?? "?"} - ${match.awayScore ?? "?"}
+          <div class="score-wrap">
+            <div class="score">
+              ${match.homeScore ?? "?"} - ${match.awayScore ?? "?"}
+            </div>
           </div>
         </div>
       </div>
