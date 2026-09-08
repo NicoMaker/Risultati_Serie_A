@@ -1,14 +1,12 @@
 /* ===================================================================
-   BANDIERA ITALIANA — tricolore a riga (stessa firma grafica della
-   .tricolore-bar), mostrato sopra le giornate, la classifica e le
-   card delle stagioni.
+   BANDIERA ITALIANA — tricolore a riga, a piena larghezza, mostrato
+   sopra ogni partita, ogni giornata, la classifica e le card stagioni.
    =================================================================== */
 
 .italy-flag-badge {
   display: block;
-  height: 8px;
-  width: 210px;
-  margin: 0 auto;
+  height: 7px;
+  width: 100%;
   background: linear-gradient(
     90deg,
     #008c45 0%,
@@ -18,10 +16,9 @@
     #cd212a 66.666%,
     #cd212a 100%
   );
-  clip-path: polygon(4% 0, 100% 0, 96% 100%, 0 100%);
   position: relative;
   overflow: hidden;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.22);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.22);
   flex-shrink: 0;
 }
 
@@ -41,26 +38,16 @@
 
 /* Sopra ogni giornata (day-card) */
 .day-card > .italy-flag-badge {
-  margin: 14px auto 0;
+  height: 8px;
 }
 
 /* Sopra la classifica */
 .italy-flag-badge--section {
-  margin: 0 auto 16px;
-}
-
-/* Sopra ogni card stagione, nella pagina generale (versione più stretta) */
-.italy-flag-badge--card {
-  width: 150px;
-  height: 7px;
+  height: 8px;
+  margin-bottom: 16px;
 }
 
 /* Sopra ogni singola partita, dentro la giornata */
-.italy-flag-badge--match {
-  width: 120px;
-  height: 6px;
-}
-
 .match-card-wrap {
   display: flex;
   flex-direction: column;
@@ -68,16 +55,9 @@
   min-width: 0;
 }
 
-.match-card-wrap > .italy-flag-badge {
-  margin: 0 auto;
-}
-
+/* Sopra ogni card stagione, nella pagina generale */
 .season-card-wrap {
   display: flex;
   flex-direction: column;
   gap: 10px;
-}
-
-.season-card-wrap > .italy-flag-badge {
-  margin: 0 auto;
 }

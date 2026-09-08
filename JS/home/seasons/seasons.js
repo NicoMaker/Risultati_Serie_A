@@ -20,7 +20,7 @@ Object.assign(SerieAApp.prototype, {
 
     return `
       <div class="season-card-wrap">
-        <div class="italy-flag-badge italy-flag-badge--card" aria-hidden="true" title="Italia"></div>
+        <div class="italy-flag-badge" aria-hidden="true" title="Italia"></div>
         <a href="${season.url}" class="season-card">
           <div class="season-card-main">
             <div class="${crestClass}">

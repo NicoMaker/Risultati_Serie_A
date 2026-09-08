@@ -58,7 +58,7 @@ Object.assign(SeasonPageApp.prototype, {
   _createMatchCard(match, teamLogos) {
     return `
       <div class="match-card-wrap">
-        <div class="italy-flag-badge italy-flag-badge--match" aria-hidden="true" title="Italia"></div>
+        <div class="italy-flag-badge" aria-hidden="true" title="Italia"></div>
         <div class="match-card">
           <div class="teams">
             <div class="team">
