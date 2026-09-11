@@ -299,8 +299,8 @@
         {
           "home": "Venezia",
           "away": "Fiorentina",
-          "homeScore": null,
-          "awayScore": null
+          "homeScore": 2,
+          "awayScore": 4
         }
       ]
     },
