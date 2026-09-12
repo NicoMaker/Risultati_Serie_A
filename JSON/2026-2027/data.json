@@ -245,8 +245,8 @@
         {
           "home": "Atalanta",
           "away": "Cagliari",
-          "homeScore": null,
-          "awayScore": null
+          "homeScore": 1,
+          "awayScore": 2
         },
         {
           "home": "Como",
