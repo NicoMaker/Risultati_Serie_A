@@ -269,8 +269,8 @@
         {
           "home": "Lazio",
           "away": "Milan",
-          "homeScore": null,
-          "awayScore": null
+          "homeScore": 2,
+          "awayScore": 2
         },
         {
           "home": "Lecce",
