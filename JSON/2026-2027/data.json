@@ -281,8 +281,8 @@
         {
           "home": "Napoli",
           "away": "Bologna",
-          "homeScore": null,
-          "awayScore": null
+          "homeScore": 1,
+          "awayScore": 0
         },
         {
           "home": "Sassuolo",
