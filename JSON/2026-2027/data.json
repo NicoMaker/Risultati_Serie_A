@@ -310,8 +310,8 @@
         {
           "home": "Bologna",
           "away": "Torino",
-          "homeScore": null,
-          "awayScore": null
+          "homeScore": 1,
+          "awayScore": 1
         },
         {
           "home": "Fiorentina",
@@ -358,8 +358,8 @@
         {
           "home": "Udinese",
           "away": "Cagliari",
-          "homeScore": null,
-          "awayScore": null
+          "homeScore": 0,
+          "awayScore": 1
         },
         {
           "home": "Venezia",
