@@ -322,8 +322,8 @@
         {
           "home": "Frosinone",
           "away": "Como",
-          "homeScore": null,
-          "awayScore": null
+          "homeScore": 2,
+          "awayScore": 0
         },
         {
           "home": "Juventus",
@@ -346,8 +346,8 @@
         {
           "home": "Parma",
           "away": "Genoa",
-          "homeScore": null,
-          "awayScore": null
+          "homeScore": 2,
+          "awayScore": 1
         },
         {
           "home": "Roma",
