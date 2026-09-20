@@ -334,8 +334,8 @@
         {
           "home": "Milan",
           "away": "Lecce",
-          "homeScore": null,
-          "awayScore": null
+          "homeScore": 3,
+          "awayScore": 0
         },
         {
           "home": "Monza",
