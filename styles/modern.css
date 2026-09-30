@@ -1,0 +1,138 @@
+/* ===================================================================
+   SERIE A · MODERN LAYER
+   Caricato per ultimo: rifinisce token, header, card, tabelle e motion
+   senza toccare i CSS di componente. Identità: notte blu, verde/ciano
+   elettrico, taglio diagonale della Lega.
+   =================================================================== */
+:root{
+  --bg-primary:#050912;--bg-secondary:#0b1424;--bg-card:#0f1a2e;--bg-card-alt:#15233c;
+  --text-secondary:#8c9ab5;--accent-green:#19f0a0;--accent-cyan:#22d3ee;
+  --border:rgba(148,190,255,.12);
+  --gradient-green:linear-gradient(115deg,#19f0a0 0%,#22d3ee 100%);
+  --glass:rgba(15,26,46,.66);--ring:0 0 0 1px var(--border);
+  --shadow:0 24px 60px -18px rgba(0,0,0,.65);--glow:0 0 40px -8px rgba(25,240,160,.35);
+  --radius:16px;--ease:cubic-bezier(.22,.9,.3,1);
+}
+:root.light{
+  --bg-primary:#eef3fa;--bg-secondary:#e3ebf6;--bg-card:#fff;--bg-card-alt:#f1f5fb;
+  --accent-green:#079e66;--accent-cyan:#0891b2;--glass:rgba(255,255,255,.75);
+  --gradient-green:linear-gradient(115deg,#0bc17f 0%,#0891b2 100%);
+  --shadow:0 20px 44px -18px rgba(15,35,70,.22);--glow:0 0 30px -10px rgba(7,158,102,.35);
+}
+html{scroll-padding-top:90px}
+body{
+  background:
+    radial-gradient(900px 500px at 12% -8%,rgba(25,240,160,.13),transparent 60%),
+    radial-gradient(800px 520px at 100% 0%,rgba(34,211,238,.12),transparent 55%),
+    var(--bg-primary);
+  background-attachment:fixed;-webkit-font-smoothing:antialiased;
+}
+::selection{background:var(--accent-green);color:var(--ink-on-accent)}
+::-webkit-scrollbar{width:10px;height:10px}
+::-webkit-scrollbar-thumb{background:var(--bg-card-alt);border-radius:9px;border:2px solid var(--bg-primary)}
+::-webkit-scrollbar-thumb:hover{background:var(--accent-green)}
+
+/* progress di scroll + torna su */
+.sa-progress{position:fixed;top:0;left:0;height:3px;width:100%;z-index:100;transform-origin:0 50%;
+  transform:scaleX(0);background:var(--gradient-green);box-shadow:0 0 12px var(--accent-green)}
+.sa-top{position:fixed;right:18px;bottom:18px;z-index:90;width:46px;height:46px;border-radius:14px;border:1px solid var(--border);
+  background:var(--glass);backdrop-filter:blur(14px);color:var(--text-primary);font-size:1.1rem;cursor:pointer;
+  opacity:0;transform:translateY(12px);pointer-events:none;transition:.3s var(--ease)}
+.sa-top.show{opacity:1;transform:none;pointer-events:auto}
+.sa-top:hover{border-color:var(--accent-green);box-shadow:var(--glow)}
+
+/* header a vetro */
+header,.app-header{padding-top:36px}
+.header-content h1,.title-container h1{
+  background:linear-gradient(100deg,var(--text-primary) 30%,var(--accent-green) 100%);
+  -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;
+  font-family:var(--font-display);letter-spacing:.02em;text-transform:uppercase}
+.brand-logo,.serie-logo{border-radius:10px;box-shadow:var(--glow)}
+.tricolore-bar{height:6px;background:var(--gradient-green)}
+.icon-button,.back-button{background:var(--glass);backdrop-filter:blur(12px);border-radius:12px;transition:.25s var(--ease)}
+.icon-button:hover,.back-button:hover{box-shadow:var(--glow);border-color:var(--accent-green)}
+.season-badge{background:var(--gradient-green);color:var(--ink-on-accent);font-weight:800;letter-spacing:.06em;
+  text-transform:uppercase;padding:4px 14px;clip-path:polygon(6% 0,100% 0,94% 100%,0 100%)}
+
+/* card generiche: vetro, bordo luminoso, ingresso */
+.season-card,.day-card,.leaderboard-card,.leaderboard-filters-card,.legend-card,.controls-section,
+.table-wrapper,.legend-section .legend,.match-card{
+  background:var(--glass);backdrop-filter:blur(16px) saturate(140%);-webkit-backdrop-filter:blur(16px) saturate(140%);
+  border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow)}
+.season-card{transition:.35s var(--ease)}
+.season-card:hover{transform:translateY(-6px) scale(1.01);box-shadow:var(--shadow),var(--glow);border-color:var(--accent-green)}
+.season-card::before{content:"";position:absolute;inset:0;pointer-events:none;
+  background:linear-gradient(120deg,transparent 40%,rgba(25,240,160,.10) 50%,transparent 60%);transform:translateX(-100%);transition:transform .8s var(--ease)}
+.season-card:hover::before{transform:translateX(100%)}
+.season-title,.day-header h2{font-family:var(--font-display);font-weight:700;letter-spacing:.03em}
+.season-tag,.day-tag{background:var(--gradient-green);color:var(--ink-on-accent);font-weight:800;border-radius:6px;padding:2px 9px}
+.current-badge{background:var(--gradient-green);color:var(--ink-on-accent);font-weight:800;border-radius:999px;
+  animation:sa-pulse 2.2s ease-in-out infinite}
+@keyframes sa-pulse{0%,100%{box-shadow:0 0 0 0 rgba(25,240,160,.5)}50%{box-shadow:0 0 0 9px rgba(25,240,160,0)}}
+.champion-badge{border-radius:999px}
+.crest-wrap--champion{box-shadow:0 0 0 4px rgba(255,204,51,.18),0 0 32px rgba(255,204,51,.35)}
+
+/* giornate e partite */
+.day-card{margin-bottom:16px;overflow:hidden}
+.day-header{cursor:pointer}
+.match-card{border-top:0;position:relative;overflow:hidden;transition:.3s var(--ease)}
+.match-card::before{content:"";position:absolute;inset:0 0 auto 0;height:3px;background:var(--gradient-green)}
+.match-card:hover{transform:translateY(-4px);box-shadow:var(--shadow),var(--glow)}
+.team-logo,.team-logo-small{background:#fff;object-fit:contain;box-shadow:0 4px 14px rgba(0,0,0,.28)}
+.score{font-size:1.75rem;background:linear-gradient(135deg,var(--bg-card-alt),var(--bg-secondary));
+  border:1px solid var(--border);text-shadow:0 0 18px rgba(25,240,160,.35);font-variant-numeric:tabular-nums}
+.view-selector button.active,.filter-btn.active,.filter-btn.selected,.sort-criteria-btn.active{
+  background:var(--gradient-green);color:var(--ink-on-accent);border-color:transparent;font-weight:800;box-shadow:var(--glow)}
+.view-selector button,.filter-btn,.sort-criteria-btn{border-radius:12px;transition:.25s var(--ease)}
+.view-selector button:hover,.filter-btn:hover,.sort-criteria-btn:hover{transform:translateY(-2px)}
+
+/* input di ricerca */
+.search-input,.leaderboard-search{background:var(--bg-secondary);border:1px solid var(--border);border-radius:14px;
+  color:var(--text-primary);transition:.25s var(--ease)}
+.search-input:focus,.leaderboard-search:focus{border-color:var(--accent-green);box-shadow:0 0 0 4px rgba(25,240,160,.16);outline:0}
+
+/* classifiche */
+.standings-table,.leaderboard-table{border-collapse:separate;border-spacing:0 4px;font-variant-numeric:tabular-nums}
+.standings-table thead th,.leaderboard-table thead th{position:sticky;top:0;z-index:2;
+  background:var(--bg-card);color:var(--text-secondary);font-size:.72rem;text-transform:uppercase;letter-spacing:.09em}
+.standings-table tbody tr,.leaderboard-table tbody tr{transition:transform .2s var(--ease),background .2s;animation:sa-row .5s var(--ease) both}
+.standings-table tbody tr:hover,.leaderboard-table tbody tr:hover{transform:scale(1.008);background:var(--bg-card-alt)}
+@keyframes sa-row{from{opacity:0;transform:translateX(-14px)}to{opacity:1;transform:none}}
+.standings-table tbody tr:nth-child(n){animation-delay:calc(var(--i,0)*18ms)}
+.pts-col,.leaderboard-table td:nth-child(3){font-family:var(--font-display);font-size:1.2rem;font-weight:700;color:var(--accent-green)}
+.pos-col,.position{font-family:var(--font-display);font-weight:700}
+tr[data-zone="championship"] .pos-col{color:#ffcc33;text-shadow:0 0 14px rgba(255,204,51,.6)}
+tr[data-zone] td:first-child{box-shadow:inset 4px 0 0 var(--zone,transparent)}
+tr[data-zone="championship"]{--zone:#ffcc33}tr[data-zone="champions"]{--zone:#3b82f6}
+tr[data-zone="europa"]{--zone:#fb923c}tr[data-zone="conference"]{--zone:#84cc16}tr[data-zone="relegation"]{--zone:#ef4444}
+.scudetto-row .position{box-shadow:0 0 18px rgba(255,204,51,.55)}
+.spinner{border-top-color:var(--accent-green)}
+.whatsapp-btn{border-radius:14px;transition:.25s var(--ease)}
+.whatsapp-btn:hover{transform:translateY(-2px);box-shadow:0 12px 30px -8px rgba(37,211,102,.55)}
+
+/* footer */
+footer,.app-footer{margin-top:40px;padding:26px 0;text-align:center;color:var(--text-secondary);
+  border-top:1px solid var(--border);font-size:.85rem;letter-spacing:.04em}
+
+/* reveal allo scroll */
+.sa-reveal{opacity:0;transform:translateY(22px);transition:opacity .7s var(--ease),transform .7s var(--ease)}
+.sa-reveal.in{opacity:1;transform:none}
+@media (max-width:640px){.container,.app-container{padding:0 12px}.score{font-size:1.5rem}}
+@media print{.bg-animation,.sa-progress,.sa-top,.whatsapp-btn,.icon-button{display:none!important}body{background:#fff}}
+
+/* ===== Zone classifica (Champions, Europa, Conference, retrocessione) =====
+   Colore vivo preso da config.json (--zone), tinta sulle celle + barra a sinistra */
+.leaderboard-table tbody tr[data-zone] td{background:color-mix(in srgb,var(--zone) 15%,transparent);transition:background .2s}
+.leaderboard-table tbody tr[data-zone]:hover td{background:color-mix(in srgb,var(--zone) 28%,transparent)}
+.leaderboard-table tbody tr[data-zone] td:first-child{box-shadow:inset 5px 0 0 var(--zone);border-radius:10px 0 0 10px}
+.leaderboard-table tbody tr[data-zone] td:last-child{border-radius:0 10px 10px 0}
+.leaderboard-table tbody tr[data-zone] .position{background:var(--zone);border-color:var(--zone);color:#fff;box-shadow:0 0 14px -2px var(--zone)}
+.leaderboard-table tbody tr.scudetto-row .position{color:#1a1300;box-shadow:0 0 18px rgba(255,204,51,.7)}
+.scudetto-row{background:none!important;border:0!important}
+.legend-color{width:16px;height:16px;border-radius:5px;box-shadow:0 0 10px -2px currentColor}
+.legend-item{padding:6px 0;line-height:1.35}
+
+/* Anno stagione sulle card home */
+.season-year{display:block;font-family:var(--font-display);font-weight:700;font-size:1.7rem;letter-spacing:.04em;line-height:1.1;
+  margin:2px 0 6px;font-variant-numeric:tabular-nums;background:var(--gradient-green);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.ticket-stub{width:64px}.ticket-stub-year{font-size:1.05rem}

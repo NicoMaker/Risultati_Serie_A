@@ -1,0 +1,16 @@
+{
+  "name": "Risultati Serie A",
+  "short_name": "Serie A",
+  "description": "Archivio completo di calendari, risultati e classifiche della Serie A, stagione per stagione.",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#050912",
+  "theme_color": "#050912",
+  "icons": [
+    {
+      "src": "https://www.calciomagazine.net/wp-content/uploads/2024/07/serie-a-enilive-logo.jpg",
+      "sizes": "512x512",
+      "type": "image/jpeg"
+    }
+  ]
+}

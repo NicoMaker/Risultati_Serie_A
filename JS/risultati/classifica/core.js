@@ -245,18 +245,15 @@ Object.assign(SeasonPageApp.prototype, {
 
   _createLeaderboardRow(team, position, teamLogos) {
     const tr = document.createElement("tr");
-    let rowStyle = "";
-
     for (const key in this.config.positions) {
       const posConfig = this.config.positions[key];
       if (posConfig.positions.includes(position)) {
-        const { backgroundColor, borderColor } = posConfig;
-        rowStyle = `background: linear-gradient(135deg, ${backgroundColor}20 0%, ${backgroundColor}10 100%); border-left: 4px solid ${borderColor};`;
+        tr.dataset.zone = key;
+        tr.style.setProperty("--zone", posConfig.borderColor);
         if (key === "scudetto") tr.classList.add("scudetto-row");
         break;
       }
     }
-    tr.style.cssText = rowStyle;
 
     // Calcolo differenza reti con segno
     const goalDifference = team.differenzaReti;
@@ -290,7 +287,7 @@ Object.assign(SeasonPageApp.prototype, {
       const div = document.createElement("div");
       div.className = "legend-item";
       div.innerHTML = `
-        <div class="legend-color" style="background-color: ${item.backgroundColor}; border-color: ${item.borderColor};"></div>
+        <div class="legend-color" style="background-color: ${item.borderColor}; border-color: ${item.borderColor};"></div>
         <span>${item.name}: ${item.description}</span>
       `;
       this.legendList.appendChild(div);
