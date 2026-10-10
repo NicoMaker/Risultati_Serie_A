@@ -417,8 +417,8 @@
         {
           "home": "Napoli",
           "away": "Frosinone",
-          "homeScore": null,
-          "awayScore": null
+          "homeScore": 3,
+          "awayScore": 0
         },
         {
           "home": "Sassuolo",
