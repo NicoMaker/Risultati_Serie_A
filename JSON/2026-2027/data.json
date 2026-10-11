@@ -405,14 +405,14 @@
         {
           "home": "Lazio",
           "away": "Monza",
-          "homeScore": null,
-          "awayScore": null
+          "homeScore": 3,
+          "awayScore": 1
         },
         {
           "home": "Lecce",
           "away": "Bologna",
-          "homeScore": null,
-          "awayScore": null
+          "homeScore": 1,
+          "awayScore": 2
         },
         {
           "home": "Napoli",
