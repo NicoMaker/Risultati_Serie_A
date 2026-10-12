@@ -375,8 +375,8 @@
         {
           "home": "Atalanta",
           "away": "Venezia",
-          "homeScore": null,
-          "awayScore": null
+          "homeScore": 3,
+          "awayScore": 1
         },
         {
           "home": "Cagliari",
