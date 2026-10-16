@@ -452,8 +452,8 @@
         {
           "home": "Frosinone",
           "away": "Sassuolo",
-          "homeScore": null,
-          "awayScore": null
+          "homeScore": 4,
+          "awayScore": 2
         },
         {
           "home": "Juventus",
