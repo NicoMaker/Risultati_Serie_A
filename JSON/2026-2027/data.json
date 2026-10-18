@@ -446,8 +446,8 @@
         {
           "home": "Fiorentina",
           "away": "Como",
-          "homeScore": null,
-          "awayScore": null
+          "homeScore": 1,
+          "awayScore": 3
         },
         {
           "home": "Frosinone",
