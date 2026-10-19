@@ -470,8 +470,8 @@
         {
           "home": "Monza",
           "away": "Cagliari",
-          "homeScore": null,
-          "awayScore": null
+          "homeScore": 4,
+          "awayScore": 0
         },
         {
           "home": "Parma",
