@@ -505,8 +505,8 @@
         {
           "home": "Atalanta",
           "away": "Frosinone",
-          "homeScore": null,
-          "awayScore": null
+          "homeScore": 4,
+          "awayScore": 4
         },
         {
           "home": "Cagliari",
@@ -523,8 +523,8 @@
         {
           "home": "Genoa",
           "away": "Venezia",
-          "homeScore": null,
-          "awayScore": null
+          "homeScore": 1,
+          "awayScore": 0
         },
         {
           "home": "Inter",
