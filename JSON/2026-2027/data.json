@@ -588,8 +588,8 @@
         {
           "home": "Milan",
           "away": "Bologna",
-          "homeScore": null,
-          "awayScore": null
+          "homeScore": 2,
+          "awayScore": 4
         },
         {
           "home": "Monza",
@@ -600,8 +600,8 @@
         {
           "home": "Parma",
           "away": "Udinese",
-          "homeScore": null,
-          "awayScore": null
+          "homeScore": 0,
+          "awayScore": 0
         },
         {
           "home": "Roma",
@@ -624,8 +624,8 @@
         {
           "home": "Venezia",
           "away": "Inter",
-          "homeScore": null,
-          "awayScore": null
+          "homeScore": 0,
+          "awayScore": 2
         }
       ]
     },
