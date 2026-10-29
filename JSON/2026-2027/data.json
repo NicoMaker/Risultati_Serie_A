@@ -570,8 +570,8 @@
         {
           "home": "Fiorentina",
           "away": "Atalanta",
-          "homeScore": null,
-          "awayScore": null
+          "homeScore": 2,
+          "awayScore": 2
         },
         {
           "home": "Frosinone",
