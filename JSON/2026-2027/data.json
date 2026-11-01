@@ -647,8 +647,8 @@
         {
           "home": "Como",
           "away": "Venezia",
-          "homeScore": null,
-          "awayScore": null
+          "homeScore": 1,
+          "awayScore": 0
         },
         {
           "home": "Frosinone",
