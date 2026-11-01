@@ -328,8 +328,8 @@
         {
           "home": "Juventus",
           "away": "Atalanta",
-          "homeScore": 0,
-          "awayScore": 2
+          "homeScore": 2,
+          "awayScore": 0
         },
         {
           "home": "Milan",
