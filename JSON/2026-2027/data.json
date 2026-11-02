@@ -635,8 +635,8 @@
         {
           "home": "Atalanta",
           "away": "Parma",
-          "homeScore": null,
-          "awayScore": null
+          "homeScore": 0,
+          "awayScore": 3
         },
         {
           "home": "Bologna",
