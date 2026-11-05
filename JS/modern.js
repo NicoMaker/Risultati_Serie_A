@@ -6,11 +6,13 @@
   const top = Object.assign(document.createElement("button"), {
     className: "sa-top",
     type: "button",
-    ariaLabel: "Torna su",
     textContent: "↑",
   });
+  top.setAttribute("aria-label", "Torna su");
+  const reduceMotion = matchMedia("(prefers-reduced-motion: reduce)");
   document.body.append(bar, top);
-  top.onclick = () => scrollTo({ top: 0, behavior: "smooth" });
+  top.onclick = () =>
+    scrollTo({ top: 0, behavior: reduceMotion.matches ? "auto" : "smooth" });
   const onScroll = () => {
     const h = document.documentElement,
       max = h.scrollHeight - innerHeight;

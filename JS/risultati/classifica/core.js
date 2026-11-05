@@ -264,7 +264,7 @@ Object.assign(SeasonPageApp.prototype, {
       <td><div class="position">${position}</div></td>
       <td>
         <div class="team-cell">
-          <img src="${this._getLogoPath(teamLogos[team.squadra])}" alt="${team.squadra}" class="team-logo-small">
+          <img src="${this._getLogoPath(teamLogos[team.squadra])}" alt="${team.squadra}" class="team-logo-small" loading="lazy" decoding="async">
           <span>${team.squadra}</span>
         </div>
       </td>

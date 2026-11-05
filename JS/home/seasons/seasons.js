@@ -24,7 +24,7 @@ Object.assign(SerieAApp.prototype, {
         <a href="${season.url}" class="season-card">
           <div class="season-card-main">
             <div class="${crestClass}">
-              <img src="${crestSrc}" alt="${crestAlt}" class="season-logo">
+              <img src="${crestSrc}" alt="${crestAlt}" class="season-logo" loading="lazy" decoding="async">
             </div>
             <div class="season-card-body">
               <span class="season-tag">Stagione</span>

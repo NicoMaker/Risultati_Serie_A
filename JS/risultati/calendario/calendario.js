@@ -62,12 +62,12 @@ Object.assign(SeasonPageApp.prototype, {
         <div class="match-card">
           <div class="teams">
             <div class="team">
-              <img src="${this._getLogoPath(teamLogos[match.home])}" alt="${match.home}" class="team-logo">
+              <img src="${this._getLogoPath(teamLogos[match.home])}" alt="${match.home}" class="team-logo" loading="lazy" decoding="async">
               <span class="team-name">${match.home}</span>
             </div>
             <span class="vs">VS</span>
             <div class="team">
-              <img src="${this._getLogoPath(teamLogos[match.away])}" alt="${match.away}" class="team-logo">
+              <img src="${this._getLogoPath(teamLogos[match.away])}" alt="${match.away}" class="team-logo" loading="lazy" decoding="async">
               <span class="team-name">${match.away}</span>
             </div>
           </div>

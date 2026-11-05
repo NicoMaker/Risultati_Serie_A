@@ -3,6 +3,16 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="color-scheme" content="dark light" />
+    <script>
+      // Applica il tema salvato prima del primo render (niente flash)
+      try {
+        if (localStorage.getItem("theme") === "light")
+          document.documentElement.classList.add("light");
+      } catch (e) {}
+    </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <title>Generale Stagioni | Archivio Serie A</title>
     <link
       href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&family=Inter:wght@400;500;600;700;800&display=swap"
