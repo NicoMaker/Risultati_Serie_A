@@ -700,8 +700,8 @@
         {
           "home": "Cagliari",
           "away": "Frosinone",
-          "homeScore": null,
-          "awayScore": null
+          "homeScore": 1,
+          "awayScore": 0
         },
         {
           "home": "Fiorentina",
@@ -748,8 +748,8 @@
         {
           "home": "Torino",
           "away": "Lecce",
-          "homeScore": null,
-          "awayScore": null
+          "homeScore": 1,
+          "awayScore": 1
         },
         {
           "home": "Venezia",
