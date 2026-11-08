@@ -712,8 +712,8 @@
         {
           "home": "Genoa",
           "away": "Milan",
-          "homeScore": null,
-          "awayScore": null
+          "homeScore": 1,
+          "awayScore": 2
         },
         {
           "home": "Inter",
@@ -724,8 +724,8 @@
         {
           "home": "Monza",
           "away": "Atalanta",
-          "homeScore": null,
-          "awayScore": null
+          "homeScore": 0,
+          "awayScore": 1
         },
         {
           "home": "Napoli",
