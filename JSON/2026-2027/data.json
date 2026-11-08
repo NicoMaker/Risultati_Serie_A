@@ -730,8 +730,8 @@
         {
           "home": "Napoli",
           "away": "Lazio",
-          "homeScore": null,
-          "awayScore": null
+          "homeScore": 1,
+          "awayScore": 1
         },
         {
           "home": "Parma",
