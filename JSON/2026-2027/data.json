@@ -706,8 +706,8 @@
         {
           "home": "Fiorentina",
           "away": "Juventus",
-          "homeScore": null,
-          "awayScore": null
+          "homeScore": 2,
+          "awayScore": 2
         },
         {
           "home": "Genoa",
