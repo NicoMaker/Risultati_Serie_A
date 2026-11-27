@@ -884,8 +884,8 @@
         {
           "home": "Venezia",
           "away": "Bologna",
-          "homeScore": null,
-          "awayScore": null
+          "homeScore": 0,
+          "awayScore": 0
         }
       ]
     },
